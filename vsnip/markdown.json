@@ -1,0 +1,38 @@
+{
+  "link": {
+    "prefix": "link",
+    "body": "[${1:$TM_SELECTED_TEXT}]($2)"
+  },
+  "italic": {
+    "prefix": "italic",
+    "body": "*${1:$TM_SELECTED_TEXT}*"
+  },
+  "h1": {
+    "prefix": "h1",
+    "body": "# ${1:$TM_SELECTED_TEXT}"
+  },
+  "h2": {
+    "prefix": "h2",
+    "body": "## ${1:$TM_SELECTED_TEXT}"
+  },
+  "h3": {
+    "prefix": "h3",
+    "body": "### ${1:$TM_SELECTED_TEXT}"
+  },
+  "h4": {
+    "prefix": "h4",
+    "body": "#### ${1:$TM_SELECTED_TEXT}"
+  },
+  "h5": {
+    "prefix": "h5",
+    "body": "##### ${1:$TM_SELECTED_TEXT}"
+  },
+  "h6": {
+    "prefix": "h6",
+    "body": "###### ${1:$TM_SELECTED_TEXT}"
+  },
+  "img": {
+    "prefix": "img",
+    "body": "![${1:$TM_SELECTED_TEXT}]($2)"
+  }
+}
