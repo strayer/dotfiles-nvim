@@ -1,4 +1,4 @@
 .netrwhist
 lua-language-server
 python3-venv
-plugin/packer_compiled.vim
+plugin/packer_compiled.*
