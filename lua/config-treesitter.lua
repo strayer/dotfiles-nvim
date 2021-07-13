@@ -2,7 +2,7 @@ local M = {}
 
 M.cfg = function()
   require'nvim-treesitter.configs'.setup {
-    ensure_installed = {"bash", "go", "html", "javascript", "json", "lua", "python", "ruby", "rust", "toml", "typescript", "yaml"},
+    ensure_installed = {"bash", "go", "html", "javascript", "json", "lua", "python", "ruby", "rust", "toml", "typescript", "yaml", "vue", "scss"},
     highlight = {enable = true},
     incremental_selection = {
       enable = true,

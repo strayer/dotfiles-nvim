@@ -1,3 +1,6 @@
+-- https://github.com/wbthomason/packer.nvim/issues/180#issuecomment-871634199
+vim.fn.setenv("MACOSX_DEPLOYMENT_TARGET", "10.15")
+
 vim.cmd [[packadd packer.nvim]]
 
 vim.cmd "autocmd BufWritePost plugins.lua PackerCompile" -- Auto compile when there are changes in plugins.lua
@@ -6,6 +9,9 @@ return require('packer').startup({
   function(use)
     -- Packer can manage itself as an optional plugin
     use {'wbthomason/packer.nvim', opt = true}
+
+    -- luarocks stuff
+    use_rocks 'penlight'
 
     -- Base plugins
     use 'tpope/vim-surround'
@@ -40,6 +46,7 @@ return require('packer').startup({
     use 'kchmck/vim-coffee-script'
     use 'ekalinin/Dockerfile.vim'
     use 'hashivim/vim-terraform'
+    use 'dag/vim-fish'
 
     -- UI
     use 'tpope/vim-vinegar'
@@ -95,6 +102,7 @@ return require('packer').startup({
         require'config-telescope'.cfg()
       end
     }
+    use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
 
     use {
       'AckslD/nvim-whichkey-setup.lua',
@@ -106,6 +114,7 @@ return require('packer').startup({
 
     -- LSP
     use 'neovim/nvim-lspconfig'
+    use {'kabouzeid/nvim-lspinstall', config = function() require'lsp'.setup_servers() end}
     use {
       'hrsh7th/nvim-compe',
       config = function()
@@ -154,5 +163,6 @@ return require('packer').startup({
     use 'bluz71/vim-nightfly-guicolors'
     use 'folke/tokyonight.nvim'
     use 'sainnhe/edge'
+    use 'projekt0n/github-nvim-theme'
   end
 });

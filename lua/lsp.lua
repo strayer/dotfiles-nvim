@@ -1,4 +1,3 @@
-local nvim_lsp = require('lspconfig')
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...)
     vim.api.nvim_buf_set_keymap(bufnr, ...)
@@ -15,7 +14,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  -- buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
   buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
@@ -42,20 +41,23 @@ vim.cmd([[
   autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
 ]])
 
--- Servers
+-- config that activates keymaps and enables snippet support
+local function make_config()
+  --[[ local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities.textDocument.completion.completionItem.snippetSupport = true ]]
+  return {
+    -- enable snippet support
+    -- capabilities = capabilities,
+    -- map buffer local keybindings when the language server attaches
+    on_attach = on_attach,
+    flags = {debounce_text_changes = 150}
+  }
+end
 
--- TODO:
--- coc-tsserver
--- coc-eslint
--- coc-prettier
--- coc-go
-
-nvim_lsp.bashls.setup {on_attach = on_attach}
-nvim_lsp.dockerls.setup {on_attach = on_attach}
-nvim_lsp.pyright.setup {on_attach = on_attach}
-nvim_lsp.diagnosticls.setup {
+local diagnosticls_config = {
   filetypes = {
-    "sh", "dockerfile", "slim", "lua"
+    "sh", "dockerfile", "slim"
+    -- "lua"
     -- "ruby"
   },
   init_options = {
@@ -101,28 +103,14 @@ nvim_lsp.diagnosticls.setup {
         }
       }
     }
-  },
-  on_attach = on_attach
+  }
 }
-nvim_lsp.solargraph.setup {init_options = {solargraph = {diagnostics = true}}, flags = {debounce_text_changes = 150}, on_attach = on_attach}
-nvim_lsp.cssls.setup {on_attach = on_attach}
-nvim_lsp.yamlls.setup {on_attach = on_attach}
-nvim_lsp.jsonls.setup {
-  commands = {
-    Format = {
-      function()
-        vim.lsp.buf.range_formatting({}, {0, 0}, {vim.fn.line("$"), 0})
-      end
-    }
-  },
-  on_attach = on_attach
-}
-nvim_lsp.vimls.setup {on_attach = on_attach}
-nvim_lsp.efm.setup {
+
+local efm_config = {
   init_options = {documentFormatting = true},
-  filetypes = {"lua", "python"},
+  filetypes = {"lua", "python", "typescript", "vue"},
   settings = {
-    rootMarkers = {".git/", "nvim/"},
+    rootMarkers = {".git/", "nvim/", "package.json"},
     languages = {
       python = {
         {formatCommand = "black --quiet -", formatStdin = true},
@@ -130,12 +118,69 @@ nvim_lsp.efm.setup {
       },
       lua = {
         {
-          formatCommand = "lua-format -i --no-keep-simple-function-one-line --no-break-after-operator --column-limit=150 --break-after-table-lb",
+          formatCommand = "lua-format -i --no-keep-simple-function-one-line --no-break-after-operator --column-limit=150 --break-after-table-lb --no-use-tab --indent-width=2",
           formatStdin = true
+        }
+      },
+      typescript = {
+        {
+          formatCommand = "prettier_d_slim --stdin --stdin-filepath ${INPUT}",
+          formatStdin = true,
+          lintCommand = "eslint_d -f visualstudio --stdin --stdin-filename ${INPUT}",
+          lintIgnoreExitCode = true,
+          lintStdin = true,
+          lintFormats = {"%f(%l,%c): %tarning %m", "%f(%l,%c): %rror %m"}
+        }
+      },
+      vue = {
+        {
+          formatCommand = "prettier_d_slim --stdin --stdin-filepath ${INPUT}",
+          formatStdin = true,
+          lintCommand = "eslint_d -f visualstudio --stdin --stdin-filename ${INPUT}",
+          lintIgnoreExitCode = true,
+          lintStdin = true,
+          lintFormats = {"%f(%l,%c): %tarning %m", "%f(%l,%c): %rror %m"}
         }
       }
     }
-  },
-  on_attach = on_attach
+  }
 }
-nvim_lsp.terraformls.setup {on_attach = on_attach}
+
+-- lsp-install
+local function setup_servers()
+  local tablex = require('pl.tablex')
+
+  require'lspinstall'.setup()
+
+  -- get all installed servers
+  local servers = require'lspinstall'.installed_servers()
+  -- ... and add manually installed servers
+  table.insert(servers, "solargraph")
+  table.insert(servers, "efm")
+  table.insert(servers, "terraformls")
+
+  for _, server in pairs(servers) do
+    local config = make_config()
+
+    -- language specific config
+    if server == "diagnosticls" then config = tablex.merge(config, diagnosticls_config, true) end
+    if server == "efm" then config = tablex.merge(config, efm_config, true) end
+    if server == "solargraph" then config.init_options = {formatting = true} end
+    if server == "typescript" then
+      config.on_attach = function(client)
+        on_attach(client)
+
+        -- formatting handled by prettier
+        client.resolved_capabilities.document_formatting = false
+      end
+    end
+
+    require'lspconfig'[server].setup(config)
+  end
+end
+
+local M = {}
+
+M.setup_servers = setup_servers
+
+return M

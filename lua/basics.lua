@@ -42,14 +42,19 @@ vim.o.undofile = true
 vim.bo.undofile = true
 
 -- theme
--- vim.g.background = "black"
+-- vim.o.background = "dark"
 -- vim.cmd "colorscheme nightfly"
 
 -- vim.o.background = "light"
 -- vim.cmd "colorscheme edge"
 
-vim.g.background = "black"
+vim.o.background = "dark"
 vim.cmd "colorscheme tokyonight"
+
+-- vim.o.background = "light"
+-- vim.cmd "colorscheme tokyonight"
+
+-- require('github-theme').setup({themeStyle = 'light'})
 
 --  https://stackoverflow.com/a/61382706/360593
 --  vim highlights $() in sh files as an error, because the original sh does not
