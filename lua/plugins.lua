@@ -3,8 +3,6 @@ vim.fn.setenv("MACOSX_DEPLOYMENT_TARGET", "10.15")
 
 vim.cmd [[packadd packer.nvim]]
 
-vim.cmd "autocmd BufWritePost plugins.lua PackerCompile" -- Auto compile when there are changes in plugins.lua
-
 return require('packer').startup({
   function(use)
     -- Packer can manage itself as an optional plugin
