@@ -113,8 +113,15 @@ local efm_config = {
     rootMarkers = {".git/", "nvim/", "package.json"},
     languages = {
       python = {
-        {formatCommand = "black --quiet -", formatStdin = true},
-        {lintCommand = "flake8 --stdin-display-name ${INPUT} -", lintStdin = true, lintFormats = {'%f:%l:%c: %m'}}
+        {
+          formatCommand = "black --quiet -",
+          formatStdin = true,
+        },
+        {
+          lintCommand = "flake8 --stdin-display-name ${INPUT} -",
+          lintStdin = true,
+          lintFormats = {'%f:%l:%c: %m'}
+        }
       },
       lua = {
         {
@@ -165,7 +172,6 @@ local function setup_servers()
     -- language specific config
     if server == "diagnosticls" then config = tablex.merge(config, diagnosticls_config, true) end
     if server == "efm" then config = tablex.merge(config, efm_config, true) end
-    if server == "solargraph" then config.init_options = {formatting = true} end
     if server == "typescript" then
       config.on_attach = function(client)
         on_attach(client)
