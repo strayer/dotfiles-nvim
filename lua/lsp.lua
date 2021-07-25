@@ -56,12 +56,12 @@ end
 
 local diagnosticls_config = {
   filetypes = {
-    "sh", "dockerfile", "slim"
+    "dockerfile", "slim"
     -- "lua"
     -- "ruby"
   },
   init_options = {
-    filetypes = {sh = "shellcheck", dockerfile = "hadolint", slim = "slimlint", ruby = "rubocop"},
+    filetypes = {dockerfile = "hadolint", slim = "slimlint", ruby = "rubocop"},
     formatFiletypes = {lua = "luaformat"},
     linters = {
       hadolint = {
@@ -108,10 +108,17 @@ local diagnosticls_config = {
 
 local efm_config = {
   init_options = {documentFormatting = true},
-  filetypes = {"lua", "python", "typescript", "vue"},
+  filetypes = {"lua", "python", "typescript", "vue", "sh"},
   settings = {
     rootMarkers = {".git/", "nvim/", "package.json"},
     languages = {
+      sh = {
+        {
+          lintCommand = "shellcheck -f gcc -x",
+          lintSource = "shellcheck",
+          lintFormats = {"%f:%l:%c: %trror: %m", "%f:%l:%c: %tarning: %m", "%f:%l:%c: %tote: %m"}
+        }
+      },
       python = {
         {
           formatCommand = "black --quiet -",
