@@ -59,7 +59,9 @@ return require('packer').startup({
     use {
       'hoob3rt/lualine.nvim',
       requires = {'kyazdani42/nvim-web-devicons', opt = true},
-      config = {require('lualine').setup {options = {theme = 'tokyonight'}}}
+      config = function()
+        require('config-lualine').cfg()
+      end
     }
 
     use {
