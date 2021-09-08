@@ -39,6 +39,7 @@ local keymap = {
     p = {'<CMD>Lspsaga preview_definition<CR>', 'preview definition'},
     q = {'<CMD>Telescope quickfix<CR>', 'quickfix'},
     r = {'<CMD>Lspsaga rename<CR>', 'rename'},
+    t = {'<CMD>Trouble<CR>', 'trouble'},
     T = {'<CMD>LspTypeDefinition<CR>', 'type defintion'},
     x = {'<CMD>cclose<CR>', 'close quickfix'},
     s = {'<CMD>Telescope lsp_document_symbols<CR>', 'document symbols'},

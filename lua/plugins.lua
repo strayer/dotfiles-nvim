@@ -153,6 +153,16 @@ return require('packer').startup({
       end
     }
 
+    use {
+      'folke/trouble.nvim',
+      requires = {'kyazdani42/nvim-web-devicons', opt = true},
+      opt = true,
+      cmd = {'Trouble', 'TroubleToggle'},
+      config = function()
+        require'config-trouble'.cfg()
+      end
+    }
+
     -- barbar
     -- use 'kyazdani42/nvim-web-devicons'
     -- use 'romgrk/barbar.nvim'
