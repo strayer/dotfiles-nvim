@@ -56,6 +56,8 @@ return require('packer').startup({
     -- use 'itchyny/lightline.vim'
     -- use 'itchyny/vim-gitbranch'
 
+    use {'voldikss/vim-floaterm', opt = true, cmd = {'FloatermNew', 'FloatermToggle'}}
+
     -- Lualine
     use {
       'hoob3rt/lualine.nvim',

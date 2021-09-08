@@ -51,6 +51,12 @@ local keymap = {
     j = {'<C-W>j', 'down'},
     k = {'<C-W>k', 'up'},
     l = {'<C-W>l', 'right'},
+  },
+  t = {
+    name = '+terminal',
+    f = {'<CMD>FloatermToggle<CR>', 'floating'},
+    v = {'<CMD>bo vsplit term://$SHELL<CR>'},
+    h = {'<CMD>bo split term://$SHELL<CR>'}
   }
 }
 

@@ -55,3 +55,7 @@ vim.g.loaded_python_provider = 0
 vim.g.python3_host_prog = "~/.config/nvim/python3-venv/bin/python"
 -- disable Perl provider
 vim.g.loaded_perl_provider = 0
+
+vim.cmd([[
+  autocmd TermOpen * startinsert
+]])
