@@ -45,6 +45,7 @@ return require('packer').startup({
     use 'ekalinin/Dockerfile.vim'
     use 'hashivim/vim-terraform'
     use 'dag/vim-fish'
+    use 'elixir-editors/vim-elixir'
 
     -- UI
     use 'tpope/vim-vinegar'
