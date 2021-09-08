@@ -108,7 +108,7 @@ local diagnosticls_config = {
 
 local efm_config = {
   init_options = {documentFormatting = true},
-  filetypes = {"lua", "python", "typescript", "vue", "sh"},
+  filetypes = {"lua", "python", "typescript", "vue", "sh", "javascript"},
   settings = {
     rootMarkers = {".git/", "nvim/", "package.json"},
     languages = {
@@ -120,15 +120,8 @@ local efm_config = {
         }
       },
       python = {
-        {
-          formatCommand = "black --quiet -",
-          formatStdin = true,
-        },
-        {
-          lintCommand = "flake8 --stdin-display-name ${INPUT} -",
-          lintStdin = true,
-          lintFormats = {'%f:%l:%c: %m'}
-        }
+        {formatCommand = "black --quiet -", formatStdin = true},
+        {lintCommand = "flake8 --stdin-display-name ${INPUT} -", lintStdin = true, lintFormats = {'%f:%l:%c: %m'}}
       },
       lua = {
         {
@@ -137,6 +130,16 @@ local efm_config = {
         }
       },
       typescript = {
+        {
+          formatCommand = "prettier_d_slim --stdin --stdin-filepath ${INPUT}",
+          formatStdin = true,
+          lintCommand = "eslint_d -f visualstudio --stdin --stdin-filename ${INPUT}",
+          lintIgnoreExitCode = true,
+          lintStdin = true,
+          lintFormats = {"%f(%l,%c): %tarning %m", "%f(%l,%c): %rror %m"}
+        }
+      },
+      javascript = {
         {
           formatCommand = "prettier_d_slim --stdin --stdin-filepath ${INPUT}",
           formatStdin = true,
