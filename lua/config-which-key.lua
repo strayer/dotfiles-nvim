@@ -7,9 +7,10 @@ local keymap = {
   r = {'<CMD>RnvimrToggle<CR>', 'ranger'},
   h = {'<C-W>s', 'split below'},
   v = {'<C-W>v', 'split right'},
+  -- [' '] = {'<CMD>lua require\'config-telescope\'.project_files()<CR>', 'search project files'},
   s = {
     name = '+search',
-    -- '.' = {':Telescope filetypes', 'filetypes'}
+    b = {'<CMD>Telescope buffers show_all_buffers=true<CR>', 'buffers'},
     B = {'<Cmd>Telescope git_branches<CR>', 'git branches'},
     d = {'<Cmd>Telescope lsp_document_diagnostics<CR>', 'document_diagnostics'},
     D = {'<Cmd>Telescope lsp_workspace_diagnostics<CR>', 'workspace_diagnostics'},

@@ -7,10 +7,7 @@ M.project_files = function()
 end
 
 M.cfg = function()
-  -- my custom keybindings
-  -- vim.api.nvim_set_keymap('n', '<Leader><Space>', '<CMD>Telescope find_files<CR>', {noremap = true, silent = true})
   vim.api.nvim_set_keymap('n', '<Leader><Space>', '<CMD>lua require\'config-telescope\'.project_files()<CR>', {noremap = true, silent = true})
-  vim.api.nvim_set_keymap('n', '<Leader>b', '<CMD>Telescope buffers show_all_buffers=true<CR>', {noremap = true, silent = true})
 
   local actions = require('telescope.actions')
   require('telescope').setup {
