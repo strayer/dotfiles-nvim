@@ -41,21 +41,6 @@ vim.bo.synmaxcol = 600
 vim.o.undofile = true
 vim.bo.undofile = true
 
--- theme
--- vim.o.background = "dark"
--- vim.cmd "colorscheme nightfly"
-
--- vim.o.background = "light"
--- vim.cmd "colorscheme edge"
-
-vim.o.background = "dark"
-vim.cmd "colorscheme tokyonight"
-
--- vim.o.background = "light"
--- vim.cmd "colorscheme tokyonight"
-
--- require('github-theme').setup({themeStyle = 'light'})
-
 --  https://stackoverflow.com/a/61382706/360593
 --  vim highlights $() in sh files as an error, because the original sh does not
 --  support it. POSIX does support it and pretty much everything I use is POSIX

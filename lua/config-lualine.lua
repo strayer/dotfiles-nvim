@@ -1,7 +1,8 @@
 local M = {}
 
 M.cfg = function()
-  require('lualine').setup({options = {theme = 'tokyonight'}})
+  THEME = require('theme')
+  require('lualine').setup({options = {theme = THEME.active_theme}})
 end
 
 return M

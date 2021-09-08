@@ -162,8 +162,22 @@ return require('packer').startup({
 
     -- Colors
     use 'bluz71/vim-nightfly-guicolors'
-    use 'folke/tokyonight.nvim'
     use 'sainnhe/edge'
-    use 'projekt0n/github-nvim-theme'
+
+    use {
+     'folke/tokyonight.nvim',
+      requires = {{"hoob3rt/lualine.nvim", opt = true}},
+      config = function()
+        require('theme').cfg_theme()
+      end
+    }
+
+    use {
+      'projekt0n/github-nvim-theme',
+      requires = {{"hoob3rt/lualine.nvim", opt = true}},
+      config = function()
+        require('theme').cfg_theme()
+      end
+    }
   end
 });
