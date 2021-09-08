@@ -51,7 +51,7 @@ local keymap = {
     h = {'<C-W>h', 'left'},
     j = {'<C-W>j', 'down'},
     k = {'<C-W>k', 'up'},
-    l = {'<C-W>l', 'right'},
+    l = {'<C-W>l', 'right'}
   },
   t = {
     name = '+terminal',

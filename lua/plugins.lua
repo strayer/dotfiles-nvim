@@ -117,7 +117,12 @@ return require('packer').startup({
 
     -- LSP
     use 'neovim/nvim-lspconfig'
-    use {'kabouzeid/nvim-lspinstall', config = function() require'lsp'.setup_servers() end}
+    use {
+      'kabouzeid/nvim-lspinstall',
+      config = function()
+        require'lsp'.setup_servers()
+      end
+    }
     use {
       'hrsh7th/nvim-compe',
       config = function()
@@ -174,7 +179,7 @@ return require('packer').startup({
     use 'sainnhe/edge'
 
     use {
-     'folke/tokyonight.nvim',
+      'folke/tokyonight.nvim',
       requires = {{"hoob3rt/lualine.nvim", opt = true}},
       config = function()
         require('theme').cfg_theme()
