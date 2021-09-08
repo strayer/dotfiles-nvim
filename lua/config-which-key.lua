@@ -21,7 +21,7 @@ local keymap = {
     M = {'<Cmd>Telescope man_pages<CR>', 'man_pages'},
     o = {'<Cmd>Telescope vim_options<CR>', 'vim_options'},
     t = {'<Cmd>Telescope live_grep<CR>', 'text'},
-    r = {'<Cmd>Telescope registers<CR>', 'registers'},
+    r = {'<Cmd>Telescope neoclip<CR>', 'registers'},
     w = {'<Cmd>Telescope file_browser<CR>', 'buf_fuz_find'},
     u = {'<Cmd>Telescope colorscheme<CR>', 'colorschemes'}
   },

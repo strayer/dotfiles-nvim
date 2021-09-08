@@ -141,6 +141,13 @@ return require('packer').startup({
       end
     }
 
+    use {
+      "AckslD/nvim-neoclip.lua",
+      config = function()
+        require('neoclip').setup()
+      end
+    }
+
     -- barbar
     -- use 'kyazdani42/nvim-web-devicons'
     -- use 'romgrk/barbar.nvim'
