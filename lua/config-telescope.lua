@@ -14,12 +14,22 @@ M.cfg = function()
 
   local actions = require('telescope.actions')
   require('telescope').setup {
+    extensions = {
+      fzf = {
+        fuzzy = true,
+        override_generic_sorter = false,
+        override_file_sorter = true,
+        case_mode = "smart_case",
+      }
+    },
     defaults = {
       vimgrep_arguments = {'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', '--hidden'},
       color_devicons = true,
       mappings = {i = {["<CR>"] = actions.select_default + actions.center}}
     }
   }
+  require('telescope').load_extension('fzf')
+  require('telescope').load_extension('neoclip')
 end
 
 return M
