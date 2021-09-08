@@ -15,6 +15,3 @@ endif
 autocmd Syntax slim setlocal nofoldenable
 
 let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
-
-set title
-let &titlestring='%t - nvim'
