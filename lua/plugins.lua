@@ -141,7 +141,6 @@ return require('packer').startup({
         require'config-vsnip'.cfg()
       end
     }
-    use {"glepnir/lspsaga.nvim"}
 
     use {
       'windwp/nvim-autopairs',
