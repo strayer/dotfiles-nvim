@@ -13,7 +13,10 @@ return require('packer').startup({
 
     -- Base plugins
     use 'tpope/vim-surround'
-    use 'b3nj5m1n/kommentary'
+    use {
+      'terrortylor/nvim-comment',
+      config = function() require'nvim_comment'.setup() end
+    }
     use {
       'editorconfig/editorconfig-vim',
       config = function()
