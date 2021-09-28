@@ -1,45 +1,34 @@
-vim.o.termguicolors = true
-vim.g.termguicolors = true
+vim.opt.termguicolors = true
 
-vim.o.lazyredraw = true
-vim.o.showmatch = true
-vim.o.number = true
-vim.wo.number = true
-vim.o.cursorline = true
-vim.wo.cursorline = true
-vim.o.relativenumber = true
-vim.wo.relativenumber = true
+vim.opt.lazyredraw = true
+vim.opt.showmatch = true
+vim.opt.number = true
+vim.opt.cursorline = true
+vim.opt.relativenumber = true
 
 -- show diagnostic messages faster
-vim.o.updatetime = 300
+vim.opt.updatetime = 300
 
-vim.g.incsearch = true -- search as characters are entered
-vim.g.hlsearch = true -- highlight matches
+vim.opt.incsearch = true -- search as characters are entered
+vim.opt.hlsearch = true -- highlight matches
 
 -- configure leader to space
 vim.g.mapleader = " "
 
 -- mouse mode
-vim.o.mouse = 'a'
+vim.opt.mouse = 'a'
 
 -- indentation
--- doing this with vimscript for now until I figure out vim.g/o/bo
-vim.o.tabstop = 2
-vim.bo.tabstop = 2
-vim.o.shiftwidth = 2
-vim.bo.shiftwidth = 2
-vim.o.softtabstop = 0
-vim.bo.softtabstop = 0
-vim.o.expandtab = true
-vim.bo.expandtab = true
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.softtabstop = 0
+vim.opt.expandtab = true
 
 -- avoid syntax highlighting for very long lines
-vim.o.synmaxcol = 600
-vim.bo.synmaxcol = 600
+vim.opt.synmaxcol = 600
 
 -- enable undofile
-vim.o.undofile = true
-vim.bo.undofile = true
+vim.opt.undofile = true
 
 --  https://stackoverflow.com/a/61382706/360593
 --  vim highlights $() in sh files as an error, because the original sh does not
