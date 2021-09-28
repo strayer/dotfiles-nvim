@@ -94,15 +94,6 @@ local diagnosticls_config = {
         },
         securities = {fatal = "error", error = "error", warning = "warning", convention = "info", refactor = "info", info = "info"}
       }
-    },
-    formatters = {
-      luaformat = {
-        command = "lua-format",
-        args = {
-          "-i", "--no-keep-simple-function-one-line", "--no-break-after-operator", "--column-limit=150", "--break-after-table-lb", "--no-use-tab",
-          "--indent-width=2"
-        }
-      }
     }
   }
 }
@@ -126,7 +117,7 @@ local efm_config = {
       },
       lua = {
         {
-          formatCommand = "lua-format -i --no-keep-simple-function-one-line --no-break-after-operator --column-limit=150 --break-after-table-lb --no-use-tab --indent-width=2",
+          formatCommand = "lua-format -i --no-keep-simple-function-one-line --no-break-after-operator --column-limit=100 --no-use-tab --single-quote-to-double-quote --indent-width=2",
           formatStdin = true
         }
       },
