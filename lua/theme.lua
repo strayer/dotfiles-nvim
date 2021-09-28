@@ -11,7 +11,7 @@ M.cfg_theme = function()
 
   if M.active_theme == 'github' then
     vim.o.background = "light"
-    require("github-theme").setup({themeStyle = "light"})
+    require("github-theme").setup({theme_style = "light_default"})
   end
 end
 
