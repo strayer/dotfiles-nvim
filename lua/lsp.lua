@@ -1,3 +1,6 @@
+local lsp_status = require('lsp-status')
+lsp_status.register_progress()
+
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...)
     vim.api.nvim_buf_set_keymap(bufnr, ...)
@@ -29,6 +32,8 @@ local on_attach = function(client, bufnr)
       augroup END
     ]], false)
   end
+
+  lsp_status.on_attach(client)
 end
 
 vim.cmd([[
@@ -41,6 +46,10 @@ vim.cmd([[
   autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
 ]])
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+capabilities = vim.tbl_extend('keep', capabilities or {}, lsp_status.capabilities)
+
 -- config that activates keymaps and enables snippet support
 local function make_config()
   --[[ local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -51,7 +60,7 @@ local function make_config()
     -- map buffer local keybindings when the language server attaches
     on_attach = on_attach,
     flags = {debounce_text_changes = 150},
-    capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+    capabilities = capabilities
   }
 end
 

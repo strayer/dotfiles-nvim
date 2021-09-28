@@ -142,6 +142,8 @@ return require('packer').startup({
       end
     }
 
+    use 'nvim-lua/lsp-status.nvim'
+
     use {
       "ray-x/lsp_signature.nvim",
       requires = {'neovim/nvim-lspconfig', opt = true},
