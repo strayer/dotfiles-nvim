@@ -143,6 +143,19 @@ return require('packer').startup({
     }
 
     use {
+      "ray-x/lsp_signature.nvim",
+      requires = {'neovim/nvim-lspconfig', opt = true},
+      config = function()
+        require "lsp_signature".setup({
+          bind = true,
+          handler_opts = {
+            border = "single"
+          }
+        })
+      end
+    }
+
+    use {
       'windwp/nvim-autopairs',
       config = function()
         require'config-autopairs'.cfg()
