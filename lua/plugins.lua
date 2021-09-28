@@ -119,7 +119,7 @@ return require('packer').startup({
     }
 
     -- LSP
-    use 'neovim/nvim-lspconfig'
+    use {'neovim/nvim-lspconfig', requires = {'hrsh7th/nvim-cmp', opt = true}}
     use {
       'kabouzeid/nvim-lspinstall',
       config = function()
@@ -127,9 +127,10 @@ return require('packer').startup({
       end
     }
     use {
-      'hrsh7th/nvim-compe',
+      'hrsh7th/nvim-cmp',
+      requires = {'hrsh7th/cmp-buffer', 'hrsh7th/cmp-nvim-lsp'},
       config = function()
-        require'config-compe'.cfg()
+        require'config-cmp'.cfg()
       end
     }
     use 'onsails/lspkind-nvim'
