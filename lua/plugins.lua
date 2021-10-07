@@ -8,6 +8,8 @@ return require('packer').startup({
     -- Packer can manage itself as an optional plugin
     use {'wbthomason/packer.nvim', opt = true}
 
+    use 'lewis6991/impatient.nvim'
+
     -- luarocks stuff
     use_rocks 'penlight'
 
@@ -221,5 +223,5 @@ return require('packer').startup({
         require('theme').cfg_theme()
       end
     }
-  end
+  end, config = {compile_path = vim.fn.stdpath('config')..'/lua/packer_compiled.lua'}
 });
