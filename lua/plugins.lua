@@ -187,14 +187,14 @@ return require('packer').startup({
     -- use 'kyazdani42/nvim-web-devicons'
     -- use 'romgrk/barbar.nvim'
 
-    -- bufferline
-    use {
-      'akinsho/nvim-bufferline.lua',
-      requires = 'kyazdani42/nvim-web-devicons',
-      config = function()
-        require'config-bufferline'.cfg()
-      end
-    }
+--     -- bufferline
+--     use {
+--       'akinsho/nvim-bufferline.lua',
+--       requires = 'kyazdani42/nvim-web-devicons',
+--       config = function()
+--         require'config-bufferline'.cfg()
+--       end
+--     }
 
     -- Treesitter
     use {
