@@ -121,13 +121,7 @@ return require('packer').startup({
     }
 
     -- LSP
-    use {'neovim/nvim-lspconfig', requires = {'hrsh7th/nvim-cmp', opt = true}}
-    use {
-      'kabouzeid/nvim-lspinstall',
-      config = function()
-        require'lsp'.setup_servers()
-      end
-    }
+    use {'neovim/nvim-lspconfig', requires = {'hrsh7th/nvim-cmp', opt = true}, config = function() require'lsp'.setup_servers() end}
     use {
       'hrsh7th/nvim-cmp',
       requires = {'hrsh7th/cmp-buffer', 'hrsh7th/cmp-nvim-lsp'},

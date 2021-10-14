@@ -1,4 +1,4 @@
-local lsp_status = require('lsp-status')
+local lsp_status = require("lsp-status")
 lsp_status.register_progress()
 
 local on_attach = function(client, bufnr)
@@ -9,18 +9,21 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_option(bufnr, ...)
   end
 
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+  buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 
   -- Mappings.
-  local opts = {noremap = true, silent = true}
-  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  local opts = {
+    noremap = true,
+    silent = true
+  }
+  buf_set_keymap("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
+  buf_set_keymap("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
+  buf_set_keymap("n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
+  buf_set_keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
   -- buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
+  buf_set_keymap("n", "[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
+  buf_set_keymap("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", opts)
 
   -- Set autocommands conditional on server_capabilities
   if client.resolved_capabilities.document_highlight then
@@ -40,15 +43,15 @@ vim.cmd([[
   command! -nargs=0 LspFormat :lua vim.lsp.buf.formatting()
 ]])
 
-require('lspkind').init()
+require("lspkind").init()
 
 vim.cmd([[
   autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
 ]])
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-capabilities = vim.tbl_extend('keep', capabilities or {}, lsp_status.capabilities)
+capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+capabilities = vim.tbl_extend("keep", capabilities or {}, lsp_status.capabilities)
 
 -- config that activates keymaps and enables snippet support
 local function make_config()
@@ -59,7 +62,9 @@ local function make_config()
     -- capabilities = capabilities,
     -- map buffer local keybindings when the language server attaches
     on_attach = on_attach,
-    flags = {debounce_text_changes = 150},
+    flags = {
+      debounce_text_changes = 150
+    },
     capabilities = capabilities
   }
 end
@@ -71,21 +76,24 @@ local diagnosticls_config = {
     -- "ruby"
   },
   init_options = {
-    filetypes = {dockerfile = "hadolint", slim = "slimlint", ruby = "rubocop"},
-    formatFiletypes = {lua = "luaformat"},
+    filetypes = {
+      slim = "slimlint",
+      ruby = "rubocop"
+    },
+    formatFiletypes = {
+      lua = "luaformat"
+    },
     linters = {
-      hadolint = {
-        command = "hadolint",
-        sourceName = "hadolint",
-        args = {"-f", "json", "-"},
-        parseJson = {line = "line", colume = "column", security = "level", message = "${message} [${code}]"},
-        securities = {error = "error", warning = "warning", info = "info", style = "hint"}
-      },
       slimlint = {
         command = "slim-lint",
         sourceName = "slim-lint",
         args = {"-r", "json", "%file"},
-        parseJson = {errorsRoot = "files.[0].offenses", line = "location.line", security = "severity", message = "${code}: ${message}"}
+        parseJson = {
+          errorsRoot = "files.[0].offenses",
+          line = "location.line",
+          security = "severity",
+          message = "${code}: ${message}"
+        }
       },
       rubocop = {
         command = "bundle",
@@ -101,84 +109,76 @@ local diagnosticls_config = {
           message = "[${cop_name}] ${message}",
           security = "severity"
         },
-        securities = {fatal = "error", error = "error", warning = "warning", convention = "info", refactor = "info", info = "info"}
+        securities = {
+          fatal = "error",
+          error = "error",
+          warning = "warning",
+          convention = "info",
+          refactor = "info",
+          info = "info"
+        }
       }
     }
   }
 }
 
+-- see efm configuration in $HOME/.config/efm-langserer/config.yaml
 local efm_config = {
-  init_options = {documentFormatting = true},
-  filetypes = {"lua", "python", "typescript", "vue", "sh", "javascript"},
-  settings = {
-    rootMarkers = {".git/", "nvim/", "package.json"},
-    languages = {
-      sh = {
-        {
-          lintCommand = "shellcheck -f gcc -x",
-          lintSource = "shellcheck",
-          lintFormats = {"%f:%l:%c: %trror: %m", "%f:%l:%c: %tarning: %m", "%f:%l:%c: %tote: %m"}
-        }
-      },
-      python = {
-        {formatCommand = "black --quiet -", formatStdin = true},
-        {lintCommand = "flake8 --stdin-display-name ${INPUT} -", lintStdin = true, lintFormats = {'%f:%l:%c: %m'}}
-      },
-      lua = {
-        {
-          formatCommand = "lua-format -i --no-keep-simple-function-one-line --no-break-after-operator --column-limit=100 --no-use-tab --single-quote-to-double-quote --indent-width=2",
-          formatStdin = true
-        }
-      },
-      typescript = {
-        {
-          formatCommand = "prettier_d_slim --stdin --stdin-filepath ${INPUT}",
-          formatStdin = true,
-          lintCommand = "eslint_d -f visualstudio --stdin --stdin-filename ${INPUT}",
-          lintIgnoreExitCode = true,
-          lintStdin = true,
-          lintFormats = {"%f(%l,%c): %tarning %m", "%f(%l,%c): %rror %m"}
-        }
-      },
-      javascript = {
-        {
-          formatCommand = "prettier_d_slim --stdin --stdin-filepath ${INPUT}",
-          formatStdin = true,
-          lintCommand = "eslint_d -f visualstudio --stdin --stdin-filename ${INPUT}",
-          lintIgnoreExitCode = true,
-          lintStdin = true,
-          lintFormats = {"%f(%l,%c): %tarning %m", "%f(%l,%c): %rror %m"}
-        }
-      },
-      vue = {
-        {
-          formatCommand = "prettier_d_slim --stdin --stdin-filepath ${INPUT}",
-          formatStdin = true,
-          lintCommand = "eslint_d -f visualstudio --stdin --stdin-filename ${INPUT}",
-          lintIgnoreExitCode = true,
-          lintStdin = true,
-          lintFormats = {"%f(%l,%c): %tarning %m", "%f(%l,%c): %rror %m"}
-        }
-      }
-    }
-  }
+  init_options = {
+    documentFormatting = true
+  },
+  filetypes = {"lua", "python", "typescript", "vue", "sh", "javascript", "dockerfile"}
 }
+
+local function yarn_custom_install_path(install_dir)
+  return vim.env.HOME .. "/.config/nvim/lsp-servers/" .. install_dir .. "/node_modules/.bin/"
+end
+
+local function server_custom_cmd(server_name)
+  if server_name == "bashls" then
+    return {yarn_custom_install_path(server_name) .. "bash-language-server", "start"}
+  elseif server_name == "diagnosticls" then
+    return {yarn_custom_install_path(server_name) .. "diagnostic-languageserver", "--stdio"}
+  elseif server_name == "dockerls" then
+    return {yarn_custom_install_path(server_name) .. "docker-langserver", "--stdio"}
+  elseif server_name == "pyright" then
+    return {yarn_custom_install_path(server_name) .. "pyright-langserver", "--stdio"}
+  elseif server_name == "tsserver" then
+    return {yarn_custom_install_path(server_name) .. "typescript-language-server", "--stdio"}
+  elseif server_name == "cssls" then
+    return {yarn_custom_install_path("vscode-extracted") .. "vscode-css-language-server", "--stdio"}
+  elseif server_name == "html" then
+    return {
+      yarn_custom_install_path("vscode-extracted") .. "vscode-html-language-server", "--stdio"
+    }
+  elseif server_name == "yamlls" then
+    return {yarn_custom_install_path(server_name) .. "yaml-language-server", "--stdio"}
+  elseif server_name == "vuels" then
+    return {yarn_custom_install_path(server_name) .. "vls"}
+  else
+    return nil
+  end
+end
 
 -- lsp-install
 local function setup_servers()
-  local tablex = require('pl.tablex')
+  local tablex = require("pl.tablex")
 
-  require'lspinstall'.setup()
+  local servers = {
+    "bashls", "diagnosticls", "dockerls", "sumneko_lua", "pyright", "tsserver", "cssls", "jsonls",
+    "html", "vuels", "yamlls", "solargraph", "efm", "terraformls"
+  }
 
-  -- get all installed servers
-  local servers = require'lspinstall'.installed_servers()
-  -- ... and add manually installed servers
-  table.insert(servers, "solargraph")
-  table.insert(servers, "efm")
-  table.insert(servers, "terraformls")
-
-  for _, server in pairs(servers) do
+  for _, server in ipairs(servers) do
     local config = make_config()
+    local custom_cmd = server_custom_cmd(server)
+
+    -- install path overrides
+    if custom_cmd then
+      config = tablex.merge(config, {
+        cmd = custom_cmd
+      }, true)
+    end
 
     -- language specific config
     if server == "diagnosticls" then config = tablex.merge(config, diagnosticls_config, true) end
@@ -192,7 +192,7 @@ local function setup_servers()
       end
     end
 
-    require'lspconfig'[server].setup(config)
+    require"lspconfig"[server].setup(config)
   end
 end
 
