@@ -217,5 +217,8 @@ return require('packer').startup({
         require('theme').cfg_theme()
       end
     }
+
+    use 'mfussenegger/nvim-dap'
+    use{'mfussenegger/nvim-dap-python', config = function() require'config-dap-python'.cfg() end}
   end, config = {compile_path = vim.fn.stdpath('config')..'/lua/packer_compiled.lua'}
 });

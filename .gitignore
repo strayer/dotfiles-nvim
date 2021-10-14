@@ -1,3 +1,4 @@
 .netrwhist
 python3-venv
 lua/packer_compiled.*
+debugpy-venv/

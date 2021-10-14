@@ -8,6 +8,14 @@ local keymap = {
   h = {'<C-W>s', 'split below'},
   v = {'<C-W>v', 'split right'},
   -- [' '] = {'<CMD>lua require\'config-telescope\'.project_files()<CR>', 'search project files'},
+  d = {
+    name = '+debug',
+    b = {'<CMD>lua require"dap".toggle_breakpoint()<CR>', 'toggle breakpoint'},
+    c = {'<CMD>lua require"dap".continue()<CR>', 'continue'},
+    o = {'<CMD>lua require"dap".step_over()<CR>', 'step over'},
+    i = {'<CMD>lua require"dap".step_into()<CR>', 'step into'},
+    r = {'<CMD>lua require"dap".repl.open()<CR>', 'repl'},
+  },
   s = {
     name = '+search',
     b = {'<CMD>Telescope buffers show_all_buffers=true<CR>', 'buffers'},
