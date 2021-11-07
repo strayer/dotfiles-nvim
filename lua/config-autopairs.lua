@@ -1,9 +1,9 @@
 local M = {}
 
 M.cfg = function()
-  local npairs = require('nvim-autopairs')
+  local npairs = require("nvim-autopairs")
 
-  npairs.setup({check_ts = true, ts_config = {lua = {'string'}, javascript = {'template_string'}, java = false}})
+  npairs.setup({ check_ts = true, ts_config = { lua = { "string" }, javascript = { "template_string" }, java = false } })
 
   _G.MUtils = {}
 
@@ -26,7 +26,7 @@ M.cfg = function()
       return npairs.esc("<C-n>")
     else
       if vim.fn["vsnip#available"](1) ~= 0 then
-        vim.fn.feedkeys(string.format('%c%c%c(vsnip-expand-or-jump)', 0x80, 253, 83))
+        vim.fn.feedkeys(string.format("%c%c%c(vsnip-expand-or-jump)", 0x80, 253, 83))
         return npairs.esc("")
       else
         return npairs.esc("<Tab>")
@@ -39,7 +39,7 @@ M.cfg = function()
       return npairs.esc("<C-p>")
     else
       if vim.fn["vsnip#jumpable"](-1) ~= 0 then
-        vim.fn.feedkeys(string.format('%c%c%c(vsnip-jump-prev)', 0x80, 253, 83))
+        vim.fn.feedkeys(string.format("%c%c%c(vsnip-jump-prev)", 0x80, 253, 83))
         return npairs.esc("")
       else
         return npairs.esc("<C-h>")
@@ -47,9 +47,9 @@ M.cfg = function()
     end
   end
 
-  vim.api.nvim_set_keymap("i", "<CR>", "v:lua.MUtils.completion_confirm()", {expr = true, noremap = true})
-  vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.MUtils.tab()", {expr = true, noremap = true})
-  vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.MUtils.s_tab()", {expr = true, noremap = true})
+  vim.api.nvim_set_keymap("i", "<CR>", "v:lua.MUtils.completion_confirm()", { expr = true, noremap = true })
+  vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.MUtils.tab()", { expr = true, noremap = true })
+  vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.MUtils.s_tab()", { expr = true, noremap = true })
 end
 
 return M

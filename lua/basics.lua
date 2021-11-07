@@ -16,7 +16,7 @@ vim.opt.hlsearch = true -- highlight matches
 vim.g.mapleader = " "
 
 -- mouse mode
-vim.opt.mouse = 'a'
+vim.opt.mouse = "a"
 
 -- indentation
 vim.opt.tabstop = 2
