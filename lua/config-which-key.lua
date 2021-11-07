@@ -45,7 +45,8 @@ local keymap = {
     T = {'<CMD>LspTypeDefinition<CR>', 'type defintion'},
     x = {'<CMD>cclose<CR>', 'close quickfix'},
     s = {'<CMD>Telescope lsp_document_symbols<CR>', 'document symbols'},
-    S = {'<CMD>Telescope lsp_workspace_symbols<CR>', 'workspace symbols'}
+    S = {'<CMD>Telescope lsp_workspace_symbols<CR>', 'workspace symbols'},
+    r = {'<CMD>Lspsaga rename<cr>', 'rename symbol'}
   },
   w = {
     name = '+window',

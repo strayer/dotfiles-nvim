@@ -2,8 +2,6 @@ require('impatient')
 require('basics')
 require('plugins')
 require('packer_compiled')
-require('lsp')
-require('lsp-lua')
 
 if os.getenv('TMUX') ~= nil then
   vim.cmd [[

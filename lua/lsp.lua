@@ -1,5 +1,4 @@
 local lsp_status = require("lsp-status")
-lsp_status.register_progress()
 
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...)
@@ -14,7 +13,7 @@ local on_attach = function(client, bufnr)
   -- Mappings.
   local opts = {
     noremap = true,
-    silent = true
+    silent = true,
   }
   buf_set_keymap("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
   buf_set_keymap("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
@@ -27,164 +26,56 @@ local on_attach = function(client, bufnr)
 
   -- Set autocommands conditional on server_capabilities
   if client.resolved_capabilities.document_highlight then
-    vim.api.nvim_exec([[
-      augroup lsp_document_highlight
-        autocmd! * <buffer>
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-    ]], false)
+    vim.api.nvim_exec(
+      [[
+        augroup lsp_document_highlight
+          autocmd! * <buffer>
+          autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+          autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+        augroup END
+      ]],
+      false
+    )
   end
 
   lsp_status.on_attach(client)
 end
 
-vim.cmd([[
-  command! -nargs=0 LspFormat :lua vim.lsp.buf.formatting()
-]])
+local function cfg()
+  -- setup lsp-status
+  lsp_status.register_progress()
 
-require("lspkind").init()
+  vim.cmd([[
+    command! -nargs=0 LspFormat :lua vim.lsp.buf.formatting()
+  ]])
 
-vim.cmd([[
-  autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
-]])
+  -- setup lspkind
+  require("lspkind").init()
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
-capabilities = vim.tbl_extend("keep", capabilities or {}, lsp_status.capabilities)
+  -- setup lightbulb
+  vim.cmd([[
+    autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
+  ]])
 
--- config that activates keymaps and enables snippet support
-local function make_config()
-  --[[ local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities.textDocument.completion.completionItem.snippetSupport = true ]]
-  return {
-    -- enable snippet support
-    -- capabilities = capabilities,
-    -- map buffer local keybindings when the language server attaches
-    on_attach = on_attach,
-    flags = {
-      debounce_text_changes = 150
-    },
-    capabilities = capabilities
-  }
-end
+  -- setup cmp
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+  capabilities = vim.tbl_extend("keep", capabilities or {}, lsp_status.capabilities)
 
-local diagnosticls_config = {
-  filetypes = {
-    "dockerfile", "slim"
-    -- "lua"
-    -- "ruby"
-  },
-  init_options = {
-    filetypes = {
-      slim = "slimlint",
-      ruby = "rubocop"
-    },
-    formatFiletypes = {
-      lua = "luaformat"
-    },
-    linters = {
-      slimlint = {
-        command = "slim-lint",
-        sourceName = "slim-lint",
-        args = {"-r", "json", "%file"},
-        parseJson = {
-          errorsRoot = "files.[0].offenses",
-          line = "location.line",
-          security = "severity",
-          message = "${code}: ${message}"
-        }
+  -- setup lsp-installer
+  local lsp_installer = require("nvim-lsp-installer")
+
+  lsp_installer.on_server_ready(function(server)
+    local opts = {
+      on_attach = on_attach,
+      flags = {
+        debounce_text_changes = 150,
       },
-      rubocop = {
-        command = "bundle",
-        sourceName = "rubocop",
-        debounce = 10,
-        args = {"exec", "rubocop", "--format", "json", "--force-exclusion", "--stdin", "%filepath"},
-        parseJson = {
-          errorsRoot = "files[0].offenses",
-          line = "location.start_line",
-          endLine = "location.last_line",
-          column = "location.start_column",
-          endColumn = "location.end_column",
-          message = "[${cop_name}] ${message}",
-          security = "severity"
-        },
-        securities = {
-          fatal = "error",
-          error = "error",
-          warning = "warning",
-          convention = "info",
-          refactor = "info",
-          info = "info"
-        }
-      }
+      capabilities = capabilities,
     }
-  }
-}
 
--- see efm configuration in $HOME/.config/efm-langserer/config.yaml
-local efm_config = {
-  init_options = {
-    documentFormatting = true
-  },
-  filetypes = {"lua", "python", "typescript", "vue", "sh", "javascript", "dockerfile"}
-}
-
-local function yarn_custom_install_path(install_dir)
-  return vim.env.HOME .. "/.config/nvim/lsp-servers/" .. install_dir .. "/node_modules/.bin/"
-end
-
-local function server_custom_cmd(server_name)
-  if server_name == "bashls" then
-    return {yarn_custom_install_path(server_name) .. "bash-language-server", "start"}
-  elseif server_name == "diagnosticls" then
-    return {yarn_custom_install_path(server_name) .. "diagnostic-languageserver", "--stdio"}
-  elseif server_name == "dockerls" then
-    return {yarn_custom_install_path(server_name) .. "docker-langserver", "--stdio"}
-  elseif server_name == "pyright" then
-    return {yarn_custom_install_path(server_name) .. "pyright-langserver", "--stdio"}
-  elseif server_name == "tsserver" then
-    return {yarn_custom_install_path(server_name) .. "typescript-language-server", "--stdio"}
-  elseif server_name == "cssls" then
-    return {yarn_custom_install_path("vscode-extracted") .. "vscode-css-language-server", "--stdio"}
-  elseif server_name == "html" then
-    return {
-      yarn_custom_install_path("vscode-extracted") .. "vscode-html-language-server", "--stdio"
-    }
-  elseif server_name == "yamlls" then
-    return {yarn_custom_install_path(server_name) .. "yaml-language-server", "--stdio"}
-  elseif server_name == "vuels" then
-    return {yarn_custom_install_path(server_name) .. "vls"}
-  else
-    return nil
-  end
-end
-
--- lsp-install
-local function setup_servers()
-  local tablex = require("pl.tablex")
-
-  local servers = {
-    "bashls", "diagnosticls", "dockerls", "sumneko_lua", "pyright", "tsserver", "cssls", "jsonls",
-    "html", "vuels", "yamlls", "solargraph", "efm", "terraformls"
-  }
-
-  for _, server in ipairs(servers) do
-    local config = make_config()
-    local custom_cmd = server_custom_cmd(server)
-
-    -- install path overrides
-    if custom_cmd then
-      config = tablex.merge(config, {
-        cmd = custom_cmd
-      }, true)
-    end
-
-    -- language specific config
-    if server == "diagnosticls" then config = tablex.merge(config, diagnosticls_config, true) end
-    if server == "efm" then config = tablex.merge(config, efm_config, true) end
-    if server == "typescript" then
-      config.on_attach = function(client)
+    if server.name == "tsserver" then
+      opts.on_attach = function(client)
         on_attach(client)
 
         -- formatting handled by prettier
@@ -192,12 +83,73 @@ local function setup_servers()
       end
     end
 
-    require"lspconfig"[server].setup(config)
-  end
+    if server.name == "solargraph" then
+      opts.init_options = {
+        formatting = false,
+      }
+      opts.settings = {
+        solargraph = {
+          diagnostics = false,
+          formatting = false,
+        },
+      }
+    end
+
+    if server.name == "sumneko_lua" then
+      opts.settings = {
+        Lua = {
+          diagnostics = {
+            -- Get the language server to recognize the `vim` global
+            globals = { "vim" },
+          },
+          workspace = {
+            -- Make the server aware of Neovim runtime files
+            library = {
+              [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+              [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+            },
+            maxPreload = 10000,
+          },
+        },
+      }
+    end
+
+    server:setup(opts)
+    vim.cmd([[ do User LspAttachBuffers ]])
+  end)
+
+  local null_ls = require("null-ls")
+  null_ls.config({
+    sources = {
+      null_ls.builtins.diagnostics.hadolint.with({ filetypes = { "Dockerfile", "dockerfile" } }),
+      null_ls.builtins.diagnostics.shellcheck,
+      null_ls.builtins.diagnostics.pylint,
+      null_ls.builtins.diagnostics.eslint_d,
+      null_ls.builtins.formatting.shfmt,
+      null_ls.builtins.formatting.black,
+      null_ls.builtins.formatting.stylua,
+      null_ls.builtins.formatting.prettier_d_slim,
+      null_ls.builtins.diagnostics.rubocop.with({
+        command = "bundle",
+        args = vim.list_extend({ "exec", "rubocop" }, null_ls.builtins.diagnostics.rubocop._opts.args),
+      }),
+      null_ls.builtins.formatting.rubocop.with({
+        command = "bundle",
+        args = vim.list_extend({ "exec", "rubocop" }, null_ls.builtins.formatting.rubocop._opts.args),
+      }),
+    },
+  })
+  require("lspconfig")["null-ls"].setup({
+    on_attach = on_attach,
+    flags = {
+      debounce_text_changes = 150,
+    },
+    capabilities = capabilities,
+  })
 end
 
 local M = {}
 
-M.setup_servers = setup_servers
+M.cfg = cfg
 
 return M

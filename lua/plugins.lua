@@ -40,6 +40,20 @@ return require('packer').startup({
       end
     }
     use 'knubie/vim-kitty-navigator'
+    use {'mg979/vim-visual-multi', config = function()
+      vim.g.VM_maps = {
+        ["Add Cursor Down"] = "<S-Down>",
+        ["Add Cursor Up"] = "<S-Up>",
+      }
+    end}
+    use 'nathom/filetype.nvim'
+    use {
+      "folke/todo-comments.nvim",
+      requires = "nvim-lua/plenary.nvim",
+      config = function()
+        require("todo-comments").setup()
+      end
+    }
 
     -- Languages
     use {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', opt = true, cmd = 'MarkdownPreview'}
@@ -47,13 +61,12 @@ return require('packer').startup({
     use 'fladson/vim-kitty'
     use 'digitaltoad/vim-pug'
     use 'kchmck/vim-coffee-script'
-    use 'ekalinin/Dockerfile.vim'
     use 'hashivim/vim-terraform'
     use 'dag/vim-fish'
-    use 'elixir-editors/vim-elixir'
+    -- use 'elixir-editors/vim-elixir'
 
     -- UI
-    use 'tpope/vim-vinegar'
+    -- use 'tpope/vim-vinegar'
     use {'liuchengxu/vista.vim', opt = true, cmd = {'Vista'}} -- Code structure view
     -- use 'dstein64/nvim-scrollview'
 
@@ -121,7 +134,10 @@ return require('packer').startup({
     }
 
     -- LSP
-    use {'neovim/nvim-lspconfig', requires = {'hrsh7th/nvim-cmp', opt = true}, config = function() require'lsp'.setup_servers() end}
+    use {
+      'neovim/nvim-lspconfig',
+      requires = {'hrsh7th/nvim-cmp', opt = true}
+    }
     use {
       'hrsh7th/nvim-cmp',
       requires = {'hrsh7th/cmp-buffer', 'hrsh7th/cmp-nvim-lsp'},
@@ -152,6 +168,8 @@ return require('packer').startup({
         })
       end
     }
+
+    use { 'tami5/lspsaga.nvim', config = function() require'lspsaga'.setup() end }
 
     use {
       'windwp/nvim-autopairs',
@@ -220,5 +238,19 @@ return require('packer').startup({
 
     use 'mfussenegger/nvim-dap'
     use{'mfussenegger/nvim-dap-python', config = function() require'config-dap-python'.cfg() end}
+
+    use {
+      'williamboman/nvim-lsp-installer',
+      requires = {'neovim/nvim-lspconfig', opt = true},
+      config = function()
+        require'lsp'.cfg()
+      end
+    }
+    use {
+      'jose-elias-alvarez/null-ls.nvim',
+      requires = {{'neovim/nvim-lspconfig', opt = true}, {'nvim-lua/plenary.nvim', opt = true}}
+    }
+
+    -- use 'github/copilot.vim'
   end, config = {compile_path = vim.fn.stdpath('config')..'/lua/packer_compiled.lua'}
 });
