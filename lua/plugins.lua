@@ -69,6 +69,7 @@ return require("packer").startup({
     use("hashivim/vim-terraform")
     use("dag/vim-fish")
     -- use 'elixir-editors/vim-elixir'
+    use("pearofducks/ansible-vim")
 
     -- UI
     -- use 'tpope/vim-vinegar'
