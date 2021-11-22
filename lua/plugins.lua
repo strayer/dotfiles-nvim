@@ -51,7 +51,7 @@ return require("packer").startup({
         }
       end,
     })
-    use("nathom/filetype.nvim")
+    -- use("nathom/filetype.nvim")
     use({
       "folke/todo-comments.nvim",
       requires = "nvim-lua/plenary.nvim",
