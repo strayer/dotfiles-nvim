@@ -48,3 +48,7 @@ vim.g.loaded_perl_provider = 0
 vim.cmd([[
   autocmd TermOpen * startinsert
 ]])
+
+vim.cmd([[
+  autocmd FileType gitcommit setlocal spell
+]])

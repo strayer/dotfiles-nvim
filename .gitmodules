@@ -1,6 +1,0 @@
-[submodule "tree-sitter-pug"]
-	path = tree-sitter-pug
-	url = https://github.com/zealot128/tree-sitter-pug.git
-[submodule "lsp-servers/lua-language-server"]
-	path = lsp-servers/lua-language-server
-	url = https://github.com/sumneko/lua-language-server.git

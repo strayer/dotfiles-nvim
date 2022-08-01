@@ -1,4 +1,3 @@
-require("impatient")
 require("basics")
 require("plugins")
 require("packer_compiled")

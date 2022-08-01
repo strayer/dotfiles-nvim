@@ -15,7 +15,6 @@ M.cfg = function()
       "toml",
       "typescript",
       "yaml",
-      "vue",
       "scss",
     },
     highlight = { enable = true },
@@ -30,18 +29,9 @@ M.cfg = function()
     },
   })
 
-  vim.o.foldmethod = "expr"
-  vim.o.foldexpr = "nvim_treesitter#foldexpr"
-
-  local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-  parser_config.pug = {
-    install_info = {
-      url = "~/.config/nvim/tree-sitter-pug", -- local path or git repo
-      files = { "src/parser.c", "src/scanner.cc" },
-    },
-    filetype = "pug", -- if filetype does not agrees with parser name
-    used_by = { "bar", "baz" }, -- additional filetypes that use this parser
-  }
+  vim.opt.foldmethod = "expr"
+  vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+  vim.opt.foldlevel = 99
 end
 
 return M
