@@ -50,8 +50,8 @@ local function cfg()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 
-  -- setup lsp-installer
-  require("nvim-lsp-installer").setup({})
+  require("mason").setup()
+  require("mason-lspconfig").setup()
   local lspconfig = require("lspconfig")
 
   local lsp_servers = {
