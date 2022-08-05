@@ -180,6 +180,7 @@ return require("packer").startup({
     use("kosayoda/nvim-lightbulb")
     use({
       "hrsh7th/vim-vsnip",
+      requires = { "rafamadriz/friendly-snippets" },
       config = function()
         require("config-vsnip").cfg()
       end,
