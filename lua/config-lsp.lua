@@ -99,7 +99,7 @@ local function cfg()
             version = "LuaJIT",
           },
           diagnostics = {
-            enable = false,
+            enable = true,
             -- Get the language server to recognize the `vim` global
             globals = { "vim" },
           },
