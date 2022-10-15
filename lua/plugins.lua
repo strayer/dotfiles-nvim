@@ -71,7 +71,14 @@ return require("packer").startup({
     use("dag/vim-fish")
     use("pearofducks/ansible-vim")
 
-    use("ggandor/lightspeed.nvim")
+    -- use("ggandor/lightspeed.nvim")
+    use({
+      "ggandor/leap.nvim",
+      requires = { "tpope/vim-repeat" },
+      config = function()
+        require("leap").set_default_keymaps()
+      end,
+    })
 
     use({ "voldikss/vim-floaterm", opt = true, cmd = { "FloatermNew", "FloatermToggle" } })
 
