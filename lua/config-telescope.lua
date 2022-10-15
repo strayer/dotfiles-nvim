@@ -31,6 +31,7 @@ M.cfg = function()
         "--column",
         "--smart-case",
         "--hidden",
+        "--glob=!.git/",
       },
       color_devicons = true,
       mappings = { i = { ["<CR>"] = actions.select_default + actions.center } },
