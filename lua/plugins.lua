@@ -85,7 +85,7 @@ return require("packer").startup({
     -- Lualine
     use({
       "nvim-lualine/lualine.nvim",
-      requires = { "kyazdani42/nvim-web-devicons", opt = true },
+      requires = { "kyazdani42/nvim-web-devicons" },
       after = { "github-nvim-theme", "tokyonight.nvim" },
       config = function()
         require("config-lualine").cfg()
@@ -173,10 +173,6 @@ return require("packer").startup({
 
     -- LSP
     use({
-      "neovim/nvim-lspconfig",
-      requires = { "hrsh7th/nvim-cmp", opt = true },
-    })
-    use({
       "hrsh7th/nvim-cmp",
       requires = { "hrsh7th/cmp-buffer", "hrsh7th/cmp-nvim-lsp", "hrsh7th/cmp-vsnip" },
       config = function()
@@ -195,7 +191,6 @@ return require("packer").startup({
 
     use({
       "ray-x/lsp_signature.nvim",
-      requires = { "neovim/nvim-lspconfig", opt = true },
       config = function()
         require("lsp_signature").setup({
           bind = true,
@@ -249,6 +244,7 @@ return require("packer").startup({
         require("config-treesitter").cfg()
       end,
     })
+    use("nvim-treesitter/nvim-treesitter-textobjects")
 
     -- Colors
     use({
@@ -268,14 +264,16 @@ return require("packer").startup({
     use({
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
-      "neovim/nvim-lspconfig",
-      config = function()
-        require("config-lsp").cfg()
-      end,
+      {
+        "neovim/nvim-lspconfig",
+        config = function()
+          require("config-lsp").cfg()
+        end,
+      },
     })
     use({
       "jose-elias-alvarez/null-ls.nvim",
-      requires = { { "neovim/nvim-lspconfig", opt = true }, { "nvim-lua/plenary.nvim", opt = true } },
+      requires = { { "nvim-lua/plenary.nvim", opt = true } },
     })
 
     use({
