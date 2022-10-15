@@ -279,27 +279,6 @@ return require("packer").startup({
         "nvim-telescope/telescope.nvim", -- optional
       },
     })
-
-    use({
-      "cormacrelf/dark-notify",
-      config = function()
-        require("dark_notify").run({
-          onchange = function(mode)
-            if mode == "light" then
-              require("github-theme").setup({
-                dark_float = true,
-                dark_sidebar = true,
-                sidebars = { "packer" },
-                theme_style = "light",
-              })
-            else
-              vim.cmd([[colorscheme tokyonight]])
-            end
-            require("lualine").setup()
-          end,
-        })
-      end,
-    })
   end,
   config = {
     compile_path = vim.fn.stdpath("config") .. "/lua/packer_compiled.lua",

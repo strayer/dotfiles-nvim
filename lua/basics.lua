@@ -52,3 +52,9 @@ vim.cmd([[
 vim.cmd([[
   autocmd FileType gitcommit setlocal spell
 ]])
+
+if vim.env.TERMINAL_THEME == "light" then
+  vim.cmd([[ colorscheme github_light ]])
+else
+  vim.cmd([[ colorscheme tokyonight ]])
+end
