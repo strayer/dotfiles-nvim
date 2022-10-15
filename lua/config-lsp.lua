@@ -62,9 +62,9 @@ local function cfg()
     "pyright",
     "sumneko_lua",
     "terraformls",
-    "tsserver",
-    "vuels",
-    -- "volar",
+    -- "tsserver",
+    -- "vuels",
+    "volar",
     "yamlls",
     "solargraph",
   }
