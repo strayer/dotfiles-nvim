@@ -3,7 +3,11 @@ vim.fn.setenv("MACOSX_DEPLOYMENT_TARGET", "10.15")
 
 vim.cmd([[packadd packer.nvim]])
 
-return require("packer").startup({
+local packer = require("packer")
+
+packer.init({ luarocks = { python_cmd = "python3" } })
+
+return packer.startup({
   function(use)
     -- Packer can manage itself
     use("wbthomason/packer.nvim")
@@ -103,13 +107,6 @@ return require("packer").startup({
     })
 
     use({
-      "glepnir/dashboard-nvim",
-      config = function()
-        require("config-dashboard").cfg()
-      end,
-    })
-
-    use({
       "nvim-neo-tree/neo-tree.nvim",
       branch = "main",
       requires = {
@@ -205,12 +202,13 @@ return require("packer").startup({
       "glepnir/lspsaga.nvim",
       branch = "main",
       config = function()
-        local saga = require("lspsaga")
-
-        saga.init_lsp_saga({
-          -- your configuration
-        })
+        require("lspsaga").setup({})
       end,
+      requires = {
+        { "nvim-tree/nvim-web-devicons" },
+        --Please make sure you install markdown and markdown_inline parser
+        { "nvim-treesitter/nvim-treesitter" },
+      },
     })
 
     use({

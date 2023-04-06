@@ -60,7 +60,7 @@ local function cfg()
     "eslint",
     "emmet_ls",
     "pyright",
-    "sumneko_lua",
+    "lua_ls",
     "terraformls",
     -- "tsserver",
     -- "vuels",
@@ -90,7 +90,7 @@ local function cfg()
     --   }
     -- end
 
-    if server == "sumneko_lua" then
+    if server == "lua_ls" then
       opts.settings = {
         Lua = {
           runtime = {
