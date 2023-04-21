@@ -201,6 +201,9 @@ return {
     lazy = false,
     priority = 1000,
     dependencies = { { "nvim-lualine/lualine.nvim" } },
+    config = function()
+      require("github-theme").setup({})
+    end,
   },
   {
     "folke/tokyonight.nvim",
