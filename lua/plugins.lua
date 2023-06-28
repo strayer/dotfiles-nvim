@@ -264,4 +264,6 @@ return {
       vim.keymap.set("x", "<leader>c", require("osc52").copy_visual, { desc = "Copy selection to clipboard (OSC52)" })
     end,
   },
+  { "echasnovski/mini.nvim", version = false },
+  { "rcarriga/nvim-notify" },
 }
