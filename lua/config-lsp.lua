@@ -67,6 +67,7 @@ local function cfg()
     "volar",
     "yamlls",
     "solargraph",
+    "jsonls",
   }
   for _, server in ipairs(lsp_servers) do
     -- default lsp opts
@@ -137,6 +138,15 @@ local function cfg()
       opts.filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" }
     end
 
+    if server == "jsonls" then
+      opts.settings = {
+        yaml = {
+          schemas = require('schemastore').json.schemas(),
+          validate = { enable = true },
+        },
+      }
+    end
+
     if server == "yamlls" then
       opts.settings = {
         redhat = {
@@ -145,14 +155,13 @@ local function cfg()
           },
         },
         yaml = {
-          schemas = {
-            ["https://github.com/compose-spec/compose-spec/raw/master/schema/compose-spec.json"] = {
-              "compose.yaml",
-              "compose.yml",
-              "docker-compose.yaml",
-              "docker-compose.yml",
-            },
-          },
+          schemas = require('schemastore').yaml.schemas(),
+          schemaStore = {
+            -- disable internal schema store for b0o/SchemaStore.nvim
+            enable = false,
+            -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+            url = "",
+          }
         },
       }
     end

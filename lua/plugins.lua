@@ -225,6 +225,7 @@ return {
       require("config-lsp").cfg()
     end,
   },
+  { "b0o/SchemaStore.nvim" },
   {
     "jose-elias-alvarez/null-ls.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
