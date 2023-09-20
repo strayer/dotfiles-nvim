@@ -170,6 +170,7 @@ local function cfg()
         dynamic_command = require("null-ls.helpers.command_resolver").from_node_modules,
       }),
       null_ls.builtins.formatting.shfmt,
+      null_ls.builtins.formatting.isort,
       null_ls.builtins.formatting.black,
       null_ls.builtins.formatting.stylua,
       null_ls.builtins.formatting.prettierd,
