@@ -20,7 +20,18 @@ return {
       require("config-easyescape").cfg()
     end,
   },
-  { "knubie/vim-kitty-navigator" },
+  {
+    "numToStr/Navigator.nvim",
+    config = function()
+      vim.keymap.set({ "n", "t" }, "<C-h>", "<CMD>NavigatorLeft<CR>")
+      vim.keymap.set({ "n", "t" }, "<C-l>", "<CMD>NavigatorRight<CR>")
+      vim.keymap.set({ "n", "t" }, "<C-k>", "<CMD>NavigatorUp<CR>")
+      vim.keymap.set({ "n", "t" }, "<C-j>", "<CMD>NavigatorDown<CR>")
+      vim.keymap.set({ "n", "t" }, "<C-p>", "<CMD>NavigatorPrevious<CR>")
+
+      require("Navigator").setup()
+    end,
+  },
   {
     "mg979/vim-visual-multi",
     config = function()
@@ -227,8 +238,8 @@ return {
   },
   { "b0o/SchemaStore.nvim" },
   {
-    "jose-elias-alvarez/null-ls.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    "creativenull/efmls-configs-nvim",
+    dependencies = { "neovim/nvim-lspconfig" },
   },
   {
     "cuducos/yaml.nvim",
@@ -268,7 +279,7 @@ return {
   { "echasnovski/mini.nvim", version = false },
   { "rcarriga/nvim-notify" },
   {
-    'isobit/vim-caddyfile',
-    ft = { "caddyfile" }
+    "isobit/vim-caddyfile",
+    ft = { "caddyfile" },
   },
 }

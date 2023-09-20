@@ -70,6 +70,7 @@ local function cfg()
     "jsonls",
     "gopls",
     "powershell_es",
+    "efm",
   }
   for _, server in ipairs(lsp_servers) do
     -- default lsp opts
@@ -168,36 +169,38 @@ local function cfg()
       }
     end
 
+    if server == "efm" then
+      local shellcheck = require("efmls-configs.linters.shellcheck")
+      local shfmt = require("efmls-configs.formatters.shfmt")
+      local hadolint = require("efmls-configs.linters.hadolint")
+      -- local prettier_d = require('efmls-configs.formatters.prettier_d')
+      local pylint = require("efmls-configs.linters.pylint")
+      local markdownlint = require("efmls-configs.linters.markdownlint")
+      local stylua = require("efmls-configs.formatters.stylua")
+      local black = require("efmls-configs.formatters.black")
+      local isort = require("efmls-configs.formatters.isort")
+
+      languages = {
+        sh = { shellcheck, shfmt },
+        Dockerfile = { hadolint },
+        dockerfile = { hadolint },
+        markdown = { markdownlint },
+        python = { pylint, black, isort },
+        lua = { stylua },
+      }
+      opts.filetypes = vim.tbl_keys(languages)
+      opts.settings = {
+        rootMarkers = { ".git/" },
+        languages = languages,
+      }
+      opts.init_options = {
+        documentFormatting = true,
+        documentRangeFormatting = true,
+      }
+    end
+
     lspconfig[server].setup(opts)
   end
-
-  local null_ls = require("null-ls")
-  null_ls.setup({
-    sources = {
-      null_ls.builtins.diagnostics.hadolint.with({ filetypes = { "Dockerfile", "dockerfile" } }),
-      -- null_ls.builtins.diagnostics.shellcheck,
-      null_ls.builtins.diagnostics.pylint,
-      null_ls.builtins.diagnostics.markdownlint,
-      null_ls.builtins.formatting.shfmt,
-      null_ls.builtins.formatting.isort,
-      null_ls.builtins.formatting.black,
-      null_ls.builtins.formatting.stylua,
-      null_ls.builtins.formatting.prettierd,
-      -- null_ls.builtins.diagnostics.rubocop.with({
-      --   command = "bundle",
-      --   args = vim.list_extend({ "exec", "rubocop" }, null_ls.builtins.diagnostics.rubocop._opts.args),
-      -- }),
-      -- null_ls.builtins.formatting.rubocop.with({
-      --   command = "bundle",
-      --   args = vim.list_extend({ "exec", "rubocop" }, null_ls.builtins.formatting.rubocop._opts.args),
-      -- }),
-    },
-    on_attach = on_attach,
-    flags = {
-      debounce_text_changes = 150,
-    },
-    capabilities = capabilities,
-  })
 end
 
 local M = {}
