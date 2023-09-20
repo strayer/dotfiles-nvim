@@ -47,7 +47,7 @@ local function cfg()
   ]])
 
   -- setup cmp
-  capabilities = require('cmp_nvim_lsp').default_capabilities()
+  capabilities = require("cmp_nvim_lsp").default_capabilities()
 
   require("mason").setup()
   require("mason-lspconfig").setup()
@@ -68,6 +68,8 @@ local function cfg()
     "yamlls",
     "solargraph",
     "jsonls",
+    "gopls",
+    "powershell_es",
   }
   for _, server in ipairs(lsp_servers) do
     -- default lsp opts
@@ -141,7 +143,7 @@ local function cfg()
     if server == "jsonls" then
       opts.settings = {
         yaml = {
-          schemas = require('schemastore').json.schemas(),
+          schemas = require("schemastore").json.schemas(),
           validate = { enable = true },
         },
       }
@@ -155,13 +157,13 @@ local function cfg()
           },
         },
         yaml = {
-          schemas = require('schemastore').yaml.schemas(),
+          schemas = require("schemastore").yaml.schemas(),
           schemaStore = {
             -- disable internal schema store for b0o/SchemaStore.nvim
             enable = false,
             -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
             url = "",
-          }
+          },
         },
       }
     end
@@ -173,11 +175,9 @@ local function cfg()
   null_ls.setup({
     sources = {
       null_ls.builtins.diagnostics.hadolint.with({ filetypes = { "Dockerfile", "dockerfile" } }),
-      null_ls.builtins.diagnostics.shellcheck,
+      -- null_ls.builtins.diagnostics.shellcheck,
       null_ls.builtins.diagnostics.pylint,
-      null_ls.builtins.diagnostics.markdownlint.with({
-        dynamic_command = require("null-ls.helpers.command_resolver").from_node_modules,
-      }),
+      null_ls.builtins.diagnostics.markdownlint,
       null_ls.builtins.formatting.shfmt,
       null_ls.builtins.formatting.isort,
       null_ls.builtins.formatting.black,
