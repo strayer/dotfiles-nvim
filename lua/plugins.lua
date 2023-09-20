@@ -267,4 +267,8 @@ return {
   },
   { "echasnovski/mini.nvim", version = false },
   { "rcarriga/nvim-notify" },
+  {
+    'isobit/vim-caddyfile',
+    ft = { "caddyfile" }
+  },
 }
