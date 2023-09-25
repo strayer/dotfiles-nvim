@@ -71,6 +71,7 @@ local function cfg()
     "gopls",
     "powershell_es",
     "efm",
+    "ruff_lsp",
   }
   for _, server in ipairs(lsp_servers) do
     -- default lsp opts
@@ -173,7 +174,7 @@ local function cfg()
       local shellcheck = require("efmls-configs.linters.shellcheck")
       local shfmt = require("efmls-configs.formatters.shfmt")
       local hadolint = require("efmls-configs.linters.hadolint")
-      -- local prettier_d = require('efmls-configs.formatters.prettier_d')
+      local prettier_d = require('efmls-configs.formatters.prettier_d')
       local pylint = require("efmls-configs.linters.pylint")
       local markdownlint = require("efmls-configs.linters.markdownlint")
       local stylua = require("efmls-configs.formatters.stylua")
@@ -184,7 +185,7 @@ local function cfg()
         sh = { shellcheck, shfmt },
         Dockerfile = { hadolint },
         dockerfile = { hadolint },
-        markdown = { markdownlint },
+        markdown = { markdownlint, prettier_d },
         python = { pylint, black, isort },
         lua = { stylua },
       }
