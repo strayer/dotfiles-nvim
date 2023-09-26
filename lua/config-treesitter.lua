@@ -16,6 +16,8 @@ M.cfg = function()
       "typescript",
       "yaml",
       "scss",
+      "markdown",
+      "markdown_inline",
     },
     highlight = { enable = true },
     incremental_selection = {

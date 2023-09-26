@@ -48,7 +48,6 @@ return {
       require("todo-comments").setup()
     end,
   },
-
   {
     "iamcco/markdown-preview.nvim",
     build = "cd app && yarn install",
@@ -77,8 +76,6 @@ return {
       require("config-lualine").cfg()
     end,
   },
-  { "arkav/lualine-lsp-progress" },
-
   {
     "kevinhwang91/rnvimr",
     config = function()
@@ -133,7 +130,10 @@ return {
   },
   {
     "nvim-telescope/telescope-fzf-native.nvim",
-    build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+    build = "make",
+    cond = function()
+      return vim.fn.executable("make") == 1
+    end,
   },
   {
     "folke/which-key.nvim",
@@ -202,11 +202,14 @@ return {
   },
   {
     "nvim-treesitter/nvim-treesitter",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter-textobjects",
+    },
     config = function()
       require("config-treesitter").cfg()
     end,
+    build = ":TSUpdate",
   },
-  { "nvim-treesitter/nvim-treesitter-textobjects" },
   {
     "projekt0n/github-nvim-theme",
     lazy = false,
@@ -228,13 +231,20 @@ return {
       require("config-dap-python").cfg()
     end,
   },
-  { "williamboman/mason.nvim" },
-  { "williamboman/mason-lspconfig.nvim" },
   {
     "neovim/nvim-lspconfig",
     config = function()
       require("config-lsp").cfg()
     end,
+    dependencies = {
+      { "williamboman/mason.nvim", config = true },
+      "williamboman/mason-lspconfig.nvim",
+      -- Useful status updates for LSP
+      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
+      { "j-hui/fidget.nvim", tag = "legacy", opts = {} },
+      -- lua_ls setup for Neovim (configured in config-lsp.lua)
+      "folke/neodev.nvim",
+    },
   },
   { "b0o/SchemaStore.nvim" },
   {

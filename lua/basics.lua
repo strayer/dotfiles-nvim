@@ -12,6 +12,8 @@ vim.opt.updatetime = 300
 vim.opt.incsearch = true -- search as characters are entered
 vim.opt.hlsearch = true -- highlight matches
 
+vim.o.completeopt = 'menuone,noselect'
+
 -- configure leader to space
 vim.g.mapleader = " "
 
