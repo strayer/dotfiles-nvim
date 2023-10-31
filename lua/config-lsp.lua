@@ -65,6 +65,7 @@ local function cfg()
     "pyright",
     "lua_ls",
     "terraformls",
+    "tflint",
     -- "tsserver",
     -- "vuels",
     "volar",
