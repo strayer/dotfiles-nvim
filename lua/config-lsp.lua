@@ -171,7 +171,6 @@ local function cfg()
     end
 
     if server == "efm" then
-      local shellcheck = require("efmls-configs.linters.shellcheck")
       local shfmt = require("efmls-configs.formatters.shfmt")
       local hadolint = require("efmls-configs.linters.hadolint")
       local prettier_d = require('efmls-configs.formatters.prettier_d')
@@ -182,7 +181,7 @@ local function cfg()
       local isort = require("efmls-configs.formatters.isort")
 
       languages = {
-        sh = { shellcheck, shfmt },
+        sh = { shfmt },
         Dockerfile = { hadolint },
         dockerfile = { hadolint },
         markdown = { markdownlint, prettier_d },
