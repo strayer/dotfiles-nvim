@@ -18,6 +18,7 @@ M.cfg = function()
       "scss",
       "markdown",
       "markdown_inline",
+      "regex",
     },
     highlight = { enable = true },
     incremental_selection = {
