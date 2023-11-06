@@ -348,4 +348,11 @@ return {
       "rcarriga/nvim-notify",
     },
   },
+  {
+    "zeioth/garbage-day.nvim",
+    event = "BufEnter",
+    opts = {
+      -- your options here
+    },
+  },
 }
