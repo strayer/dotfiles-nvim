@@ -44,11 +44,6 @@ local function cfg()
   -- setup neodev
   require('neodev').setup({})
 
-  -- setup lightbulb
-  vim.cmd([[
-    autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
-  ]])
-
   -- setup cmp
   capabilities = require("cmp_nvim_lsp").default_capabilities()
 

@@ -44,9 +44,6 @@ return {
   {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
-    config = function()
-      require("todo-comments").setup()
-    end,
   },
   {
     "iamcco/markdown-preview.nvim",
@@ -56,9 +53,7 @@ return {
       vim.cmd("doautocmd mkdp_init BufEnter")
     end,
   },
-  { "onemanstartup/vim-slim" }, -- faster slim syntax highlighting than the common plugin
   { "fladson/vim-kitty" },
-  { "hashivim/vim-terraform" },
   { "dag/vim-fish" },
   { "pearofducks/ansible-vim" },
   {
@@ -149,7 +144,6 @@ return {
     end,
   },
   { "onsails/lspkind-nvim" },
-  { "kosayoda/nvim-lightbulb" },
   {
     "hrsh7th/vim-vsnip",
     dependencies = { "rafamadriz/friendly-snippets" },
@@ -158,25 +152,17 @@ return {
     end,
   },
   {
-    "ray-x/lsp_signature.nvim",
-    config = function()
-      require("lsp_signature").setup({
-        bind = true,
-        handler_opts = {
-          border = "single",
-        },
-      })
-    end,
-  },
-  {
-    "glepnir/lspsaga.nvim",
+    "nvimdev/lspsaga.nvim",
     branch = "main",
-    config = function()
-      require("lspsaga").setup({})
-    end,
+    opts = {
+      lightbulb = {
+        sign = false,
+        virtual_text = true,
+      },
+    },
+    event = "LspAttach",
     dependencies = {
       { "nvim-tree/nvim-web-devicons" },
-      --Please make sure you install markdown and markdown_inline parser
       { "nvim-treesitter/nvim-treesitter" },
     },
   },
@@ -287,7 +273,6 @@ return {
     end,
   },
   { "echasnovski/mini.nvim", version = false },
-  { "rcarriga/nvim-notify" },
   {
     "isobit/vim-caddyfile",
     ft = { "caddyfile" },
@@ -332,5 +317,35 @@ return {
         require("ufo").closeAllFolds()
       end)
     end,
+  },
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    opts = {
+      lsp = {
+        -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+        override = {
+          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+          ["vim.lsp.util.stylize_markdown"] = true,
+          ["cmp.entry.get_documentation"] = true,
+        },
+      },
+      -- you can enable a preset for easier configuration
+      presets = {
+        bottom_search = true, -- use a classic bottom cmdline for search
+        command_palette = true, -- position the cmdline and popupmenu together
+        long_message_to_split = true, -- long messages will be sent to a split
+        inc_rename = false, -- enables an input dialog for inc-rename.nvim
+        lsp_doc_border = false, -- add a border to hover docs and signature help
+      },
+    },
+    dependencies = {
+      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+      "MunifTanjim/nui.nvim",
+      -- OPTIONAL:
+      --   `nvim-notify` is only needed, if you want to use the notification view.
+      --   If not available, we use `mini` as the fallback
+      "rcarriga/nvim-notify",
+    },
   },
 }

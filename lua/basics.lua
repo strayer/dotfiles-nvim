@@ -1,6 +1,5 @@
 vim.opt.termguicolors = true
 
-vim.opt.lazyredraw = true
 vim.opt.showmatch = true
 vim.opt.number = true
 vim.opt.cursorline = true
