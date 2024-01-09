@@ -12,6 +12,7 @@ M.cfg = function()
       "python",
       "ruby",
       "rust",
+      "terraform",
       "toml",
       "typescript",
       "yaml",
