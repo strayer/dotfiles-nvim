@@ -24,6 +24,7 @@
   "mini.nvim": { "branch": "main", "commit": "e578f353d0b1d9f21a9640458d8e506c0c9acf5e" },
   "neo-tree.nvim": { "branch": "v2.x", "commit": "80dc74d081823649809f78370fa5b204aa9a853a" },
   "neodev.nvim": { "branch": "main", "commit": "be8d4d4cab6c13c6a572269c9d6a63774baba9a0" },
+  "no-neck-pain.nvim": { "branch": "main", "commit": "b305821ca45897db6276e9ae5893747bb24040c7" },
   "noice.nvim": { "branch": "main", "commit": "92433164e2f7118d4122c7674c3834d9511722ba" },
   "nui.nvim": { "branch": "main", "commit": "35da9ca1de0fc4dda96c2e214d93d363c145f418" },
   "nvim-autopairs": { "branch": "master", "commit": "9fd41181693dd4106b3e414a822bb6569924de81" },

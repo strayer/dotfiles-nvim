@@ -67,6 +67,7 @@ M.cfg = function()
       j = { "<C-W>j", "down" },
       k = { "<C-W>k", "up" },
       l = { "<C-W>l", "right" },
+      f = { "<CMD>NoNeckPain<CR>", "focus"},
     },
     t = {
       name = "+terminal",

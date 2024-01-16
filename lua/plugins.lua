@@ -272,7 +272,7 @@ return {
       vim.keymap.set("x", "<leader>c", require("osc52").copy_visual, { desc = "Copy selection to clipboard (OSC52)" })
     end,
   },
-  { "echasnovski/mini.nvim", version = false },
+  { "echasnovski/mini.nvim",       version = false },
   {
     "isobit/vim-caddyfile",
     ft = { "caddyfile" },
@@ -357,5 +357,6 @@ return {
   },
   {
     "Vimjas/vim-python-pep8-indent"
-  }
+  },
+  { "shortcuts/no-neck-pain.nvim", version = "*" }
 }
