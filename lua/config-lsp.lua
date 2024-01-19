@@ -161,15 +161,13 @@ local function cfg()
       local pylint = require("efmls-configs.linters.pylint")
       local markdownlint = require("efmls-configs.linters.markdownlint")
       local stylua = require("efmls-configs.formatters.stylua")
-      local black = require("efmls-configs.formatters.black")
-      local isort = require("efmls-configs.formatters.isort")
 
       languages = {
         sh = { shfmt },
         Dockerfile = { hadolint },
         dockerfile = { hadolint },
         markdown = { markdownlint, prettier_d },
-        python = { pylint, black, isort },
+        python = { pylint },
         lua = { stylua },
       }
       opts.filetypes = vim.tbl_keys(languages)
