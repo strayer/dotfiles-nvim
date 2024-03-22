@@ -23,10 +23,6 @@ else
   -- vim.cmd([[ colorscheme tokyonight-day ]])
 end
 
--- old packer stuff
--- require("plugins")
--- require("packer_compiled")
-
 if os.getenv("TMUX") ~= nil then
   vim.cmd([[
     let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
