@@ -358,5 +358,11 @@ return {
   {
     "Vimjas/vim-python-pep8-indent"
   },
-  { "shortcuts/no-neck-pain.nvim", version = "*" }
+  { "shortcuts/no-neck-pain.nvim", version = "*" },
+  {
+    "lukas-reineke/headlines.nvim",
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    config = true,
+    ft = "markdown",
+  },
 }
