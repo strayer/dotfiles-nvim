@@ -359,4 +359,8 @@ return {
     config = true,
     ft = "markdown",
   },
+  {
+    'dstein64/vim-startuptime',
+    cmd = "StartupTime",
+  },
 }
