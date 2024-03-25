@@ -27,15 +27,6 @@ return {
     end,
   },
   {
-    "mg979/vim-visual-multi",
-    config = function()
-      vim.g.VM_maps = {
-        ["Add Cursor Down"] = "<S-Down>",
-        ["Add Cursor Up"] = "<S-Up>",
-      }
-    end,
-  },
-  {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
   },
