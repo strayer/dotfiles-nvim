@@ -6,7 +6,6 @@
   "cmp-buffer": { "branch": "main", "commit": "3022dbc9166796b644a841a02de8dd1cc1d311fa" },
   "cmp-nvim-lsp": { "branch": "main", "commit": "5af77f54de1b16c34b23cba810150689a3a90312" },
   "cmp-vsnip": { "branch": "main", "commit": "989a8a73c44e926199bfd05fa7a516d51f2d2752" },
-  "editorconfig-vim": { "branch": "master", "commit": "0956bc257ca4eaa3e087e0ba2253a3e980805820" },
   "efmls-configs-nvim": { "branch": "main", "commit": "00f922e261519ffba7ea1c6a71adcb2319b093cb" },
   "fidget.nvim": { "branch": "main", "commit": "0ba1e16d07627532b6cae915cc992ecac249fb97" },
   "friendly-snippets": { "branch": "main", "commit": "b8fae73a479ae0a1c54f5c98fa687ae8a0addc53" },

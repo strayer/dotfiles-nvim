@@ -2,12 +2,6 @@ return {
   { "tpope/vim-surround" },
   { "numToStr/Comment.nvim" },
   {
-    "editorconfig/editorconfig-vim",
-    config = function()
-      vim.g.EditorConfig_max_line_indicator = "none"
-    end,
-  },
-  {
     "ntpeters/vim-better-whitespace",
     config = function()
       require("config-better-whitespace").cfg()
