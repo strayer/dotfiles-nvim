@@ -167,6 +167,8 @@ return {
       require("config-autopairs").cfg()
     end,
   },
+  -- wisely add "end" in Ruby, Lua, Vimscript, etc.
+  { "RRethy/nvim-treesitter-endwise" },
   {
     "AckslD/nvim-neoclip.lua",
     config = function()
