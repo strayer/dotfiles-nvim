@@ -45,6 +45,7 @@ return {
   {
     "ggandor/leap.nvim",
     dependencies = { "tpope/vim-repeat" },
+    event = "VeryLazy",
     config = function()
       require("leap").set_default_keymaps()
     end,
@@ -105,20 +106,18 @@ return {
   },
   {
     "nvim-telescope/telescope.nvim",
-    dependencies = { "nvim-lua/popup.nvim", "nvim-lua/plenary.nvim" },
+    dependencies = { "nvim-lua/popup.nvim", "nvim-lua/plenary.nvim", { "nvim-telescope/telescope-fzf-native.nvim", build = "make" } },
     config = function()
       require("config-telescope").cfg()
     end,
-  },
-  {
-    "nvim-telescope/telescope-fzf-native.nvim",
-    build = "make",
-    cond = function()
-      return vim.fn.executable("make") == 1
-    end,
+    cmd = "Telescope",
+    keys = {
+      { "<Leader><Space>", "<CMD>lua require'config-telescope'.project_files()<CR>", noremap = true, silent = true }
+    }
   },
   {
     "folke/which-key.nvim",
+    event = "VeryLazy",
     config = function()
       require("config-which-key").cfg()
     end,
@@ -130,7 +129,9 @@ return {
       require("config-cmp").cfg()
     end,
   },
+  -- vscode-like pictograms in lsp completions
   { "onsails/lspkind-nvim" },
+  -- TODO: I'm not really using this... maybe remove it?
   {
     "hrsh7th/vim-vsnip",
     dependencies = { "rafamadriz/friendly-snippets" },
@@ -138,12 +139,12 @@ return {
       require("config-vsnip").cfg()
     end,
   },
+  -- TODO: validate what features of lspsaga I'm actually using
   {
     "nvimdev/lspsaga.nvim",
     branch = "main",
     opts = {
       lightbulb = {
-        sign = false,
         enable = false
       },
     },
@@ -171,9 +172,7 @@ return {
   { "RRethy/nvim-treesitter-endwise" },
   {
     "AckslD/nvim-neoclip.lua",
-    config = function()
-      require("neoclip").setup()
-    end,
+    opts = {},
   },
   {
     "folke/trouble.nvim",
@@ -207,9 +206,9 @@ return {
     lazy = false,
     priority = 1000,
   },
-  { "mfussenegger/nvim-dap" },
   {
-    "mfussenegger/nvim-dap-python",
+    "mfussenegger/nvim-dap",
+    dependencies = { "mfussenegger/nvim-dap-python" },
     config = function()
       require("config-dap-python").cfg()
     end,
