@@ -15,20 +15,20 @@ M.cfg = function()
       fzf = { fuzzy = true, override_generic_sorter = true, override_file_sorter = true, case_mode = "smart_case" },
     },
     defaults = {
-      vimgrep_arguments = {
-        "rg",
-        "--color=never",
-        "--no-heading",
-        "--with-filename",
-        "--line-number",
-        "--column",
-        "--smart-case",
-        "--hidden",
-        "--glob=!.git/",
-      },
       color_devicons = true,
       mappings = { i = { ["<CR>"] = actions.select_default + actions.center } },
     },
+    pickers = {
+      find_files = {
+        find_command = { 'rg', '--files', '--iglob', '!.git', '--hidden' },
+      },
+      grep_string = {
+        additional_args = { '--hidden' }
+      },
+      live_grep = {
+        additional_args = { '--hidden' }
+      }
+    }
   })
   require("telescope").load_extension("fzf")
 end
