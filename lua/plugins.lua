@@ -105,17 +105,6 @@ return {
     end,
   },
   {
-    "nvim-telescope/telescope.nvim",
-    dependencies = { "nvim-lua/popup.nvim", "nvim-lua/plenary.nvim", { "nvim-telescope/telescope-fzf-native.nvim", build = "make" } },
-    config = function()
-      require("config-telescope").cfg()
-    end,
-    cmd = "Telescope",
-    keys = {
-      { "<Leader><Space>", "<CMD>lua require'config-telescope'.project_files()<CR>", noremap = true, silent = true }
-    }
-  },
-  {
     "folke/which-key.nvim",
     event = "VeryLazy",
     config = function()
@@ -238,7 +227,6 @@ return {
     ft = { "yaml" }, -- optional
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
-      "nvim-telescope/telescope.nvim", -- optional
     },
   },
   {
@@ -360,6 +348,19 @@ return {
     dependencies = "nvim-treesitter/nvim-treesitter",
     config = true,
     ft = "markdown",
+  },
+  {
+    "ibhagwan/fzf-lua",
+    -- optional for icon support
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      -- calling `setup` is optional for customization
+      require("fzf-lua").setup({})
+    end,
+    cmd = "FzfLua",
+    keys = {
+      { "<Leader><Space>", "<CMD>lua require('fzf-lua').files()<CR>", noremap = true, silent = true }
+    }
   },
   {
     'dstein64/vim-startuptime',
