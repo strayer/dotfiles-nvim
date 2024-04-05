@@ -9,12 +9,6 @@ return {
   },
   { "tpope/vim-fugitive" },
   {
-    "zhou13/vim-easyescape",
-    config = function()
-      require("config-easyescape").cfg()
-    end,
-  },
-  {
     "numToStr/Navigator.nvim",
     config = function()
       vim.keymap.set({ "n", "t" }, "<C-h>", "<CMD>NavigatorLeft<CR>")
