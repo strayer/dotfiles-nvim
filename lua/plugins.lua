@@ -113,21 +113,13 @@ return {
   },
   {
     "hrsh7th/nvim-cmp",
-    dependencies = { "hrsh7th/cmp-buffer", "hrsh7th/cmp-nvim-lsp", "hrsh7th/cmp-vsnip" },
+    dependencies = { "hrsh7th/cmp-buffer", "hrsh7th/cmp-nvim-lsp" },
     config = function()
       require("config-cmp").cfg()
     end,
   },
   -- vscode-like pictograms in lsp completions
   { "onsails/lspkind-nvim" },
-  -- TODO: I'm not really using this... maybe remove it?
-  {
-    "hrsh7th/vim-vsnip",
-    dependencies = { "rafamadriz/friendly-snippets" },
-    config = function()
-      require("config-vsnip").cfg()
-    end,
-  },
   -- TODO: validate what features of lspsaga I'm actually using
   {
     "nvimdev/lspsaga.nvim",
@@ -153,9 +145,8 @@ return {
   },
   {
     "windwp/nvim-autopairs",
-    config = function()
-      require("config-autopairs").cfg()
-    end,
+    event = "InsertEnter",
+    config = true,
   },
   -- wisely add "end" in Ruby, Lua, Vimscript, etc.
   { "RRethy/nvim-treesitter-endwise" },
