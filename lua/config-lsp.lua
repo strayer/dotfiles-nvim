@@ -161,6 +161,7 @@ local function cfg()
       local pylint = require("efmls-configs.linters.pylint")
       local markdownlint = require("efmls-configs.linters.markdownlint")
       local stylua = require("efmls-configs.formatters.stylua")
+      local terraform_fmt = require('efmls-configs.formatters.terraform_fmt')
 
       local languages = {
         sh = { shfmt },
@@ -169,6 +170,7 @@ local function cfg()
         markdown = { markdownlint, prettier_d },
         python = { pylint },
         lua = { stylua },
+        terraform = { terraform_fmt },
       }
       opts.filetypes = vim.tbl_keys(languages)
       opts.settings = {
