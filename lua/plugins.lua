@@ -248,6 +248,7 @@ return {
     config = function()
       require("mini.starter").setup()
       require("mini.sessions").setup()
+      require("mini.indentscope").setup()
     end,
   },
   {
