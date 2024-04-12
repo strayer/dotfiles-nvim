@@ -5,6 +5,9 @@ vim.opt.number = true
 vim.opt.cursorline = true
 vim.opt.relativenumber = true
 
+-- set window title
+vim.opt.title = true
+
 -- show diagnostic messages faster
 vim.opt.updatetime = 300
 

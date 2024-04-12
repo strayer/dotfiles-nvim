@@ -217,6 +217,7 @@ return {
   },
   {
     "ojroques/nvim-osc52",
+    enabled = not vim.g.neovide,
     config = function()
       local function copy(lines, _)
         require("osc52").copy(table.concat(lines, "\n"))

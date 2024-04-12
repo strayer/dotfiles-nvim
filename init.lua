@@ -30,6 +30,21 @@ if os.getenv("TMUX") ~= nil then
   ]])
 end
 
+if vim.g.neovide then
+  vim.o.guifont = "Iosevka:h16"
+
+  -- schedule focusing of Neovide (https://github.com/neovide/neovide/issues/2330)
+  vim.schedule(function()
+    vim.cmd("NeovideFocus")
+  end)
+
+  vim.keymap.set("n", "<D-s>", ":w<CR>") -- Save
+  vim.keymap.set("v", "<D-c>", '"+y') -- Copy
+  vim.keymap.set({ "n", "v", "s", "x", "o", "i", "l", "c", "t" }, "<D-v>", function()
+    vim.api.nvim_paste(vim.fn.getreg("+"), true, -1)
+  end, { noremap = true, silent = true })
+end
+
 -- disable fold for slim because it slows everything down
 vim.cmd([[autocmd Syntax slim setlocal nofoldenable]])
 
