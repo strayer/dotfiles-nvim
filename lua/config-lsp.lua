@@ -158,7 +158,6 @@ local function cfg()
       local shfmt = require("efmls-configs.formatters.shfmt")
       local hadolint = require("efmls-configs.linters.hadolint")
       local prettier_d = require('efmls-configs.formatters.prettier_d')
-      local pylint = require("efmls-configs.linters.pylint")
       local markdownlint = require("efmls-configs.linters.markdownlint")
       local stylua = require("efmls-configs.formatters.stylua")
       local terraform_fmt = require('efmls-configs.formatters.terraform_fmt')
@@ -168,7 +167,6 @@ local function cfg()
         Dockerfile = { hadolint },
         dockerfile = { hadolint },
         markdown = { markdownlint, prettier_d },
-        python = { pylint },
         lua = { stylua },
         terraform = { terraform_fmt },
       }
