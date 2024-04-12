@@ -242,7 +242,14 @@ return {
       vim.keymap.set("x", "<leader>c", require("osc52").copy_visual, { desc = "Copy selection to clipboard (OSC52)" })
     end,
   },
-  { "echasnovski/mini.nvim", version = false },
+  {
+    "echasnovski/mini.nvim",
+    version = false,
+    config = function()
+      require("mini.starter").setup()
+      require("mini.sessions").setup()
+    end,
+  },
   {
     "isobit/vim-caddyfile",
     ft = { "caddyfile" },
