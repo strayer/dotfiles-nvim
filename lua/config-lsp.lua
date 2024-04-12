@@ -45,7 +45,7 @@ local function cfg()
   require('neodev').setup({})
 
   -- setup cmp
-  capabilities = require("cmp_nvim_lsp").default_capabilities()
+  local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
   require("mason").setup()
   require("mason-lspconfig").setup()
@@ -128,7 +128,7 @@ local function cfg()
 
     if server == "jsonls" then
       opts.settings = {
-        yaml = {
+        json = {
           schemas = require("schemastore").json.schemas(),
           validate = { enable = true },
         },
@@ -162,7 +162,7 @@ local function cfg()
       local markdownlint = require("efmls-configs.linters.markdownlint")
       local stylua = require("efmls-configs.formatters.stylua")
 
-      languages = {
+      local languages = {
         sh = { shfmt },
         Dockerfile = { hadolint },
         dockerfile = { hadolint },
