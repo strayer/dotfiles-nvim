@@ -57,7 +57,7 @@ local function cfg()
     "dockerls",
     "eslint",
     "emmet_ls",
-    "pyright",
+    "basedpyright",
     "lua_ls",
     "terraformls",
     "tflint",
