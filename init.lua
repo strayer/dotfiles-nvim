@@ -31,7 +31,7 @@ if os.getenv("TMUX") ~= nil then
 end
 
 if vim.g.neovide then
-  vim.o.guifont = "Iosevka:h16"
+  vim.o.guifont = "Iosevka Term,Symbols Nerd Font Mono:h16"
 
   -- schedule focusing of Neovide (https://github.com/neovide/neovide/issues/2330)
   vim.schedule(function()
