@@ -1,6 +1,5 @@
 return {
   { "tpope/vim-surround" },
-  { "numToStr/Comment.nvim", opts = {} },
   {
     "ntpeters/vim-better-whitespace",
     config = function()
