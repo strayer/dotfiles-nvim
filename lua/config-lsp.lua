@@ -162,6 +162,11 @@ local function cfg()
       local stylua = require("efmls-configs.formatters.stylua")
       local terraform_fmt = require('efmls-configs.formatters.terraform_fmt')
 
+      -- override shfmt parameters
+      shfmt = vim.tbl_extend('force', shfmt, {
+        formatCommand = "shfmt -i 2 -bn -kp"
+      })
+
       local languages = {
         sh = { shfmt },
         Dockerfile = { hadolint },
