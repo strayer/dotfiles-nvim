@@ -214,34 +214,6 @@ return {
     },
   },
   {
-    "ojroques/nvim-osc52",
-    enabled = not vim.g.neovide,
-    config = function()
-      local function copy(lines, _)
-        require("osc52").copy(table.concat(lines, "\n"))
-      end
-
-      local function paste()
-        return { vim.fn.split(vim.fn.getreg(""), "\n"), vim.fn.getregtype("") }
-      end
-
-      vim.g.clipboard = {
-        name = "osc52",
-        copy = { ["+"] = copy, ["*"] = copy },
-        paste = { ["+"] = paste, ["*"] = paste },
-      }
-
-      vim.keymap.set(
-        "n",
-        "<leader>c",
-        require("osc52").copy_operator,
-        { expr = true, desc = "Copy given text to clipboard (OSC52)" }
-      )
-      vim.keymap.set("n", "<leader>cc", "<leader>c_", { remap = true, desc = "Copy current line to clipboard (OSC52)" })
-      vim.keymap.set("x", "<leader>c", require("osc52").copy_visual, { desc = "Copy selection to clipboard (OSC52)" })
-    end,
-  },
-  {
     "echasnovski/mini.nvim",
     version = false,
     config = function()
