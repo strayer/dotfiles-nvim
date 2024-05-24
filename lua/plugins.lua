@@ -32,9 +32,7 @@ return {
       vim.cmd("doautocmd mkdp_init BufEnter")
     end,
   },
-  { "fladson/vim-kitty" },
   { "dag/vim-fish" },
-  { "pearofducks/ansible-vim" },
   {
     "ggandor/leap.nvim",
     dependencies = { "tpope/vim-repeat" },
@@ -49,13 +47,6 @@ return {
     config = function()
       require("config-lualine").cfg()
     end,
-  },
-  {
-    "kevinhwang91/rnvimr",
-    config = function()
-      require("config-rnvimr").cfg()
-    end,
-    cmd = "RnvimrToggle",
   },
   {
     "nvim-neo-tree/neo-tree.nvim",
@@ -196,7 +187,7 @@ return {
       "williamboman/mason-lspconfig.nvim",
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { "j-hui/fidget.nvim", tag = "legacy", opts = {} },
+      { "j-hui/fidget.nvim",       tag = "legacy", opts = {} },
       -- lua_ls setup for Neovim (configured in config-lsp.lua)
       "folke/neodev.nvim",
     },
@@ -212,6 +203,14 @@ return {
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
     },
+    cmd = {
+      "YAMLView",
+      "YAMLYank",
+      "YAMLYankKey",
+      "YAMLYankValue",
+      "YAMLQuickfix",
+      "YAMLTelescope",
+    }
   },
   {
     "echasnovski/mini.nvim",
@@ -237,8 +236,8 @@ return {
           require("statuscol").setup({
             relculright = true,
             segments = {
-              { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
-              { text = { "%s" }, click = "v:lua.ScSa" },
+              { text = { builtin.foldfunc },      click = "v:lua.ScFa" },
+              { text = { "%s" },                  click = "v:lua.ScSa" },
               { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
             },
           })
@@ -255,7 +254,7 @@ return {
     init = function()
       -- UFO folding
       vim.o.foldcolumn = "1" -- '0' is not bad
-      vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+      vim.o.foldlevel = 99   -- Using ufo provider need a large value, feel free to decrease the value
       vim.o.foldlevelstart = 99
       vim.o.foldenable = true
       vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
@@ -281,11 +280,11 @@ return {
       },
       -- you can enable a preset for easier configuration
       presets = {
-        bottom_search = true, -- use a classic bottom cmdline for search
-        command_palette = true, -- position the cmdline and popupmenu together
+        bottom_search = true,         -- use a classic bottom cmdline for search
+        command_palette = true,       -- position the cmdline and popupmenu together
         long_message_to_split = true, -- long messages will be sent to a split
-        inc_rename = false, -- enables an input dialog for inc-rename.nvim
-        lsp_doc_border = false, -- add a border to hover docs and signature help
+        inc_rename = false,           -- enables an input dialog for inc-rename.nvim
+        lsp_doc_border = false,       -- add a border to hover docs and signature help
       },
     },
     dependencies = {
@@ -299,15 +298,17 @@ return {
   },
   {
     "zeioth/garbage-day.nvim",
-    event = "BufEnter",
+    dependencies = "neovim/nvim-lspconfig",
+    event = "VeryLazy",
     opts = {
       -- your options here
     },
   },
   {
     "Vimjas/vim-python-pep8-indent",
+    ft = "python",
   },
-  { "shortcuts/no-neck-pain.nvim", version = "*" },
+  { "shortcuts/no-neck-pain.nvim", version = "*", cmd = "NoNeckPain" },
   {
     "lukas-reineke/headlines.nvim",
     dependencies = "nvim-treesitter/nvim-treesitter",
