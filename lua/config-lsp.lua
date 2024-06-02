@@ -41,9 +41,6 @@ local function cfg()
   -- setup lspkind
   require("lspkind").init()
 
-  -- setup neodev
-  require('neodev').setup({})
-
   -- setup cmp
   local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
