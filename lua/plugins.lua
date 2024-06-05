@@ -97,6 +97,7 @@ return {
   {
     "hrsh7th/nvim-cmp",
     dependencies = { "hrsh7th/cmp-buffer", "hrsh7th/cmp-nvim-lsp" },
+    event = { "InsertEnter", "CmdlineEnter" },
     config = function()
       require("config-cmp").cfg()
     end,
