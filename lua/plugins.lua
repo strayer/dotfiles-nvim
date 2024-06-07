@@ -172,6 +172,11 @@ return {
     priority = 1000,
   },
   {
+    "scottmckendry/cyberdream.nvim",
+    lazy = false,
+    priority = 1000,
+  },
+  {
     "mfussenegger/nvim-dap",
     dependencies = { "mfussenegger/nvim-dap-python" },
     config = function()

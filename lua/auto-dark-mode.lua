@@ -2,13 +2,13 @@
 
 local os_is_dark = function()
   return (vim.call(
-    'system',
+    "system",
     [[echo $(defaults read -globalDomain AppleInterfaceStyle &> /dev/null && echo 'dark' || echo 'light')]]
-  )):find('dark') ~= nil
+  )):find("dark") ~= nil
 end
 
 local is_dark = function()
-  return vim.o.background == 'dark'
+  return vim.o.background == "dark"
 end
 
 -- local set_scheme_for_style = function(dark)
@@ -29,9 +29,9 @@ end
 
 local set_from_os = function()
   if os_is_dark() then
-    vim.o.background = 'dark'
+    vim.o.background = "dark"
   else
-    vim.o.background = 'light'
+    vim.o.background = "light"
   end
 
   -- set_scheme_for_style(os_is_dark())
@@ -40,8 +40,8 @@ end
 local init = function()
   set_from_os()
 
-  vim.api.nvim_create_autocmd('Signal', {
-    pattern = '*',
+  vim.api.nvim_create_autocmd("Signal", {
+    pattern = "*",
     callback = function()
       set_from_os()
     end,
@@ -50,9 +50,9 @@ end
 
 local toggle = function()
   if is_dark() then
-    vim.o.background = 'light'
+    vim.o.background = "light"
   else
-    vim.o.background = 'dark'
+    vim.o.background = "dark"
   end
 
   -- set_scheme_for_style(is_dark())

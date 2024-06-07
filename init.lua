@@ -16,7 +16,8 @@ require("auto-dark-mode").init()
 
 require("lazy").setup("plugins")
 
-vim.cmd([[ colorscheme tokyonight ]])
+-- vim.cmd([[ colorscheme tokyonight ]])
+vim.cmd([[ colorscheme cyberdream ]])
 
 if os.getenv("TMUX") ~= nil then
   vim.cmd([[
@@ -37,7 +38,7 @@ if vim.g.neovide then
   end)
 
   vim.keymap.set("n", "<D-s>", ":w<CR>") -- Save
-  vim.keymap.set("v", "<D-c>", '"+y')    -- Copy
+  vim.keymap.set("v", "<D-c>", '"+y') -- Copy
   vim.keymap.set({ "n", "v", "s", "x", "o", "i", "l", "c", "t" }, "<D-v>", function()
     vim.api.nvim_paste(vim.fn.getreg("+"), true, -1)
   end, { noremap = true, silent = true })
