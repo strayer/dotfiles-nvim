@@ -16,8 +16,8 @@ require("auto-dark-mode").init()
 
 require("lazy").setup("plugins")
 
--- vim.cmd([[ colorscheme tokyonight ]])
-vim.cmd([[ colorscheme cyberdream ]])
+vim.cmd([[ colorscheme tokyonight ]])
+-- vim.cmd([[ colorscheme cyberdream ]])
 
 if os.getenv("TMUX") ~= nil then
   vim.cmd([[

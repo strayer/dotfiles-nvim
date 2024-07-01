@@ -1,10 +1,11 @@
 -- Source: https://github.com/jascha030/macos-nvim-dark-mode/blob/cc7f35a/README.md#neovim
 
 local os_is_dark = function()
-  return (vim.call(
-    "system",
-    [[echo $(defaults read -globalDomain AppleInterfaceStyle &> /dev/null && echo 'dark' || echo 'light')]]
-  )):find("dark") ~= nil
+  local f = assert(io.open(vim.env.HOME .. "/.cache/system-theme.txt", "r"))
+  local current_system_theme = f:read("*all")
+  f:close()
+
+  return current_system_theme == "dark"
 end
 
 local is_dark = function()
