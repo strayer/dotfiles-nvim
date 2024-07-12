@@ -54,17 +54,6 @@ local init = function()
   })
 end
 
-local toggle = function()
-  if is_dark() then
-    vim.o.background = "light"
-  else
-    vim.o.background = "dark"
-  end
-
-  -- set_scheme_for_style(is_dark())
-end
-
 return {
-  toggle = toggle,
   init = init,
 }
