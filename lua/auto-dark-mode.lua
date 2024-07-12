@@ -36,7 +36,7 @@ local set_from_os = function()
   end
 
   if package.loaded['tiny-inline-diagnostic'] then
-    require("config-tiny-inline-diagnostic").cfg()
+    require("config-tiny-inline-diagnostic").change()
   end
 
   -- reconfigure lualine to load correct theme
