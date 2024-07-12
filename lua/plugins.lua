@@ -353,5 +353,10 @@ return {
       },
     },
   },
-  { "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
+  { "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typing
+  {
+    "rachartier/tiny-inline-diagnostic.nvim",
+    event = "VeryLazy",
+    config = require("config-tiny-inline-diagnostic").cfg,
+  },
 }
