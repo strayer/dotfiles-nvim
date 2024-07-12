@@ -35,6 +35,11 @@ local set_from_os = function()
     vim.o.background = "light"
   end
 
+  -- reconfigure lualine to load correct theme
+  if package.loaded['lualine'] then
+    require("config-lualine").cfg()
+  end
+
   -- set_scheme_for_style(os_is_dark())
 end
 
