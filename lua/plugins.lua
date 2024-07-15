@@ -43,7 +43,6 @@ return {
   { "voldikss/vim-floaterm", cmd = { "FloatermNew", "FloatermToggle" } },
   {
     "nvim-lualine/lualine.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
       require("config-lualine").cfg()
     end,
@@ -54,7 +53,6 @@ return {
     cmd = "Neotree",
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
       "MunifTanjim/nui.nvim",
       {
         "s1n7ax/nvim-window-picker",
@@ -116,7 +114,6 @@ return {
     },
     event = "LspAttach",
     dependencies = {
-      { "nvim-tree/nvim-web-devicons" },
       { "nvim-treesitter/nvim-treesitter" },
     },
   },
@@ -141,7 +138,6 @@ return {
   },
   {
     "folke/trouble.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
     cmd = { "Trouble", "TroubleToggle" },
     config = function()
       require("config-trouble").cfg()
@@ -226,6 +222,9 @@ return {
       require("mini.starter").setup()
       require("mini.sessions").setup()
       require("mini.indentscope").setup()
+      require("mini.icons").setup()
+
+      MiniIcons.mock_nvim_web_devicons()
     end,
   },
   {
@@ -324,8 +323,6 @@ return {
   },
   {
     "ibhagwan/fzf-lua",
-    -- optional for icon support
-    dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
       -- calling `setup` is optional for customization
       require("fzf-lua").setup({})
