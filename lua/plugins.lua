@@ -315,10 +315,11 @@ return {
   },
   { "shortcuts/no-neck-pain.nvim", version = "*", cmd = "NoNeckPain" },
   {
-    "lukas-reineke/headlines.nvim",
-    dependencies = "nvim-treesitter/nvim-treesitter",
-    config = true,
+    "MeanderingProgrammer/markdown.nvim",
+    main = "render-markdown",
+    opts = {},
     ft = "markdown",
+    dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" },
   },
   {
     "ibhagwan/fzf-lua",
