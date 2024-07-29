@@ -361,4 +361,9 @@ return {
     opts = {},
     cmd = "Oil",
   },
+  {
+    "ejrichards/mise.nvim",
+    opts = {},
+    cond = vim.g.neovide,
+  },
 }
