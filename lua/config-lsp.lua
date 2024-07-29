@@ -67,7 +67,7 @@ local function cfg()
     "gopls",
     "powershell_es",
     "efm",
-    "ruff_lsp",
+    "ruff",
   }
   for _, server in ipairs(lsp_servers) do
     -- default lsp opts
