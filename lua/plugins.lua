@@ -356,4 +356,9 @@ return {
     event = "VeryLazy",
     config = require("config-tiny-inline-diagnostic").cfg,
   },
+  {
+    "stevearc/oil.nvim",
+    opts = {},
+    cmd = "Oil",
+  },
 }
