@@ -52,6 +52,7 @@ M.cfg = function()
         name = "lazydev",
         group_index = 0, -- set group index to 0 to skip loading LuaLS completions
       },
+      { name = "snippets" },
     }),
     formatting = {
       format = require("lspkind").cmp_format({

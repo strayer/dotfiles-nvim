@@ -362,6 +362,14 @@ return {
     cmd = "Oil",
   },
   {
+    "garymjr/nvim-snippets",
+    event = "InsertEnter",
+    dependencies = { "rafamadriz/friendly-snippets" },
+    opts = {
+      friendly_snippets = true,
+    },
+  },
+  {
     "ejrichards/mise.nvim",
     opts = {},
     cond = vim.g.neovide,
