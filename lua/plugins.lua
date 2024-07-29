@@ -88,9 +88,8 @@ return {
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
-    config = function()
-      require("config-which-key").cfg()
-    end,
+    opts = true,
+    keys = require("config-which-key").keys,
   },
   {
     "hrsh7th/nvim-cmp",
