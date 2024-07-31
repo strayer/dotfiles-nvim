@@ -80,6 +80,13 @@ M.keys = {
     desc = "text",
   },
   {
+    "<leader>ss",
+    function()
+      require("mini.sessions").select()
+    end,
+    desc = "sessions",
+  },
+  {
     "<leader>sr",
     function()
       require("neoclip.fzf")()
