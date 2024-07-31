@@ -52,6 +52,7 @@ local function cfg()
     "ansiblels",
     "bashls",
     "dockerls",
+    "dprint",
     "eslint",
     "emmet_ls",
     "basedpyright",
