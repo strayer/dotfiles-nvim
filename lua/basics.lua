@@ -40,12 +40,12 @@ vim.opt.undofile = true
 --              neovim apparently figures this out itself.
 vim.g.is_posix = 1
 
--- disable Python 2 provider
+-- disable unused providers
 vim.g.loaded_python_provider = 0
--- use venv for Python 3 provider
-vim.g.python3_host_prog = "~/.config/nvim/python3-venv/bin/python"
--- disable Perl provider
+vim.g.loaded_python3_provider = 0
 vim.g.loaded_perl_provider = 0
+vim.g.loaded_node_provider = 0
+vim.g.loaded_ruby_provider = 0
 
 vim.cmd([[
   autocmd TermOpen * startinsert
