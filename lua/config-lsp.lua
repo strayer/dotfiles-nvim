@@ -152,6 +152,10 @@ local function cfg()
       }
     end
 
+    if server == "dprint" then
+      opts.filetypes = { "toml" }
+    end
+
     if server == "efm" then
       local shfmt = require("efmls-configs.formatters.shfmt")
       local hadolint = require("efmls-configs.linters.hadolint")
