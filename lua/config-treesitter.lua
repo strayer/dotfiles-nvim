@@ -31,7 +31,7 @@ M.cfg = function()
         node_decremental = "grm",
       },
     },
-    endwise = { enable = true }
+    endwise = { enable = true },
   })
 
   vim.opt.foldmethod = "expr"

@@ -35,12 +35,12 @@ local set_from_os = function()
     vim.o.background = "light"
   end
 
-  if package.loaded['tiny-inline-diagnostic'] then
+  if package.loaded["tiny-inline-diagnostic"] then
     require("config-tiny-inline-diagnostic").change()
   end
 
   -- reconfigure lualine to load correct theme
-  if package.loaded['lualine'] then
+  if package.loaded["lualine"] then
     require("config-lualine").cfg()
   end
 

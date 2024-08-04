@@ -159,14 +159,14 @@ local function cfg()
     if server == "efm" then
       local shfmt = require("efmls-configs.formatters.shfmt")
       local hadolint = require("efmls-configs.linters.hadolint")
-      local prettier_d = require('efmls-configs.formatters.prettier_d')
+      local prettier_d = require("efmls-configs.formatters.prettier_d")
       local markdownlint = require("efmls-configs.linters.markdownlint")
       local stylua = require("efmls-configs.formatters.stylua")
-      local terraform_fmt = require('efmls-configs.formatters.terraform_fmt')
+      local terraform_fmt = require("efmls-configs.formatters.terraform_fmt")
 
       -- override shfmt parameters
-      shfmt = vim.tbl_extend('force', shfmt, {
-        formatCommand = "shfmt -i 2 -bn -kp"
+      shfmt = vim.tbl_extend("force", shfmt, {
+        formatCommand = "shfmt -i 2 -bn -kp",
       })
 
       local languages = {
