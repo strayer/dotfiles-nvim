@@ -375,11 +375,6 @@ return {
     opts = {},
     cond = vim.g.neovide == true,
   },
-  {
-    "m4xshen/hardtime.nvim",
-    dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
-    opts = {},
-  },
   { -- better vim.ui.select
     "stevearc/dressing.nvim",
     opts = {},
