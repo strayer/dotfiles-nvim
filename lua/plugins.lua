@@ -373,7 +373,7 @@ return {
   {
     "ejrichards/mise.nvim",
     opts = {},
-    cond = vim.g.neovide,
+    cond = vim.g.neovide == true,
   },
   {
     "m4xshen/hardtime.nvim",
