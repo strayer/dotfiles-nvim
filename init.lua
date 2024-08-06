@@ -12,12 +12,10 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("basics")
-require("auto-dark-mode").init()
 
 require("lazy").setup("plugins")
 
-vim.cmd([[ colorscheme tokyonight ]])
--- vim.cmd([[ colorscheme cyberdream ]])
+require("auto-dark-mode").init()
 
 if os.getenv("TMUX") ~= nil then
   vim.cmd([[
@@ -30,7 +28,6 @@ if vim.g.neovide then
   vim.o.guifont = "Iosevka Term Light,Symbols Nerd Font Mono:h16"
   vim.g.neovide_cursor_vfx_mode = "pixiedust"
   vim.g.neovide_refresh_rate = 120
-  vim.g.neovide_theme = "auto"
 
   -- schedule focusing of Neovide (https://github.com/neovide/neovide/issues/2330)
   vim.schedule(function()
