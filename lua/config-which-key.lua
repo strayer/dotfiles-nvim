@@ -100,6 +100,24 @@ M.keys = {
     end,
     desc = "colorschemes",
   },
+  { "<leader>S", group = "sessions" },
+  {
+    "<leader>Sn",
+    function()
+      local MiniSessions = require("mini.sessions")
+      local Utils = require("utils")
+
+      local project_path = Utils.get_git_root_or_cwd()
+      local proposed_session_name = vim.fs.basename(project_path)
+
+      Utils.input_prompt_with_default("Session name:", proposed_session_name, function(name)
+        if name then
+          MiniSessions.write(name)
+        end
+      end)
+    end,
+    desc = "sessions",
+  },
   { "<leader>l", group = "lsp" },
   {
     "<leader>ld",
