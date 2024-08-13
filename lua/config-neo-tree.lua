@@ -17,6 +17,11 @@ M.cfg = function()
     filesystem = {
       use_libuv_file_watcher = true,
       async_directory_scan = false,
+      filtered_items = {
+        always_show = {
+          ".github",
+        },
+      },
     },
     window = {
       mappings = {
