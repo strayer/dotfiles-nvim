@@ -176,6 +176,7 @@ local function cfg()
         markdown = { markdownlint, prettier_d },
         lua = { stylua },
         terraform = { terraform_fmt },
+        html = { prettier_d },
       }
       opts.filetypes = vim.tbl_keys(languages)
       opts.settings = {
