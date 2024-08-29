@@ -1,0 +1,2 @@
+lint-cmd: "lua: stylua"
+lint-cmd: "markdown: markdownlint"
