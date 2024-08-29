@@ -90,6 +90,11 @@ return {
     event = "VeryLazy",
     opts = true,
     keys = require("config-which-key").keys,
+    config = function()
+      local wk = require("which-key")
+      wk.setup()
+      require("config-gp").setup_whichkey(wk)
+    end,
   },
   {
     "hrsh7th/nvim-cmp",
@@ -385,5 +390,13 @@ return {
   { -- better vim.ui.select
     "stevearc/dressing.nvim",
     opts = {},
+  },
+  {
+    "robitx/gp.nvim",
+    config = function()
+      require("gp").setup(require("config-gp").config())
+      require("config-gp").setup_autocommand()
+    end,
+    -- event = "VeryLazy", -- TODO: add all commands here
   },
 }
