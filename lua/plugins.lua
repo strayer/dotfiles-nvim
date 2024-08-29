@@ -371,7 +371,8 @@ return {
   {
     "stevearc/oil.nvim",
     opts = {},
-    cmd = "Oil",
+    -- no lazy-loading, author doesn't recommend it and it caused problems with
+    -- oil-ssh for me
   },
   {
     "garymjr/nvim-snippets",
