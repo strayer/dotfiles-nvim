@@ -330,9 +330,9 @@ return {
   },
   { "shortcuts/no-neck-pain.nvim", version = "*", cmd = "NoNeckPain" },
   {
-    "MeanderingProgrammer/markdown.nvim",
-    main = "render-markdown",
+    "MeanderingProgrammer/render-markdown.nvim",
     opts = {
+      file_types = { "markdown", "Avante" },
       -- heading = {
       --   backgrounds = nil,
       -- },
@@ -340,7 +340,7 @@ return {
       --   style = "language",
       -- }
     },
-    ft = "markdown",
+    ft = { "markdown", "Avante" },
     dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" },
   },
   {
@@ -409,5 +409,36 @@ return {
       require("config-gp").setup_autocommand()
     end,
     -- event = "VeryLazy", -- TODO: add all commands here
+  },
+  {
+    "yetone/avante.nvim",
+    event = "VeryLazy",
+    lazy = false,
+    opts = require("config-avante").config(),
+    build = ":AvanteBuild", -- Also note that this will block the startup for a bit since we are compiling bindings in Rust.
+    dependencies = {
+      "stevearc/dressing.nvim",
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      "echasnovski/mini.icons",
+      {
+        -- support for image pasting
+        "HakonHarnes/img-clip.nvim",
+        event = "VeryLazy",
+        opts = {
+          -- recommended settings
+          default = {
+            embed_image_as_base64 = false,
+            prompt_for_file_name = false,
+            drag_and_drop = {
+              insert_mode = true,
+            },
+            -- required for Windows users
+            use_absolute_path = true,
+          },
+        },
+      },
+      "MeanderingProgrammer/render-markdown.nvim",
+    },
   },
 }

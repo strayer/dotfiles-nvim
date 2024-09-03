@@ -3,4 +3,4 @@ python3-venv
 lua/packer_compiled.*
 debugpy-venv/
 .aider*
-lua/config-gp-private.lua
+lua/config-*-private.lua

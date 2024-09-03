@@ -13,7 +13,7 @@ Welcome to my Neovim configuration! This setup is designed to provide a powerful
 - 🌳 File explorer with oil.nvim and neo-tree
 - 🔧 Robust LSP configuration for various languages (including Ansible, Bash, Docker, Python, Lua, Terraform, Vue, YAML, Ruby, JSON, Go, PowerShell, and more)
 - 🧩 Syntax highlighting and advanced code analysis with Treesitter
-- 🤖 AI-assisted coding integration with gp.nvim
+- 🤖 AI-assisted coding integration with gp.nvim and avante.nvim
 - 📊 Handy status line with lualine
 - 🚀 Efficient plugin management with lazy.nvim
 - 🌓 Automatic dark/light mode switching based on system preferences
