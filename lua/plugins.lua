@@ -430,7 +430,7 @@ return {
       },
     },
     opts = require("config-avante").config(),
-    build = ":AvanteBuild", -- Also note that this will block the startup for a bit since we are compiling bindings in Rust.
+    build = "make", -- Also note that this will block the startup for a bit since we are compiling bindings in Rust.
     dependencies = {
       "stevearc/dressing.nvim",
       "nvim-lua/plenary.nvim",
