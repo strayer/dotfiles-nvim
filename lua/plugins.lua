@@ -390,8 +390,45 @@ return {
   },
   {
     "yetone/avante.nvim",
-    event = "VeryLazy",
-    lazy = false,
+    cmd = { "AvanteAsk", "AvanteBuild", "AvanteEdit", "AvanteRefresh", "AvanteSwitchProvider", "AvanteToggle" },
+    keys = {
+      {
+        "<leader>a",
+        group = "avante",
+      },
+      {
+        "<leader>aa",
+        function()
+          require("avante.api").ask()
+        end,
+        desc = "avante: ask",
+        mode = { "n", "v" },
+      },
+      {
+        "<leader>ar",
+        function()
+          require("avante.api").refresh()
+        end,
+        desc = "avante: refresh",
+        mode = "v",
+      },
+      {
+        "<leader>ae",
+        function()
+          require("avante.api").edit()
+        end,
+        desc = "avante: edit",
+        mode = { "n", "v" },
+      },
+      {
+        "<leader>at",
+        function()
+          require("avante.api").toggle()
+        end,
+        desc = "avante: toggle",
+        mode = { "n", "v" },
+      },
+    },
     opts = require("config-avante").config(),
     build = ":AvanteBuild", -- Also note that this will block the startup for a bit since we are compiling bindings in Rust.
     dependencies = {
