@@ -398,7 +398,7 @@ return {
       "stevearc/dressing.nvim",
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
-      "echasnovski/mini.icons",
+      -- "echasnovski/mini.icons", -- already installed, keeping line for reference
       {
         -- support for image pasting
         "HakonHarnes/img-clip.nvim",
