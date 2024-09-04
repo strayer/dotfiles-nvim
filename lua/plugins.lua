@@ -1,11 +1,6 @@
 return {
   { "tpope/vim-surround" },
-  {
-    "ntpeters/vim-better-whitespace",
-    config = function()
-      require("config-better-whitespace").cfg()
-    end,
-  },
+  { "ntpeters/vim-better-whitespace" },
   { "tpope/vim-fugitive" },
   {
     "numToStr/Navigator.nvim",
