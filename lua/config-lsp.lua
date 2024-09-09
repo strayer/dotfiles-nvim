@@ -25,14 +25,14 @@ local on_attach = function(client, bufnr)
 end
 
 local function cfg()
-  vim.api.nvim_create_user_command("LspFormat", function()
-    vim.lsp.buf.format({
-      filter = function(client)
-        return client.name ~= "tsserver" and client.name ~= "volar"
-      end,
-      timeout_ms = 4000,
-    })
-  end, { nargs = 0 })
+  -- vim.api.nvim_create_user_command("LspFormat", function()
+  --   vim.lsp.buf.format({
+  --     filter = function(client)
+  --       return client.name ~= "tsserver" and client.name ~= "volar"
+  --     end,
+  --     timeout_ms = 4000,
+  --   })
+  -- end, { nargs = 0 })
 
   -- vim.cmd([[
   --   command! -nargs=0 LspFormat :lua vim.lsp.buf.formatting()
@@ -67,7 +67,6 @@ local function cfg()
     "jsonls",
     "gopls",
     "powershell_es",
-    "efm",
     "ruff",
   }
   for _, server in ipairs(lsp_servers) do
@@ -154,40 +153,6 @@ local function cfg()
 
     if server == "dprint" then
       opts.filetypes = { "toml" }
-    end
-
-    if server == "efm" then
-      local shfmt = require("efmls-configs.formatters.shfmt")
-      local hadolint = require("efmls-configs.linters.hadolint")
-      local prettier_d = require("efmls-configs.formatters.prettier_d")
-      local markdownlint = require("efmls-configs.linters.markdownlint")
-      local stylua = require("efmls-configs.formatters.stylua")
-      local terraform_fmt = require("efmls-configs.formatters.terraform_fmt")
-
-      -- override shfmt parameters
-      shfmt = vim.tbl_extend("force", shfmt, {
-        formatCommand = "shfmt -i 2 -bn -kp",
-      })
-
-      local languages = {
-        sh = { shfmt },
-        Dockerfile = { hadolint },
-        dockerfile = { hadolint },
-        markdown = { markdownlint, prettier_d },
-        lua = { stylua },
-        terraform = { terraform_fmt },
-        html = { prettier_d },
-        yaml = { prettier_d },
-      }
-      opts.filetypes = vim.tbl_keys(languages)
-      opts.settings = {
-        rootMarkers = { ".git/" },
-        languages = languages,
-      }
-      opts.init_options = {
-        documentFormatting = true,
-        documentRangeFormatting = true,
-      }
     end
 
     lspconfig[server].setup(opts)

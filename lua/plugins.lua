@@ -186,8 +186,85 @@ return {
   },
   { "b0o/SchemaStore.nvim" },
   {
-    "creativenull/efmls-configs-nvim",
-    dependencies = { "neovim/nvim-lspconfig" },
+    -- note: do not lazy-load, BufReadPost autocmd will break
+    "mfussenegger/nvim-lint",
+    config = function()
+      local lint = require("lint")
+      lint.linters_by_ft = {
+        Dockerfile = { "hadolint" },
+        dockerfile = { "hadolint" },
+        markdown = { "markdownlint-cli2" },
+      }
+
+      local function debounce(ms, fn)
+        local timer = vim.uv.new_timer()
+        return function(...)
+          local argv = { ... }
+          timer:start(ms, 0, function()
+            timer:stop()
+            vim.schedule_wrap(fn)(unpack(argv))
+          end)
+        end
+      end
+
+      vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave" }, {
+        callback = debounce(100, function()
+          lint.try_lint()
+        end),
+      })
+    end,
+  },
+  {
+    "stevearc/conform.nvim",
+    event = { "BufWritePre" },
+    cmd = { "ConformInfo", "Format" },
+    keys = {
+      { "<leader>cf", "<cmd>Format<cr>", mode = { "n", "v" }, desc = "format" },
+      {
+        "<leader>cF",
+        function()
+          require("conform").format({ formatters = { "injected" }, timeout_ms = 3000 })
+        end,
+        mode = { "n", "v" },
+        desc = "format injected",
+      },
+    },
+    ---@module "conform"
+    ---@type conform.setupOpts
+    opts = {
+      formatters_by_ft = {
+        html = { "prettierd" },
+        lua = { "stylua" },
+        markdown = { "prettierd" },
+        sh = { "shfmt" },
+        terraform = { "terraform_fmt" },
+        yaml = { "prettierd" },
+      },
+      default_format_opts = {
+        lsp_format = "fallback",
+      },
+      format_on_save = { timeout_ms = 500 },
+      formatters = {
+        shfmt = {
+          prepend_args = { "-i", "2", "-bn" },
+        },
+      },
+    },
+    config = function(_, opts)
+      vim.api.nvim_create_user_command("Format", function(args)
+        local range = nil
+        if args.count ~= -1 then
+          local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
+          range = {
+            start = { args.line1, 0 },
+            ["end"] = { args.line2, end_line:len() },
+          }
+        end
+        require("conform").format({ async = true, lsp_format = "fallback", range = range })
+      end, { range = true })
+
+      require("conform").setup(opts)
+    end,
   },
   {
     "cuducos/yaml.nvim",
@@ -355,6 +432,9 @@ return {
     "rachartier/tiny-inline-diagnostic.nvim",
     event = "VeryLazy",
     config = require("config-tiny-inline-diagnostic").cfg,
+    -- currently not working correctly with nvim.lint
+    -- https://github.com/rachartier/tiny-inline-diagnostic.nvim/issues/40
+    cond = false,
   },
   {
     "stevearc/oil.nvim",

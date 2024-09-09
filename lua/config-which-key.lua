@@ -133,7 +133,6 @@ M.keys = {
     end,
     desc = "workspace_diagnostics",
   },
-  { "<leader>lf", "<CMD>LspFormat<CR>", desc = "format" },
   { "<leader>lI", "<CMD>LspInfo<CR>", desc = "lsp info" },
   { "<leader>lv", "<CMD>LspVirtualTextToggle<CR>", desc = "lsp toggle virtual text" },
   { "<leader>lt", "<CMD>Trouble<CR>", desc = "trouble" },
