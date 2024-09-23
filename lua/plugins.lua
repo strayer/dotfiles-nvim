@@ -238,7 +238,7 @@ return {
         markdown = { "prettierd" },
         sh = { "shfmt" },
         terraform = { "terraform_fmt" },
-        yaml = { "prettierd" },
+        yaml = { "prettier_yaml" },
       },
       default_format_opts = {
         lsp_format = "fallback",
@@ -264,6 +264,12 @@ return {
       end, { range = true })
 
       require("conform").setup(opts)
+
+      -- create custom markdown formatter with prettier and longer print-width by default
+      local yaml_formatter = vim.deepcopy(require("conform.formatters.prettier"))
+      require("conform.util").add_formatter_args(yaml_formatter, { "--print-width", "120" }, { append = false })
+      ---@cast yaml_formatter conform.FormatterConfigOverride
+      require("conform").formatters.prettier_yaml = yaml_formatter
     end,
   },
   {
