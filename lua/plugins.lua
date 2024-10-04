@@ -92,7 +92,8 @@ return {
     end,
   },
   {
-    "hrsh7th/nvim-cmp",
+    "yioneko/nvim-cmp",
+    branch = "perf",
     dependencies = { "hrsh7th/cmp-buffer", "hrsh7th/cmp-nvim-lsp" },
     event = { "InsertEnter", "CmdlineEnter" },
     config = function()
