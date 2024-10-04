@@ -42,6 +42,9 @@ if vim.g.neovide then
 end
 
 -- disable fold for slim because it slows everything down
-vim.cmd([[autocmd Syntax slim setlocal nofoldenable]])
+vim.api.nvim_create_autocmd("Syntax", {
+  pattern = "slim",
+  command = "setlocal nofoldenable",
+})
 
 vim.g.EditorConfig_exclude_patterns = { "fugitive://.*", "scp://.*" }

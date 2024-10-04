@@ -47,10 +47,12 @@ vim.g.loaded_perl_provider = 0
 vim.g.loaded_node_provider = 0
 vim.g.loaded_ruby_provider = 0
 
-vim.cmd([[
-  autocmd TermOpen * startinsert
-]])
+vim.api.nvim_create_autocmd("TermOpen", {
+  pattern = "*",
+  command = "startinsert",
+})
 
-vim.cmd([[
-  autocmd FileType gitcommit setlocal spell
-]])
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "gitcommit",
+  command = "setlocal spell",
+})
