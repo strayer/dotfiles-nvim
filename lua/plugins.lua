@@ -1,5 +1,4 @@
 return {
-  { "tpope/vim-surround" },
   { "ntpeters/vim-better-whitespace" },
   { "tpope/vim-fugitive" },
   {
@@ -296,6 +295,7 @@ return {
       require("mini.sessions").setup()
       require("mini.indentscope").setup()
       require("mini.icons").setup()
+      require("mini.surround").setup()
 
       MiniIcons.mock_nvim_web_devicons()
     end,
