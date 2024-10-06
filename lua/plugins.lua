@@ -389,18 +389,16 @@ return {
   },
   { "shortcuts/no-neck-pain.nvim", version = "*", cmd = "NoNeckPain" },
   {
-    "MeanderingProgrammer/render-markdown.nvim",
-    opts = {
-      file_types = { "markdown", "Avante" },
-      -- heading = {
-      --   backgrounds = nil,
-      -- },
-      -- code = {
-      --   style = "language",
-      -- }
+    "OXY2DEV/markview.nvim",
+    lazy = false, -- Recommended
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
     },
-    ft = { "markdown", "Avante" },
-    dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" },
+    ft = { "markdown", "quarto", "rmd", "Avante" },
+    opts = {
+      filetypes = { "markdown", "quarto", "rmd", "Avante" },
+      buf_ignore = {},
+    },
   },
   {
     "ibhagwan/fzf-lua",
@@ -537,7 +535,6 @@ return {
           },
         },
       },
-      "MeanderingProgrammer/render-markdown.nvim",
     },
   },
 }
