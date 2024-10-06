@@ -9,6 +9,9 @@ vim.opt.title = true
 -- show diagnostic messages faster
 vim.opt.updatetime = 300
 
+-- use global statusline
+vim.opt.laststatus = 3
+
 vim.opt.incsearch = true -- search as characters are entered
 vim.opt.hlsearch = true -- highlight matches
 
