@@ -91,16 +91,31 @@ return {
     end,
   },
   {
-    "yioneko/nvim-cmp",
-    branch = "perf",
-    dependencies = { "hrsh7th/cmp-buffer", "hrsh7th/cmp-nvim-lsp" },
-    event = { "InsertEnter", "CmdlineEnter" },
-    config = function()
-      require("config-cmp").cfg()
-    end,
+    "saghen/blink.cmp",
+    lazy = false, -- lazy loading handled internally
+    -- optional: provides snippets for the snippet source
+    dependencies = "rafamadriz/friendly-snippets",
+
+    version = "v0.*",
+
+    opts = {
+      highlight = {
+        -- sets the fallback highlight groups to nvim-cmp's highlight groups
+        -- useful for when your theme doesn't support blink.cmp
+        -- will be removed in a future release, assuming themes add support
+        use_nvim_cmp_as_default = true,
+      },
+      -- set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+      -- adjusts spacing to ensure icons are aligned
+      nerd_font_variant = "normal",
+
+      -- experimental auto-brackets support
+      -- accept = { auto_brackets = { enabled = true } }
+
+      -- experimental signature help support
+      -- trigger = { signature_help = { enabled = true } }
+    },
   },
-  -- vscode-like pictograms in lsp completions
-  { "onsails/lspkind-nvim" },
   -- TODO: validate what features of lspsaga I'm actually using
   {
     "nvimdev/lspsaga.nvim",
@@ -443,15 +458,6 @@ return {
     opts = {},
     -- no lazy-loading, author doesn't recommend it and it caused problems with
     -- oil-ssh for me
-  },
-  {
-    "garymjr/nvim-snippets",
-    event = "InsertEnter",
-    dependencies = { "rafamadriz/friendly-snippets" },
-    opts = {
-      friendly_snippets = true,
-      ignored_filetypes = { "ps1" },
-    },
   },
   {
     "ejrichards/mise.nvim",

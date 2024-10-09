@@ -38,11 +38,9 @@ local function cfg()
   --   command! -nargs=0 LspFormat :lua vim.lsp.buf.formatting()
   -- ]])
 
+  -- 2024-10-09: disabled for https://github.com/Saghen/blink.cmp/issues/17
   -- setup lspkind
-  require("lspkind").init()
-
-  -- setup cmp
-  local capabilities = require("cmp_nvim_lsp").default_capabilities()
+  -- require("lspkind").init()
 
   require("mason").setup()
   require("mason-lspconfig").setup()
@@ -76,7 +74,6 @@ local function cfg()
       flags = {
         debounce_text_changes = 150,
       },
-      capabilities = capabilities,
     }
 
     -- if server == "solargraph" then
