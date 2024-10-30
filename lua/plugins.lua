@@ -405,9 +405,9 @@ return {
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
     },
-    ft = { "markdown", "quarto", "rmd", "Avante" },
+    ft = { "markdown", "quarto", "rmd", "Avante", "codecompanion" },
     opts = {
-      filetypes = { "markdown", "quarto", "rmd", "Avante" },
+      filetypes = { "markdown", "quarto", "rmd", "Avante", "codecompanion" },
       buf_ignore = {},
     },
   },
@@ -471,21 +471,17 @@ return {
     opts = {},
   },
   {
-    "robitx/gp.nvim",
-    config = function()
-      require("gp").setup(require("config-gp").config())
-      require("config-gp").setup_autocommand()
-    end,
-    -- event = "VeryLazy", -- TODO: add all commands here
-  },
-  {
     "yetone/avante.nvim",
-    cmd = { "AvanteAsk", "AvanteBuild", "AvanteEdit", "AvanteRefresh", "AvanteSwitchProvider", "AvanteToggle" },
+    cmd = {
+      "AvanteAsk",
+      "AvanteBuild",
+      "AvanteClear",
+      "AvanteEdit",
+      "AvanteRefresh",
+      "AvanteSwitchProvider",
+      "AvanteToggle",
+    },
     keys = {
-      {
-        "<leader>a",
-        group = "avante",
-      },
       {
         "<leader>aa",
         function()
@@ -520,7 +516,7 @@ return {
       },
     },
     opts = require("config-avante").config(),
-    build = "make", -- Also note that this will block the startup for a bit since we are compiling bindings in Rust.
+    build = "make BUILD_FROM_SOURCE=true", -- Also note that this will block the startup for a bit since we are compiling bindings in Rust.
     dependencies = {
       "stevearc/dressing.nvim",
       "nvim-lua/plenary.nvim",
@@ -543,6 +539,30 @@ return {
           },
         },
       },
+    },
+  },
+  {
+    -- "olimorris/codecompanion.nvim",
+    "strayer/codecompanion.nvim",
+    branch = "feat/add-azure-openai-adapter",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      -- "hrsh7th/nvim-cmp", -- Optional: For using slash commands and variables in the chat buffer
+      -- "nvim-telescope/telescope.nvim", -- Optional: For using slash commands
+      { "stevearc/dressing.nvim", opts = {} }, -- Optional: Improves `vim.ui.select`
+    },
+    opts = require("config-codecompanion").config(),
+    keys = {
+      {
+        "<leader>ac",
+        "<cmd>CodeCompanionChat Toggle<cr>",
+        desc = "CodeCompanion: chat",
+        mode = { "n", "v" },
+        { noremap = true, silent = true },
+      },
+      { "<C-a>", "<cmd>CodeCompanionActions<cr>", mode = { "n", "v" }, { noremap = true, silent = true } },
+      { "ga", "<cmd>CodeCompanionChat Add<cr>", mode = "v", { noremap = true, silent = true } },
     },
   },
 }
