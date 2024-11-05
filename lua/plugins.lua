@@ -82,13 +82,9 @@ return {
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
-    opts = true,
-    keys = require("config-which-key").keys,
-    config = function()
-      local wk = require("which-key")
-      wk.setup()
-      require("config-gp").setup_whichkey(wk)
-    end,
+    opts = {
+      spec = require("config-which-key").keys,
+    },
   },
   {
     "saghen/blink.cmp",
@@ -423,7 +419,13 @@ return {
     end,
     cmd = "FzfLua",
     keys = {
-      { "<Leader><Space>", "<CMD>lua require('fzf-lua').files()<CR>", noremap = true, silent = true },
+      {
+        "<Leader><Space>",
+        "<CMD>lua require('fzf-lua').files()<CR>",
+        desc = "search files",
+        noremap = true,
+        silent = true,
+      },
     },
   },
   {
