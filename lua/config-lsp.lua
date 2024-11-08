@@ -70,6 +70,7 @@ local function cfg()
   for _, server in ipairs(lsp_servers) do
     -- default lsp opts
     local opts = {
+      capabilities = require("blink.cmp").get_lsp_capabilities({}),
       on_attach = on_attach,
       flags = {
         debounce_text_changes = 150,
