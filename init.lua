@@ -13,7 +13,10 @@ vim.opt.rtp:prepend(lazypath)
 
 require("basics")
 
-require("lazy").setup("plugins")
+require("lazy").setup({
+  spec = "plugins",
+  install = { missing = false },
+})
 
 require("auto-dark-mode").init()
 
