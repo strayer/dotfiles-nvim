@@ -2,7 +2,7 @@ return {
   { "ntpeters/vim-better-whitespace" },
   { "tpope/vim-fugitive" },
   {
-    "numToStr/Navigator.nvim",
+    "craigmac/nvim-navigator",
     config = function()
       vim.keymap.set({ "n", "t" }, "<C-h>", "<CMD>NavigatorLeft<CR>")
       vim.keymap.set({ "n", "t" }, "<C-l>", "<CMD>NavigatorRight<CR>")
@@ -583,5 +583,9 @@ return {
       { "<C-a>", "<cmd>CodeCompanionActions<cr>", mode = { "n", "v" }, { noremap = true, silent = true } },
       { "ga", "<cmd>CodeCompanionChat Add<cr>", mode = "v", { noremap = true, silent = true } },
     },
+  },
+  {
+    "fladson/vim-kitty",
+    ft = "kitty",
   },
 }
