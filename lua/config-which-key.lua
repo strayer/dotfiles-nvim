@@ -118,7 +118,7 @@ M.keys = {
         end
       end)
     end,
-    desc = "sessions",
+    desc = "new",
   },
   { "<leader>l", group = "lsp" },
   {
