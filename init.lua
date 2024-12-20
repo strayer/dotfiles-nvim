@@ -31,8 +31,8 @@ if vim.g.neovide then
   vim.o.guifont = "Iosevka Term Light,Symbols Nerd Font Mono:h16"
   vim.g.neovide_cursor_vfx_mode = "pixiedust"
 
-  vim.g.neovide_window_blurred = true
-  vim.g.neovide_transparency = 0.9
+  -- vim.g.neovide_window_blurred = true
+  -- vim.g.neovide_transparency = 0.9
 
   -- schedule focusing of Neovide (https://github.com/neovide/neovide/issues/2330)
   vim.schedule(function()
