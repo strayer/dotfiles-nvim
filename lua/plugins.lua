@@ -340,6 +340,8 @@ return {
         sh = { "shfmt" },
         terraform = { "terraform_fmt" },
         yaml = { "prettier_yaml" },
+        json = { "prettierd" },
+        toml = { "prettierd" },
       },
       default_format_opts = {
         lsp_format = "fallback",
