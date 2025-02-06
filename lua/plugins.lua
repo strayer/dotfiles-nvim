@@ -530,9 +530,11 @@ return {
     },
     ft = { "markdown", "quarto", "rmd", "Avante", "codecompanion" },
     opts = {
-      filetypes = { "markdown", "quarto", "rmd", "Avante", "codecompanion" },
-      buf_ignore = {},
-      hybrid_modes = { "n" },
+      preview = {
+        ignore_buftypes = {},
+        hybrid_modes = { "n" },
+        filetypes = { "markdown", "quarto", "rmd", "Avante", "codecompanion" },
+      },
       code_blocks = {
         icons = "mini",
         style = "simple",
