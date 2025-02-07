@@ -1,7 +1,7 @@
 {
   "SchemaStore.nvim": { "branch": "main", "commit": "a2dcda8e69113008055b56a5833c96c8ab9893d6" },
   "avante.nvim": { "branch": "main", "commit": "2adf33534485318804e760b7512d484f2e5eb34b" },
-  "blink-cmp-copilot": { "branch": "main", "commit": "5d4ed42c5d7d144012792bb6cc4ac7899a108169" },
+  "blink-copilot": { "branch": "main", "commit": "19ff56e4fba60f574b2fcb0fba75919b43ff2257" },
   "blink.cmp": { "branch": "main", "commit": "b6f11a0aa33e601c469a126e3ed6e35208fe3ea3" },
   "codecompanion.nvim": { "branch": "feat/add-azure-openai-adapter", "commit": "d567feb5c5c81e7efc9a9852dda43e292a058b63" },
   "conform.nvim": { "branch": "master", "commit": "363243c03102a531a8203311d4f2ae704c620d9b" },

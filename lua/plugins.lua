@@ -89,7 +89,17 @@ return {
   {
     "saghen/blink.cmp",
     -- optional: provides snippets for the snippet source
-    dependencies = { "rafamadriz/friendly-snippets", "giuxtaposition/blink-cmp-copilot" },
+    dependencies = {
+      "rafamadriz/friendly-snippets",
+      {
+        "fang2hou/blink-copilot",
+        opts = {
+          max_completions = 1, -- Global default for max completions
+          max_attempts = 2, -- Global default for max attempts
+          -- `kind` is not set, so the default value is "Copilot"
+        },
+      },
+    },
 
     -- use a release tag to download pre-built binaries
     version = "*",
@@ -116,39 +126,8 @@ return {
         -- Adjusts spacing to ensure icons are aligned
         nerd_font_variant = "mono",
 
-        -- Blink does not expose its default kind icons so you must copy them all (or set your custom ones) and add Copilot
         kind_icons = {
           Copilot = "",
-          Text = "󰉿",
-          Method = "󰊕",
-          Function = "󰊕",
-          Constructor = "󰒓",
-
-          Field = "󰜢",
-          Variable = "󰆦",
-          Property = "󰖷",
-
-          Class = "󱡠",
-          Interface = "󱡠",
-          Struct = "󱡠",
-          Module = "󰅩",
-
-          Unit = "󰪚",
-          Value = "󰦨",
-          Enum = "󰦨",
-          EnumMember = "󰦨",
-
-          Keyword = "󰻾",
-          Constant = "󰏿",
-
-          Snippet = "󱄽",
-          Color = "󰏘",
-          File = "󰈔",
-          Reference = "󰬲",
-          Folder = "󰉋",
-          Event = "󱐋",
-          Operator = "󰪚",
-          TypeParameter = "󰬛",
         },
       },
 
@@ -175,19 +154,9 @@ return {
         providers = {
           copilot = {
             name = "copilot",
-            module = "blink-cmp-copilot",
+            module = "blink-copilot",
             score_offset = 100,
             async = true,
-
-            transform_items = function(_, items)
-              local CompletionItemKind = require("blink.cmp.types").CompletionItemKind
-              local kind_idx = #CompletionItemKind + 1
-              CompletionItemKind[kind_idx] = "Copilot"
-              for _, item in ipairs(items) do
-                item.kind = kind_idx
-              end
-              return items
-            end,
           },
         },
       },
