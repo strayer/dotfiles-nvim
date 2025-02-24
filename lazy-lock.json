@@ -6,6 +6,7 @@
   "codecompanion.nvim": { "branch": "feat/add-azure-openai-adapter", "commit": "d567feb5c5c81e7efc9a9852dda43e292a058b63" },
   "conform.nvim": { "branch": "master", "commit": "a6f5bdb78caa305496357d17e962bbc4c0b392e2" },
   "copilot.lua": { "branch": "master", "commit": "30321e33b03cb924fdcd6a806a0dc6fa0b0eafb9" },
+  "csvview.nvim": { "branch": "main", "commit": "545da7939fd295c4c95e606173f5d00658d66abc" },
   "dressing.nvim": { "branch": "master", "commit": "2d7c2db2507fa3c4956142ee607431ddb2828639" },
   "fidget.nvim": { "branch": "main", "commit": "0ba1e16d07627532b6cae915cc992ecac249fb97" },
   "friendly-snippets": { "branch": "main", "commit": "efff286dd74c22f731cdec26a70b46e5b203c619" },
