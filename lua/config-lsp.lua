@@ -42,8 +42,6 @@ local function cfg()
   -- setup lspkind
   -- require("lspkind").init()
 
-  require("mason").setup()
-  require("mason-lspconfig").setup()
   local lspconfig = require("lspconfig")
 
   local lsp_servers = {
