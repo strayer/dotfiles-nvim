@@ -613,7 +613,8 @@ return {
       },
     },
     opts = require("config-avante").config(),
-    build = "make BUILD_FROM_SOURCE=true", -- Also note that this will block the startup for a bit since we are compiling bindings in Rust.
+    -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+    build = "make",
     dependencies = {
       "stevearc/dressing.nvim",
       "nvim-lua/plenary.nvim",
