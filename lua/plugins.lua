@@ -238,15 +238,15 @@ return {
     end,
   },
   {
+    "j-hui/fidget.nvim",
+    event = { "VeryLazy" },
+    opts = {},
+  },
+  {
     "neovim/nvim-lspconfig",
     config = function()
       require("config-lsp").cfg()
     end,
-    dependencies = {
-      -- Useful status updates for LSP
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { "j-hui/fidget.nvim", tag = "legacy", opts = {} },
-    },
   },
   { "b0o/SchemaStore.nvim" },
   {
@@ -640,17 +640,19 @@ return {
     },
   },
   {
-    -- "olimorris/codecompanion.nvim",
-    "strayer/codecompanion.nvim",
-    branch = "feat/add-azure-openai-adapter",
+    "olimorris/codecompanion.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
       -- "hrsh7th/nvim-cmp", -- Optional: For using slash commands and variables in the chat buffer
       -- "nvim-telescope/telescope.nvim", -- Optional: For using slash commands
       { "stevearc/dressing.nvim", opts = {} }, -- Optional: Improves `vim.ui.select`
+      "j-hui/fidget.nvim",
     },
     opts = require("config-codecompanion").config(),
+    init = function()
+      require("plugins.codecompanion.fidget-spinner"):init()
+    end,
     keys = {
       {
         "<leader>ac",
