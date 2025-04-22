@@ -709,4 +709,5 @@ return {
     },
     cmd = { "CsvViewEnable", "CsvViewDisable", "CsvViewToggle" },
   },
+  { "RRethy/vim-illuminate" },
 }
