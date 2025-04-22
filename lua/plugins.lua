@@ -151,6 +151,9 @@ return {
       -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
         default = { "lsp", "path", "snippets", "buffer", "copilot" },
+        per_filetype = {
+          codecompanion = { "codecompanion" },
+        },
         providers = {
           copilot = {
             name = "copilot",
@@ -548,9 +551,6 @@ return {
     "rachartier/tiny-inline-diagnostic.nvim",
     event = "VeryLazy",
     config = require("config-tiny-inline-diagnostic").cfg,
-    -- currently not working correctly with nvim.lint
-    -- https://github.com/rachartier/tiny-inline-diagnostic.nvim/issues/40
-    cond = false,
   },
   {
     "stevearc/oil.nvim",
@@ -566,78 +566,6 @@ return {
   { -- better vim.ui.select
     "stevearc/dressing.nvim",
     opts = {},
-  },
-  {
-    "yetone/avante.nvim",
-    cmd = {
-      "AvanteAsk",
-      "AvanteBuild",
-      "AvanteClear",
-      "AvanteEdit",
-      "AvanteRefresh",
-      "AvanteSwitchProvider",
-      "AvanteToggle",
-    },
-    keys = {
-      {
-        "<leader>aa",
-        function()
-          require("avante.api").ask()
-        end,
-        desc = "avante: ask",
-        mode = { "n", "v" },
-      },
-      {
-        "<leader>ar",
-        function()
-          require("avante.api").refresh()
-        end,
-        desc = "avante: refresh",
-        mode = "v",
-      },
-      {
-        "<leader>ae",
-        function()
-          require("avante.api").edit()
-        end,
-        desc = "avante: edit",
-        mode = { "n", "v" },
-      },
-      {
-        "<leader>at",
-        function()
-          require("avante.api").toggle()
-        end,
-        desc = "avante: toggle",
-        mode = { "n", "v" },
-      },
-    },
-    opts = require("config-avante").config(),
-    -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-    build = "make",
-    dependencies = {
-      "stevearc/dressing.nvim",
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-      -- "echasnovski/mini.icons", -- already installed, keeping line for reference
-      {
-        -- support for image pasting
-        "HakonHarnes/img-clip.nvim",
-        event = "VeryLazy",
-        opts = {
-          -- recommended settings
-          default = {
-            embed_image_as_base64 = false,
-            prompt_for_file_name = false,
-            drag_and_drop = {
-              insert_mode = true,
-            },
-            -- required for Windows users
-            use_absolute_path = true,
-          },
-        },
-      },
-    },
   },
   {
     "olimorris/codecompanion.nvim",
