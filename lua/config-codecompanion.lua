@@ -4,7 +4,11 @@ M.config = function()
   local config = {
     display = {
       chat = {
-        render_headers = false,
+        show_header_separator = false,
+      },
+      diff = {
+        enabled = true,
+        provider = "mini_diff",
       },
     },
   }
