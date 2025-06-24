@@ -2,6 +2,7 @@
   "SchemaStore.nvim": { "branch": "main", "commit": "60aa5b633fca5407e95315eaab70fcc102ac4cc8" },
   "blink-copilot": { "branch": "main", "commit": "bdc45bbbed2ec252b3a29f4adecf031e157b5573" },
   "blink.cmp": { "branch": "main", "commit": "022521a8910a5543b0251b21c9e1a1e989745796" },
+  "catppuccin": { "branch": "main", "commit": "fa42eb5e26819ef58884257d5ae95dd0552b9a66" },
   "codecompanion.nvim": { "branch": "main", "commit": "c2f3f244193c72a29be623c85595fade24f28547" },
   "conform.nvim": { "branch": "master", "commit": "8132ec733eed3bf415b97b76797ca41b59f51d7d" },
   "copilot.lua": { "branch": "master", "commit": "c1bb86abbed1a52a11ab3944ef00c8410520543d" },

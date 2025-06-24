@@ -233,6 +233,7 @@ return {
       style = "storm",
     },
   },
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
   {
     "mfussenegger/nvim-dap",
     dependencies = { "mfussenegger/nvim-dap-python" },

@@ -29,10 +29,11 @@ end
 -- end
 
 local set_from_os = function()
-  vim.cmd.colorscheme("tokyonight")
   if os_is_dark() then
+    vim.cmd.colorscheme("tokyonight")
     vim.o.background = "dark"
   else
+    vim.cmd.colorscheme("catppuccin-latte")
     vim.o.background = "light"
   end
 
