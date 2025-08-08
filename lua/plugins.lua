@@ -482,14 +482,6 @@ return {
     },
   },
   {
-    "zeioth/garbage-day.nvim",
-    dependencies = "neovim/nvim-lspconfig",
-    event = "VeryLazy",
-    opts = {
-      -- your options here
-    },
-  },
-  {
     "Vimjas/vim-python-pep8-indent",
     ft = "python",
   },
