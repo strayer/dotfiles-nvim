@@ -490,8 +490,11 @@ return {
   {
     "OXY2DEV/markview.nvim",
     lazy = false, -- Recommended
+    -- For `nvim-treesitter` users.
+    priority = 49,
+    -- For blink.cmp's completion source
     dependencies = {
-      "nvim-treesitter/nvim-treesitter",
+      "saghen/blink.cmp",
     },
     ft = { "markdown", "quarto", "rmd", "Avante", "codecompanion" },
     opts = {
