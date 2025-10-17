@@ -42,8 +42,6 @@ local function cfg()
   -- setup lspkind
   -- require("lspkind").init()
 
-  local lspconfig = require("lspconfig")
-
   local lsp_servers = {
     "ansiblels",
     "basedpyright",
@@ -152,7 +150,11 @@ local function cfg()
       opts.filetypes = { "toml" }
     end
 
-    lspconfig[server].setup(opts)
+    -- Use new vim.lsp.config API (Neovim 0.11+)
+    -- Step 1: Define the config
+    vim.lsp.config[server] = opts
+    -- Step 2: Enable the server
+    vim.lsp.enable(server)
   end
 end
 
