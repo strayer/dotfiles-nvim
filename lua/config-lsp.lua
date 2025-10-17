@@ -28,7 +28,7 @@ local function cfg()
   -- vim.api.nvim_create_user_command("LspFormat", function()
   --   vim.lsp.buf.format({
   --     filter = function(client)
-  --       return client.name ~= "tsserver" and client.name ~= "volar"
+  --       return client.name ~= "vtsls"
   --     end,
   --     timeout_ms = 4000,
   --   })
@@ -59,10 +59,8 @@ local function cfg()
     "solargraph",
     "terraformls",
     "tflint",
-    "volar",
+    "vtsls",
     "yamlls",
-    -- "tsserver",
-    -- "vuels",
   }
   for _, server in ipairs(lsp_servers) do
     -- default lsp opts
@@ -112,10 +110,6 @@ local function cfg()
           },
         },
       }
-    end
-
-    if server == "volar" then
-      opts.filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" }
     end
 
     if server == "jsonls" then
