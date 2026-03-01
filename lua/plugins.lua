@@ -28,10 +28,13 @@ return {
   },
   { "dag/vim-fish" },
   {
-    "ggandor/leap.nvim",
+    url = "https://codeberg.org/andyg/leap.nvim",
     dependencies = { "tpope/vim-repeat" },
+    -- Don't use lazy.nvim `keys` for lazy loading - leap handles it internally.
+    -- See https://codeberg.org/andyg/leap.nvim#installation
     config = function()
-      require("leap").set_default_keymaps()
+      vim.keymap.set({ "n", "x", "o" }, "s", "<Plug>(leap)")
+      vim.keymap.set("n", "S", "<Plug>(leap-from-window)")
     end,
   },
   { "voldikss/vim-floaterm", cmd = { "FloatermNew", "FloatermToggle" } },
