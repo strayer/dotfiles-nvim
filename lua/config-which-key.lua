@@ -2,6 +2,7 @@ local M = {}
 
 M.keys = {
   { "<leader>a", name = "AI" },
+  { "<leader>C", name = "Claude Code" },
   { "<leader>c", name = "code" },
   { "<leader>?", "<CMD>NvimTreeFindFile<CR>", desc = "find current file" },
   { "<leader>e", group = "explore" },

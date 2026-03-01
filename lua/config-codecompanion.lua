@@ -8,7 +8,17 @@ M.config = function()
       },
       diff = {
         enabled = true,
-        provider = "mini_diff",
+      },
+    },
+    interactions = {
+      chat = {
+        adapter = "azure_openai",
+      },
+      inline = {
+        adapter = "azure_openai",
+      },
+      cmd = {
+        adapter = "azure_openai",
       },
     },
   }

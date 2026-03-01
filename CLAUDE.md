@@ -29,9 +29,10 @@ Supported formatters: stylua (Lua), prettierd (HTML/JSON/Markdown), shfmt (shell
 
 ### AI Assistance
 
-Two AI systems are configured:
+Three AI systems are configured:
 
-- **CodeCompanion**: `<leader>ac` to toggle chat, `<C-a>` for actions, `ga` to add selection to chat
+- **CodeCompanion** (`<leader>a`): `<leader>ac` to toggle chat, `<leader>aa` for actions, `<leader>ai` for inline assistant, `ga` to add selection to chat
+- **Claude Code** (`<leader>C`): `<leader>Cc` to toggle Claude Code terminal, `<leader>Cf` to focus
 - **Copilot**: Integrated via blink.cmp for completions
 
 ## Architecture & Key Components
@@ -73,6 +74,7 @@ The configuration automatically switches between light/dark modes by:
 The configuration uses which-key for discoverable keybindings organized by prefix:
 
 - `<leader>a` - AI operations (CodeCompanion)
+- `<leader>C` - Claude Code operations
 - `<leader>c` - Code operations (formatting, etc.)
 - `<leader>d` - Debug operations (DAP integration)
 - `<leader>e` - Explore (Neo-tree file/buffer/git views)
