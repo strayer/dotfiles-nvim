@@ -16,6 +16,7 @@ require("basics")
 require("lazy").setup({
   spec = "plugins",
   install = { missing = false },
+  rocks = { enabled = false },
 })
 
 require("auto-dark-mode").init()
