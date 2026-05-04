@@ -188,9 +188,6 @@ return {
       symbol_in_winbar = { enable = false },
     },
     event = "LspAttach",
-    dependencies = {
-      { "nvim-treesitter/nvim-treesitter" },
-    },
   },
   {
     "kosayoda/nvim-lightbulb",
@@ -205,8 +202,6 @@ return {
     event = "InsertEnter",
     config = true,
   },
-  -- wisely add "end" in Ruby, Lua, Vimscript, etc.
-  { "RRethy/nvim-treesitter-endwise" },
   {
     "AckslD/nvim-neoclip.lua",
     opts = {},
@@ -219,15 +214,17 @@ return {
     end,
   },
   {
-    "nvim-treesitter/nvim-treesitter",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter-textobjects",
-      "OXY2DEV/markview.nvim",
-    },
+    "bezhermoso/tree-sitter-ghostty",
+    build = "make nvim_install",
+    ft = "ghostty",
+  },
+  {
+    "romus204/tree-sitter-manager.nvim",
     config = function()
-      require("config-treesitter").cfg()
+      require("tree-sitter-manager").setup({
+        auto_install = true,
+      })
     end,
-    build = ":TSUpdate",
   },
   {
     "folke/tokyonight.nvim",
@@ -384,9 +381,6 @@ return {
   {
     "cuducos/yaml.nvim",
     ft = { "yaml" }, -- optional
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-    },
     cmd = {
       "YAMLView",
       "YAMLYank",
@@ -591,7 +585,6 @@ return {
     "olimorris/codecompanion.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
     },
     config = function()
       require("codecompanion").setup(require("config-codecompanion").config())
