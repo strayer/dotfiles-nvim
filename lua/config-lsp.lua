@@ -57,6 +57,7 @@ local function cfg()
     "powershell_es",
     "ruff",
     "solargraph",
+    "taplo",
     "terraformls",
     "tflint",
     "vtsls",
