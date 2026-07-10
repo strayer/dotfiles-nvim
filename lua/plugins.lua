@@ -153,13 +153,6 @@ return {
   },
   { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
   {
-    "mfussenegger/nvim-dap",
-    dependencies = { "mfussenegger/nvim-dap-python" },
-    config = function()
-      require("config-dap-python").cfg()
-    end,
-  },
-  {
     "j-hui/fidget.nvim",
     event = { "VeryLazy" },
     opts = {},
@@ -172,8 +165,8 @@ return {
   },
   { "b0o/SchemaStore.nvim" },
   {
-    -- note: do not lazy-load, BufReadPost autocmd will break
     "mfussenegger/nvim-lint",
+    ft = { "dockerfile", "markdown" },
     config = function()
       local lint = require("lint")
       lint.linters_by_ft = {
@@ -193,11 +186,15 @@ return {
         end
       end
 
-      vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave" }, {
+      vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
         callback = debounce(100, function()
           lint.try_lint()
         end),
       })
+
+      vim.schedule(function()
+        lint.try_lint()
+      end)
     end,
   },
   {
@@ -324,47 +321,6 @@ return {
     end,
   },
   {
-    "kevinhwang91/nvim-ufo",
-    dependencies = {
-      "kevinhwang91/promise-async",
-      {
-        "luukvbaal/statuscol.nvim",
-        config = function()
-          local builtin = require("statuscol.builtin")
-          require("statuscol").setup({
-            relculright = true,
-            segments = {
-              { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
-              { text = { "%s" }, click = "v:lua.ScSa" },
-              { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
-            },
-          })
-        end,
-      },
-    },
-    event = "BufReadPost",
-    opts = {
-      provider_selector = function()
-        return { "treesitter", "indent" }
-      end,
-    },
-
-    init = function()
-      -- UFO folding
-      vim.o.foldcolumn = "1" -- '0' is not bad
-      vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-      vim.o.foldlevelstart = 99
-      vim.o.foldenable = true
-      vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
-      vim.keymap.set("n", "zR", function()
-        require("ufo").openAllFolds()
-      end)
-      vim.keymap.set("n", "zM", function()
-        require("ufo").closeAllFolds()
-      end)
-    end,
-  },
-  {
     "OXY2DEV/markview.nvim",
     lazy = false, -- Recommended
     -- For `nvim-treesitter` users.
@@ -405,10 +361,6 @@ return {
     },
   },
   {
-    "dstein64/vim-startuptime",
-    cmd = "StartupTime",
-  },
-  {
     "folke/lazydev.nvim",
     ft = "lua", -- only load on lua files
     opts = {
@@ -424,15 +376,6 @@ return {
     "rachartier/tiny-inline-diagnostic.nvim",
     event = "VeryLazy",
     config = require("config-tiny-inline-diagnostic").cfg,
-  },
-  {
-    "ejrichards/mise.nvim",
-    opts = {},
-    cond = vim.g.neovide == true,
-  },
-  {
-    "MagicDuck/grug-far.nvim",
-    opts = {},
   },
   {
     "hat0uma/csvview.nvim",

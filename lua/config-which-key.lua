@@ -15,12 +15,6 @@ M.keys = {
   },
   { "<leader>h", "<C-W>s", desc = "split below" },
   { "<leader>v", "<C-W>v", desc = "split right" },
-  { "<leader>d", group = "debug" },
-  { "<leader>db", '<CMD>lua require"dap".toggle_breakpoint()<CR>', desc = "toggle breakpoint" },
-  { "<leader>dc", '<CMD>lua require"dap".continue()<CR>', desc = "continue" },
-  { "<leader>do", '<CMD>lua require"dap".step_over()<CR>', desc = "step over" },
-  { "<leader>di", '<CMD>lua require"dap".step_into()<CR>', desc = "step into" },
-  { "<leader>dr", '<CMD>lua require"dap".repl.open()<CR>', desc = "repl" },
   { "<leader>s", group = "search" },
   {
     "<leader>sb",
