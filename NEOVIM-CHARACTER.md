@@ -18,9 +18,11 @@ progress.
   this means 22 retained direct specs because Lazy is bootstrapped separately.
 - The Neo-tree migration is implemented in isolated commit `1bf68ef`
   (`chore(neo-tree): upgrade to v3`). The in-editor AI removal is implemented in
-  isolated commit `8a6d89d` (`refactor(ai): remove in-editor AI plugins`). Every
-  remaining verdict is still a target-state decision, not a description of the
-  current configuration.
+  isolated commit `8a6d89d` (`refactor(ai): remove in-editor AI plugins`), and
+  completion simplification is implemented in `9296ec5`
+  (`refactor(completion): simplify Blink and scope LazyDev`). Every remaining
+  verdict is still a target-state decision, not a description of the current
+  configuration.
 - Leap and Lualine implementation edits were deliberately reverted before that
   commit to keep it isolated. Reapply their final decisions during the cleanup.
 - MiniFiles, MiniClue, and Neovim UI2 are explicitly deferred future
@@ -51,13 +53,15 @@ not cover.
 | Neo-tree v3 migration | Complete | `1bf68ef`; included in `main` and preserved on this branch. |
 | Audit and cleanup plan | Complete | `b84b8d1`. |
 | Remove in-editor AI plugins | Complete | `8a6d89d`; removed Copilot, BlinkCopilot, CodeCompanion, ClaudeCode, and Snacks plus their active mappings/configuration. |
-| Simplify completion and LazyDev | In progress | Keep Friendly Snippets and luvit-meta until this separate group is implemented and verified. |
-| Remaining cleanup groups | Pending | UI/Mini.nvim, navigation, filetypes, development tools, and final documentation. |
+| Simplify completion and LazyDev | Complete | `9296ec5`; removed Friendly Snippets and luvit-meta, narrowed Blink sources, and scoped LazyDev. |
+| Consolidate UI helpers into Mini.nvim | In progress | Refresh current upstream Mini module documentation before editing. |
+| Remaining cleanup groups | Pending | Navigation, filetypes, development tools, and final documentation. |
 
-After the AI-removal commit, the resolved lockfile contains 58 entries. Before
-verifying that commit, `:Lazy restore` reconciled the shared installed state to
-the committed lockfile; Neo-tree and nvim-window-picker now match `1bf68ef`
-instead of their stale pre-migration installed checkouts.
+The resolved lockfile contained 58 entries after the AI-removal commit and 56
+after completion simplification. Before verifying the AI commit, `:Lazy restore`
+reconciled the shared installed state to the committed lockfile; Neo-tree and
+nvim-window-picker now match `1bf68ef` instead of their stale pre-migration
+installed checkouts.
 
 ## Final target manifest
 
@@ -72,7 +76,7 @@ Retain these 23 direct plugins, counting bootstrapped Lazy:
 | `lualine.nvim` | Polished global statusline | Remove stale `lsp_progress`; change `nvim-tree` extension to `neo-tree`. |
 | `neo-tree.nvim` | Primary filesystem/buffer/Git explorer | Already upgraded to v3 in `1bf68ef`; preserve that commit. |
 | `which-key.nvim` | Current keymap discovery UI | Keep now; remove stale mappings only. Full mapping normalization is deferred. |
-| `blink.cmp` | Completion | Apply the I05 provider/dependency refresh. |
+| `blink.cmp` | Completion | I05 provider/dependency refresh completed in `9296ec5`. |
 | `tree-sitter-manager.nvim` | Parser management | No change. |
 | `tokyonight.nvim` | Intentional dark theme | No change. |
 | `catppuccin` | Intentional light theme | No change. |
@@ -82,9 +86,9 @@ Retain these 23 direct plugins, counting bootstrapped Lazy:
 | `nvim-lint` | Diagnostics where LSPs are missing/subpar | Narrow loading and explicitly schedule the initial lint. |
 | `conform.nvim` | Format-on-save and manual formatting | Replace direct `require("notify")` with `vim.notify`. |
 | `mini.nvim` | Consolidation hub and editing utilities | Add the approved modules/configuration listed below. |
-| `markview.nvim` | Core in-Neovim Markdown rendering | Keep; remove obsolete Avante/CodeCompanion filetypes. |
+| `markview.nvim` | Core in-Neovim Markdown rendering | Kept; obsolete Avante/CodeCompanion filetypes removed in `8a6d89d`. |
 | `fzf-lua` | Sole picker and `vim.ui.select` implementation | Set `ui_select = true`; keep its current interaction model. |
-| `lazydev.nvim` | Neovim-config Lua metadata/completion | Scope to the Neovim config, use bundled luv types, and add its Blink provider. |
+| `lazydev.nvim` | Neovim-config Lua metadata/completion | Neovim-config scope, bundled luv types, and Blink provider completed in `9296ec5`. |
 | `tiny-inline-diagnostic.nvim` | Polished inline diagnostics | No change. |
 | `csvview.nvim` | Occasional CSV table/navigation workflow | No change; retain command-lazy loading. |
 | `vim-illuminate` | Semantic references with lexical fallback | No change. |
@@ -193,7 +197,8 @@ Remove these dependency specs when their parents/integrations disappear:
 Do not remove `plenary.nvim`, `nui.nvim`, or `nvim-window-picker`; Neo-tree still
 requires them. Keep the Neo-tree/window-picker v3/v2 changes already committed.
 The AI plugin subset and its dependency-only integrations were removed in
-`8a6d89d`; the other entries in these lists remain pending.
+`8a6d89d`; Friendly Snippets and luvit-meta were removed in `9296ec5`. The other
+entries in these lists remain pending.
 
 ### 2. Apply retained-plugin configuration decisions
 
@@ -354,11 +359,12 @@ Recommended sequence after `1bf68ef`:
    - Removed Copilot, BlinkCopilot, CodeCompanion, ClaudeCode, and Snacks.
    - Removed their Blink/Markview integrations, AI mappings, and tracked
      CodeCompanion configuration while preserving ignored private files.
-3. `refactor(completion): simplify Blink and scope LazyDev` - in progress.
-   - Remove Friendly Snippets and luvit-meta.
-   - Apply the recorded Blink and LazyDev provider, source, and workspace-scope
+3. `refactor(completion): simplify Blink and scope LazyDev` - complete in
+   `9296ec5`.
+   - Removed Friendly Snippets and luvit-meta.
+   - Applied the recorded Blink and LazyDev provider, source, and workspace-scope
      decisions.
-4. `refactor(ui): consolidate UI helpers into mini.nvim`
+4. `refactor(ui): consolidate UI helpers into mini.nvim` - in progress.
    - Update Mini.nvim and add Trailspace, Pairs, Hipatterns, Input, and Notify.
    - Make MiniDiff use sign style.
    - Remove vim-better-whitespace, Todo Comments, nvim-autopairs, Gitsigns,
