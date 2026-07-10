@@ -26,8 +26,11 @@ progress.
   cleanup is implemented in `16e125a`
   (`refactor(navigation): simplify movement and discovery mappings`). Browser
   Markdown preview removal is implemented in `101d600`
-  (`refactor(markdown): remove browser preview`). Every remaining verdict is
-  still a target-state decision, not a description of the current configuration.
+  (`refactor(markdown): remove browser preview`), and native filetype cleanup is
+  implemented in `2142857`
+  (`refactor(filetypes): prefer native language support`). Every remaining
+  verdict is still a target-state decision, not a description of the current
+  configuration.
 - Leap and Lualine implementation edits were deliberately reverted before the
   Neo-tree commit to keep it isolated; their final decisions are now applied in
   `16e125a` and `a4d8f76`, respectively.
@@ -63,15 +66,16 @@ not cover.
 | Consolidate UI helpers into Mini.nvim | Complete | `a4d8f76`; updated Mini.nvim, enabled the approved modules, and removed their standalone predecessors. |
 | Simplify navigation and discovery | Complete | `16e125a`; moved Leap, restored context-specific Enter, removed navigation plugins, and fixed native LSP actions. |
 | Remove browser Markdown preview | Complete | `101d600`; Markview remains the core Markdown renderer. |
-| Prefer native filetype support | In progress | Remove six legacy language plugins and add native Caddy detection. |
-| Remaining cleanup groups | Pending | Development tools and final documentation. |
+| Prefer native filetype support | Complete | `2142857`; removed six legacy language plugins and added native Caddy detection. |
+| Remove unused development tools | In progress | Remove DAP/folding/project tools and narrow nvim-lint. |
+| Final documentation | Pending | Update README/CLAUDE, record measurements, and run the full acceptance pass. |
 
 The resolved lockfile contained 58 entries after the AI-removal commit, 56 after
 completion simplification, 49 after UI consolidation, and 41 after navigation
-cleanup. Browser-preview removal reduced it to 40. Before verifying the AI
-commit, `:Lazy restore` reconciled the shared installed state to the committed
-lockfile; Neo-tree and nvim-window-picker now match `1bf68ef` instead of their
-stale pre-migration installed checkouts.
+cleanup. Browser-preview removal reduced it to 40, and filetype cleanup reduced
+it to 34. Before verifying the AI commit, `:Lazy restore` reconciled the shared
+installed state to the committed lockfile; Neo-tree and nvim-window-picker now
+match `1bf68ef` instead of their stale pre-migration installed checkouts.
 
 ## Final target manifest
 
@@ -87,7 +91,7 @@ Retain these 23 direct plugins, counting bootstrapped Lazy:
 | `neo-tree.nvim` | Primary filesystem/buffer/Git explorer | Already upgraded to v3 in `1bf68ef`; preserve that commit. |
 | `which-key.nvim` | Current keymap discovery UI | Kept; removal-specific stale mappings cleaned in `16e125a`. Full normalization is deferred. |
 | `blink.cmp` | Completion | I05 provider/dependency refresh completed in `9296ec5`. |
-| `tree-sitter-manager.nvim` | Parser management | No change. |
+| `tree-sitter-manager.nvim` | Parser management | Retained; Caddy parser source confirmed after `2142857`. |
 | `tokyonight.nvim` | Intentional dark theme | No change. |
 | `catppuccin` | Intentional light theme | No change. |
 | `fidget.nvim` | Sole LSP-progress display | Retained; MiniNotify LSP progress disabled in `a4d8f76`. |
@@ -220,7 +224,8 @@ The AI plugin subset and its dependency-only integrations were removed in
 `8a6d89d`; Friendly Snippets and luvit-meta were removed in `9296ec5`. UI
 consolidation entries were removed in `a4d8f76`. The entries in these lists
 covered by navigation were removed in `16e125a`, and browser preview was removed
-in `101d600`; filetype and development-tool entries remain pending.
+in `101d600`. Filetype entries were removed in `2142857`; development-tool
+entries remain pending.
 
 ### 2. Apply retained-plugin configuration decisions
 
@@ -405,12 +410,13 @@ Recommended sequence after `1bf68ef`:
 6. `refactor(markdown): remove browser preview` - complete in `101d600`.
    - Remove `markdown-preview.nvim`; Markview remains the core in-editor Markdown
      renderer.
-7. `refactor(filetypes): prefer native language support` - in progress.
+7. `refactor(filetypes): prefer native language support` - complete in
+   `2142857`.
    - Remove vim-fish, vim-kitty, vim-python-pep8-indent, vim-caddyfile,
      tree-sitter-ghostty, and yaml.nvim.
    - Add native Caddyfile detection and retain Tree-sitter Manager's Caddy
      parser path.
-8. `refactor(dev-tools): remove unused tools and narrow linting`
+8. `refactor(dev-tools): remove unused tools and narrow linting` - in progress.
    - Remove DAP/DAP Python, the UFO/promise-async/statuscol folding stack,
      Grug Far, Mise, and vim-startuptime.
    - Delete DAP configuration and `debugpy-requirements.txt`.
