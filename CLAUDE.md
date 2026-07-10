@@ -5,10 +5,9 @@ configuration.
 
 ## Repository overview
 
-This is a focused Neovim 0.12 configuration managed by lazy.nvim. The durable
-design brief, plugin decisions, implementation ledger, and deferred experiments
-are in `NEOVIM-CHARACTER.md`; read it before changing plugin ownership or the
-editor's intended character.
+This is a focused Neovim 0.12 configuration managed by lazy.nvim. Preserve the
+clear workflow ownership described below when changing plugins or the editor's
+intended character; completed cleanup decisions remain available in Git history.
 
 The resolved graph has 26 lockfile entries: 23 direct plugins including
 bootstrapped Lazy and three Neo-tree dependencies.
@@ -36,7 +35,7 @@ stylua --check .                         # Check Lua formatting
 - `lua/config-which-key.lua` contains only WhichKey group labels; plugin-backed
   mappings live with their plugin specifications or setup.
 - `lua/auto-dark-mode.lua` reads `~/.cache/system-theme.txt` and switches themes.
-- `NEOVIM-CHARACTER.md` is the source of truth for design and cleanup status.
+- This file and `README.md` describe the current design and workflow ownership.
 
 ## Current system ownership
 
@@ -93,14 +92,12 @@ prefixes such as `g` and `z` is part of the desired workflow.
 2. Keep functional plugin removals, their dependencies, stale mappings,
    orphaned files, and lockfile entries in the same commit.
 3. Before enabling a new plugin or Mini module, read its current official
-   installation, configuration, migration, and health documentation. Record the
-   URL and retrieval date in `NEOVIM-CHARACTER.md`.
-4. Keep `NEOVIM-CHARACTER.md` synchronized whenever implementation status or
-   commit grouping changes.
-5. Run StyLua, `git diff --check`, headless startup, and focused runtime checks
+   installation, configuration, migration, and health documentation. Record
+   durable ownership or operational changes in this file and `README.md`.
+4. Run StyLua, `git diff --check`, headless startup, and focused runtime checks
    before each functional commit. Run the full acceptance checklist before final
    handoff.
-6. Do not modify or commit ignored private configuration without explicit user
+5. Do not modify or commit ignored private configuration without explicit user
    direction.
 
 ## Environment-specific behavior

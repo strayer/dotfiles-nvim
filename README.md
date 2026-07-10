@@ -79,9 +79,8 @@ points are:
 
 ## Development
 
-`NEOVIM-CHARACTER.md` records the configuration's design decisions, completed
-cleanup commits, and deferred experiments. Read it before changing plugin
-ownership or reintroducing a removed workflow.
+The current architecture and workflow ownership are described above and in
+`CLAUDE.md`; completed cleanup decisions remain available in Git history.
 
 Useful commands:
 
