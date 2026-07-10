@@ -57,8 +57,9 @@ nvim --headless "+Lazy! restore" +qa
 
 ## Key mappings
 
-Space is the leader key, and WhichKey displays the available mapping groups.
-The main custom entry points are:
+Space is the leader key. WhichKey observes the descriptions on normal and
+plugin-owned mappings and displays the available groups. The main custom entry
+points are:
 
 - `<CR>` starts Leap in normal, visual, and operator-pending modes; `g<CR>`
   starts cross-window Leap. Quickfix, command, Neo-tree, and CSV buffers retain

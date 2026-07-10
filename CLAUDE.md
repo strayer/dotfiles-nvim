@@ -29,9 +29,12 @@ stylua --check .                         # Check Lua formatting
 - `init.lua` bootstraps Lazy and loads core configuration.
 - `lua/basics.lua` owns editor options, general autocmds, and native filetype
   additions.
+- `lua/keymaps.lua` owns normal mappings for native editor, LSP, terminal, and
+  window actions.
 - `lua/plugins.lua` is the plugin specification and most focused setup.
 - `lua/config-*.lua` contains larger retained plugin configurations.
-- `lua/config-which-key.lua` contains the existing discovery/mapping spec.
+- `lua/config-which-key.lua` contains only WhichKey group labels; plugin-backed
+  mappings live with their plugin specifications or setup.
 - `lua/auto-dark-mode.lua` reads `~/.cache/system-theme.txt` and switches themes.
 - `NEOVIM-CHARACTER.md` is the source of truth for design and cleanup status.
 
@@ -69,13 +72,15 @@ stylua --check .                         # Check Lua formatting
   Neo-tree mappings remain primary.
 - `<leader>f` - find files with FzfLua.
 - `<leader>l` - LSP diagnostics, symbols, code actions, and native operations.
-- `<leader>s` - FzfLua searches and session selection.
-- `<leader>S` - session creation.
+- `<leader>s` - FzfLua searches.
+- `<leader>S` - session selection and creation.
 - `<leader>t` - terminal operations.
 - `<leader>w` - window operations.
 
-WhichKey remains the current mapping discovery layer. Full normalization of
-mapping ownership and any MiniClue experiment are explicitly deferred.
+WhichKey remains the current mapping discovery layer, but it does not create
+action mappings. It observes their `desc` metadata and supplies group labels
+only. The mapping architecture is normalized; any MiniClue experiment remains
+explicitly deferred.
 
 ## Development rules
 
