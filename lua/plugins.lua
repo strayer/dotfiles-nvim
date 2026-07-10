@@ -46,28 +46,27 @@ return {
   },
   {
     "nvim-neo-tree/neo-tree.nvim",
-    branch = "v2.x",
+    branch = "v3.x",
     cmd = "Neotree",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
       {
         "s1n7ax/nvim-window-picker",
-        version = "1.*",
+        version = "2.*",
         opts = {
-          autoselect_one = true,
-          include_current = false,
           filter_rules = {
+            autoselect_one = true,
+            include_current_win = false,
             -- filter using buffer options
             bo = {
               -- if the file type is one of following, the window will be ignored
-              filetype = { "neo-tree", "neo-tree-popup", "notify", "quickfix" },
+              filetype = { "neo-tree", "neo-tree-popup", "mininotify" },
 
               -- if the buffer type is one of following, the window will be ignored
-              buftype = { "terminal" },
+              buftype = { "terminal", "quickfix" },
             },
           },
-          other_win_hl_color = "#e35e4f",
         },
       },
     },

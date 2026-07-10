@@ -1,13 +1,16 @@
 local M = {}
 
 M.cfg = function()
-  vim.g.neo_tree_remove_legacy_commands = 1
-
-  -- If you want icons for diagnostic errors, you'll need to define them somewhere:
-  vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
-  vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
-  vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
-  vim.fn.sign_define("DiagnosticSignHint", { text = "", texthl = "DiagnosticSignHint" })
+  vim.diagnostic.config({
+    signs = {
+      text = {
+        [vim.diagnostic.severity.ERROR] = " ",
+        [vim.diagnostic.severity.WARN] = " ",
+        [vim.diagnostic.severity.INFO] = " ",
+        [vim.diagnostic.severity.HINT] = "󰌵",
+      },
+    },
+  })
 
   require("neo-tree").setup({
     enable_git_status = true,
@@ -16,7 +19,8 @@ M.cfg = function()
     -- log_to_file = true,
     filesystem = {
       use_libuv_file_watcher = true,
-      async_directory_scan = false,
+      -- Preserve the old `false` behavior using Neo-tree v3's named setting.
+      async_directory_scan = "never",
       filtered_items = {
         always_show = {
           ".github",
@@ -33,8 +37,8 @@ M.cfg = function()
       {
         event = "file_opened",
         handler = function()
-          --auto close
-          require("neo-tree").close_all()
+          -- Auto-close the tree after choosing a file.
+          require("neo-tree.command").execute({ action = "close" })
         end,
       },
     },
