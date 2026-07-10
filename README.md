@@ -12,7 +12,8 @@ by the broader [dotfiles repository](https://github.com/strayer/dotfiles).
   while editing this Neovim configuration.
 - Native `vim.lsp.config`/`vim.lsp.enable` setup for the configured language
   servers.
-- Neo-tree filesystem, buffer, and Git views.
+- Neo-tree filesystem, buffer, and Git views, with MiniFiles enabled for a
+  focused post-cleanup workflow trial.
 - FzfLua pickers for files, text, buffers, diagnostics, symbols, and other
   searchable editor state.
 - Markview rendering for Markdown, Quarto, and R Markdown inside Neovim.
@@ -21,7 +22,7 @@ by the broader [dotfiles repository](https://github.com/strayer/dotfiles).
 - Fugitive for Git commands and MiniDiff signs for changed lines.
 - Mini.nvim modules for sessions, the start screen, surrounding edits,
   indentation, trailing whitespace, pairs, highlighted task words, input,
-  notifications, icons, and diffs.
+  notifications, icons, diffs, and the MiniFiles trial.
 - Lualine, Tiny Inline Diagnostic, Fidget LSP progress, CSVView, Illuminate, and
   FloatTerm for their focused workflows.
 - Automatic Tokyonight dark and Catppuccin Latte light theme switching.
@@ -63,7 +64,8 @@ The main custom entry points are:
   starts cross-window Leap. Quickfix, command, Neo-tree, and CSV buffers retain
   their local Enter behavior.
 - `sa`, `sd`, and `sr` add, delete, and replace surroundings with MiniSurround.
-- `<leader>e` opens Neo-tree filesystem, buffer, and Git views.
+- `<leader>e` opens explorer views: Neo-tree remains primary, while
+  `<leader>em` opens the MiniFiles trial focused on the current file.
 - `<leader>f` and `<leader>s` provide FzfLua file and search operations.
 - `<leader>l` contains diagnostics, symbols, code actions, and native LSP
   operations.

@@ -35,8 +35,10 @@ As of 2026-07-10, the plugin audit and cleanup implementation are complete.
 - Leap and Lualine implementation edits were deliberately reverted before the
   Neo-tree commit to keep it isolated; their final decisions are now applied in
   `16e125a` and `a4d8f76`, respectively.
-- MiniFiles, MiniClue, and Neovim UI2 are explicitly deferred future
-  experiments. They must not block or expand the cleanup implementation.
+- The MiniFiles post-cleanup trial is active in `059e1a1`
+  (`feat(files): trial mini.files alongside neo-tree`); its real-use decision is
+  pending. MiniClue and Neovim UI2 remain explicitly deferred future
+  experiments and must be handled one at a time.
 - This audit document was added separately in `b84b8d1`
   (`docs(nvim): record plugin audit and cleanup plan`) so the Neo-tree migration
   stayed isolated.
@@ -70,6 +72,7 @@ not cover.
 | Prefer native filetype support | Complete | `2142857`; removed six legacy language plugins and added native Caddy detection. |
 | Remove unused development tools | Complete | `d03ed1b`; removed DAP/folding/project tools, orphaned files, and narrowed nvim-lint. |
 | Final documentation and acceptance | Complete | README/CLAUDE describe the final architecture; measurements and verification are recorded below. |
+| MiniFiles post-cleanup trial | Active | `059e1a1`; enabled on `<leader>em` alongside primary Neo-tree, pending real-use evaluation. |
 
 The resolved lockfile contained 58 entries after the AI-removal commit, 56 after
 completion simplification, 49 after UI consolidation, and 41 after navigation
@@ -201,6 +204,11 @@ Implementation documentation log:
   These confirm default setup for Trailspace/Pairs/Input, standalone frontier
   patterns and built-in groups for Hipatterns, `lsp_progress.enable = false`
   for Notify, and `view.style = "sign"` for Diff.
+- 2026-07-10, current `main` branch: official
+  [MiniFiles documentation](https://raw.githubusercontent.com/nvim-mini/mini.nvim/main/doc/mini-files.txt).
+  This confirms `MiniFiles.open(path)` for focusing the current file and that
+  `options.use_as_default_explorer` defaults to `true`; the side-by-side trial
+  sets it to `false` so Neo-tree remains primary.
 
 ### 1. Reduce the plugin graph
 
@@ -502,7 +510,9 @@ All checks below passed on 2026-07-10:
 These are not pending audit failures and must not be implemented as part of the
 slimming pass:
 
-- Trial `mini.files` alongside retained Neo-tree in real use.
+- Active: trial `mini.files` on `<leader>em` alongside retained Neo-tree in real
+  use. It opens on the current file (or cwd for an unnamed buffer) and does not
+  take over directory editing.
 - Move mapping creation out of WhichKey into canonical normal/plugin mappings,
   then reassess MiniClue as a discovery-only layer.
 - Experiment with Neovim 0.12 UI2 only after Noice is removed and the native UI
@@ -1126,10 +1136,10 @@ Sources reviewed:
 - Neo-tree and its window-picker integration were upgraded and health-checked
   in isolated commit `1bf68ef` (`chore(neo-tree): upgrade to v3`). Runtime tests
   confirmed reveal, single-window auto-selection, and auto-close behavior.
-- MiniFiles was deliberately not enabled during this audit. Keep it as a future
-  workflow experiment alongside Neo-tree, using a normal mapping with a
-  description so WhichKey observes rather than owns the mapping. “Deferred” is
-  not a rejection of MiniFiles.
+- MiniFiles was deliberately not enabled during the audit. Its post-cleanup
+  trial is now active alongside Neo-tree on the normal `<leader>em` mapping, so
+  WhichKey observes rather than owns it. Neo-tree remains primary during the
+  trial and MiniFiles does not take over directory editing.
 - To keep the Neo-tree commit isolated, the already-decided Leap and Lualine
   implementation edits were reverted from tracked files. Their decisions in
   this document still stand and should be applied in the final cleanup pass.
@@ -1164,5 +1174,5 @@ complete. Deferred experiments are intentionally outside the slimming pass.
 | I05 | Blink configuration | Refresh against current upstream after removing Copilot and snippets; add LazyDev provider if appropriate. | Assessment complete; implementation recorded above |
 | I06 | Movement | Compare current Leap with MiniJump2d and other current options; restore a reliable fast-motion workflow if it still adds value. | Assessment complete; reapply `<CR>`/`g<CR>` during cleanup |
 | I07 | Lualine revisit | Make the promised final Lualine versus MiniStatusline decision after the rest of the editor shape is known. | Assessment complete; keep and apply cleanup |
-| I08 | File workflow experiment | Enable and trial MiniFiles alongside retained Neo-tree; decide whether Neo-tree remains primary after real use. | Deferred until after audit; Neo-tree v3 update complete |
+| I08 | File workflow experiment | Enable and trial MiniFiles alongside retained Neo-tree; decide whether Neo-tree remains primary after real use. | Active post-cleanup trial on `<leader>em`; Neo-tree remains primary pending real use |
 | I09 | Neovim 0.12 UI2 | Experiment only after plugin removals; decide whether the private/experimental UI is stable enough to enable. | Deferred future experiment; not required for cleanup |

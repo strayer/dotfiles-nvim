@@ -45,14 +45,16 @@ stylua --check .                         # Check Lua formatting
 - **Formatting and linting:** Conform handles format-on-save and `:Format`.
   nvim-lint loads only for Markdown and Dockerfile buffers and runs
   markdownlint-cli2 or Hadolint.
-- **Exploration and picking:** Neo-tree owns filesystem, buffer, and Git views.
-  FzfLua owns pickers and `vim.ui.select` after it loads.
+- **Exploration and picking:** Neo-tree remains the primary filesystem, buffer,
+  and Git explorer. MiniFiles is enabled explicitly on `<leader>em` for a
+  post-cleanup workflow trial and does not replace the default directory
+  explorer. FzfLua owns pickers and `vim.ui.select` after it loads.
 - **Input and notifications:** MiniInput owns `vim.ui.input`; MiniNotify owns
   `vim.notify` with LSP progress disabled.
 - **Editing and UI:** Mini.nvim provides the start screen, sessions,
   indentation, icons, surrounds, trailing-space highlighting, pairs, task-word
-  highlighting, input, notifications, and Git signs. Lualine remains the global
-  statusline.
+  highlighting, input, notifications, Git signs, and the explicit MiniFiles
+  trial. Lualine remains the global statusline.
 - **Git:** Fugitive owns Git commands and buffers; MiniDiff owns sign-column
   change visualization.
 - **Markdown:** Markview renders Markdown, Quarto, and R Markdown in Neovim.
@@ -63,7 +65,8 @@ stylua --check .                         # Check Lua formatting
 
 - `<CR>` / `g<CR>` - Leap in the current window / across windows.
 - `<leader>c` - code operations, primarily formatting.
-- `<leader>e` - Neo-tree filesystem, buffer, and Git views.
+- `<leader>e` - explorer views; `<leader>em` opens MiniFiles while the existing
+  Neo-tree mappings remain primary.
 - `<leader>f` - find files with FzfLua.
 - `<leader>l` - LSP diagnostics, symbols, code actions, and native operations.
 - `<leader>s` - FzfLua searches and session selection.
