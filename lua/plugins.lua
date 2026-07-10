@@ -90,10 +90,6 @@ return {
   },
   {
     "saghen/blink.cmp",
-    dependencies = {
-      "rafamadriz/friendly-snippets",
-    },
-
     -- use a release tag to download pre-built binaries
     version = "*",
     -- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
@@ -111,10 +107,6 @@ return {
       keymap = { preset = "super-tab" },
 
       appearance = {
-        -- Sets the fallback highlight groups to nvim-cmp's highlight groups
-        -- Useful for when your theme doesn't support blink.cmp
-        -- Will be removed in a future release
-        use_nvim_cmp_as_default = true,
         -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
         -- Adjusts spacing to ensure icons are aligned
         nerd_font_variant = "mono",
@@ -137,7 +129,17 @@ return {
       },
 
       sources = {
-        default = { "lsp", "path", "snippets", "buffer" },
+        default = { "lsp", "path", "buffer" },
+        per_filetype = {
+          lua = { inherit_defaults = true, "lazydev" },
+        },
+        providers = {
+          lazydev = {
+            name = "LazyDev",
+            module = "lazydev.integrations.blink",
+            score_offset = 100,
+          },
+        },
       },
 
       -- experimental auto-brackets support
@@ -146,9 +148,6 @@ return {
       -- experimental signature help support
       -- signature = { enabled = true }
     },
-    -- allows extending the enabled_providers array elsewhere in your config
-    -- without having to redefine it
-    opts_extend = { "sources.default" },
   },
   -- TODO: validate what features of lspsaga I'm actually using
   {
@@ -505,17 +504,14 @@ return {
     "folke/lazydev.nvim",
     ft = "lua", -- only load on lua files
     opts = {
+      enabled = function(root_dir)
+        return vim.fs.normalize(root_dir) == vim.fs.normalize(vim.fn.stdpath("config"))
+      end,
       library = {
-        -- Library items can be absolute paths
-        -- "~/projects/my-awesome-lib",
-        -- Or relative, which means they will be resolved as a plugin
-        -- "LazyVim",
-        -- When relative, you can also provide a path to the library in the plugin dir
-        "luvit-meta/library", -- see below
+        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
       },
     },
   },
-  { "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typing
   {
     "rachartier/tiny-inline-diagnostic.nvim",
     event = "VeryLazy",
