@@ -46,11 +46,3 @@ if vim.g.neovide then
     vim.api.nvim_paste(vim.fn.getreg("+"), true, -1)
   end, { noremap = true, silent = true })
 end
-
--- disable fold for slim because it slows everything down
-vim.api.nvim_create_autocmd("Syntax", {
-  pattern = "slim",
-  command = "setlocal nofoldenable",
-})
-
-vim.g.EditorConfig_exclude_patterns = { "fugitive://.*", "scp://.*" }
