@@ -54,6 +54,10 @@ stylua --check .                         # Check Lua formatting
   explorer. FzfLua owns pickers and `vim.ui.select` after it loads.
 - **Input and notifications:** MiniInput owns `vim.ui.input`; MiniNotify owns
   `vim.notify` with LSP progress disabled.
+- **Native messages and command line:** Neovim UI2 is enabled with default
+  options as an experimental post-cleanup trial. It owns native command-line,
+  message, dialog, and pager presentation; do not treat its private
+  `vim._core.ui2` API as stable.
 - **Editing and UI:** Mini.nvim provides the start screen, sessions,
   indentation, icons, surrounds, trailing-space highlighting, pairs, task-word
   highlighting, input, notifications, Git signs, and the explicit MiniFiles
@@ -108,3 +112,6 @@ prefixes such as `g` and `z` is part of the desired workflow.
   autocmd.
 - Native filetype rules cover `Caddyfile`, `*.Caddyfile`, `*.caddyfile`, and
   `Caddyfile.*`; built-in Neovim support handles Fish, Kitty, YAML, and Python.
+- UI2 is intentionally a default-options trial. Test native messages, paging,
+  shell output, prompts, Tmux, and Neovide before making it permanent or adding
+  routing customization.

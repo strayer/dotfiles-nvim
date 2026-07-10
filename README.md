@@ -12,6 +12,8 @@ by the broader [dotfiles repository](https://github.com/strayer/dotfiles).
   while editing this Neovim configuration.
 - Native `vim.lsp.config`/`vim.lsp.enable` setup for the configured language
   servers.
+- An experimental default-options trial of Neovim's native UI2 command-line,
+  message, dialog, and pager presentation.
 - Neo-tree filesystem, buffer, and Git views, with MiniFiles enabled for a
   focused post-cleanup workflow trial.
 - FzfLua pickers for files, text, buffers, diagnostics, symbols, and other
