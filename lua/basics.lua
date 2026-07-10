@@ -59,3 +59,14 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = "gitcommit",
   command = "setlocal spell",
 })
+
+vim.filetype.add({
+  filename = {
+    Caddyfile = "caddyfile",
+  },
+  pattern = {
+    [".*%.Caddyfile"] = "caddyfile",
+    [".*%.caddyfile"] = "caddyfile",
+    [".*/?Caddyfile%..*"] = "caddyfile",
+  },
+})

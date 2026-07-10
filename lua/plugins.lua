@@ -1,6 +1,5 @@
 return {
   { "tpope/vim-fugitive" },
-  { "dag/vim-fish" },
   {
     url = "https://codeberg.org/andyg/leap.nvim",
     -- Don't use lazy.nvim `keys` for lazy loading - leap handles it internally.
@@ -135,11 +134,6 @@ return {
       -- experimental signature help support
       -- signature = { enabled = true }
     },
-  },
-  {
-    "bezhermoso/tree-sitter-ghostty",
-    build = "make nvim_install",
-    ft = "ghostty",
   },
   {
     "romus204/tree-sitter-manager.nvim",
@@ -300,18 +294,6 @@ return {
     end,
   },
   {
-    "cuducos/yaml.nvim",
-    ft = { "yaml" }, -- optional
-    cmd = {
-      "YAMLView",
-      "YAMLYank",
-      "YAMLYankKey",
-      "YAMLYankValue",
-      "YAMLQuickfix",
-      "YAMLTelescope",
-    },
-  },
-  {
     "echasnovski/mini.nvim",
     version = false,
     config = function()
@@ -340,10 +322,6 @@ return {
 
       MiniIcons.mock_nvim_web_devicons()
     end,
-  },
-  {
-    "isobit/vim-caddyfile",
-    ft = { "caddyfile" },
   },
   {
     "kevinhwang91/nvim-ufo",
@@ -385,10 +363,6 @@ return {
         require("ufo").closeAllFolds()
       end)
     end,
-  },
-  {
-    "Vimjas/vim-python-pep8-indent",
-    ft = "python",
   },
   {
     "OXY2DEV/markview.nvim",
@@ -455,10 +429,6 @@ return {
     "ejrichards/mise.nvim",
     opts = {},
     cond = vim.g.neovide == true,
-  },
-  {
-    "fladson/vim-kitty",
-    ft = "kitty",
   },
   {
     "MagicDuck/grug-far.nvim",
