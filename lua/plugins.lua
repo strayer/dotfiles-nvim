@@ -30,7 +30,13 @@ return {
       })
     end,
   },
-  { "voldikss/vim-floaterm", cmd = { "FloatermNew", "FloatermToggle" } },
+  {
+    "voldikss/vim-floaterm",
+    cmd = { "FloatermNew", "FloatermToggle" },
+    keys = {
+      { "<leader>tf", "<CMD>FloatermToggle<CR>", desc = "floating terminal" },
+    },
+  },
   {
     "nvim-lualine/lualine.nvim",
     config = function()
@@ -41,6 +47,11 @@ return {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
     cmd = "Neotree",
+    keys = {
+      { "<leader>ee", "<CMD>Neotree filesystem reveal toggle<CR>", desc = "filesystem" },
+      { "<leader>eb", "<CMD>Neotree buffers toggle<CR>", desc = "buffers" },
+      { "<leader>eg", "<CMD>Neotree git_status toggle<CR>", desc = "git status" },
+    },
     dependencies = {
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
@@ -71,7 +82,7 @@ return {
     "folke/which-key.nvim",
     event = "VeryLazy",
     opts = {
-      spec = require("config-which-key").keys,
+      spec = require("config-which-key").groups,
     },
   },
   {
@@ -321,6 +332,22 @@ return {
         local path = vim.api.nvim_buf_get_name(0)
         MiniFiles.open(path ~= "" and path or nil)
       end, { desc = "mini files" })
+      vim.keymap.set("n", "<leader>Ss", function()
+        require("mini.sessions").select()
+      end, { desc = "select" })
+      vim.keymap.set("n", "<leader>Sn", function()
+        local MiniSessions = require("mini.sessions")
+        local Utils = require("utils")
+
+        local project_path = Utils.get_git_root_or_cwd()
+        local proposed_session_name = vim.fs.basename(project_path)
+
+        Utils.input_prompt_with_default("Session name:", proposed_session_name, function(name)
+          if name then
+            MiniSessions.write(name)
+          end
+        end)
+      end, { desc = "new" })
       require("mini.diff").setup({
         view = { style = "sign" },
       })
@@ -360,11 +387,88 @@ return {
     cmd = "FzfLua",
     keys = {
       {
-        "<Leader><Space>",
-        "<CMD>lua require('fzf-lua').files()<CR>",
-        desc = "search files",
-        noremap = true,
-        silent = true,
+        "<leader>f",
+        function()
+          require("fzf-lua").files()
+        end,
+        desc = "files",
+      },
+      {
+        "<leader>sb",
+        function()
+          require("fzf-lua").buffers()
+        end,
+        desc = "buffers",
+      },
+      {
+        "<leader>sB",
+        function()
+          require("fzf-lua").git_branches()
+        end,
+        desc = "git branches",
+      },
+      {
+        "<leader>sh",
+        function()
+          require("fzf-lua").command_history()
+        end,
+        desc = "history",
+      },
+      {
+        "<leader>sm",
+        function()
+          require("fzf-lua").marks()
+        end,
+        desc = "marks",
+      },
+      {
+        "<leader>st",
+        function()
+          require("fzf-lua").live_grep()
+        end,
+        desc = "text",
+      },
+      {
+        "<leader>su",
+        function()
+          require("fzf-lua").colorschemes()
+        end,
+        desc = "colorschemes",
+      },
+      {
+        "<leader>ld",
+        function()
+          require("fzf-lua").diagnostics_document()
+        end,
+        desc = "document diagnostics",
+      },
+      {
+        "<leader>lD",
+        function()
+          require("fzf-lua").diagnostics_workspace()
+        end,
+        desc = "workspace diagnostics",
+      },
+      {
+        "<leader>ls",
+        function()
+          require("fzf-lua").lsp_document_symbols()
+        end,
+        desc = "document symbols",
+      },
+      {
+        "<leader>lS",
+        function()
+          require("fzf-lua").lsp_workspace_symbols()
+        end,
+        desc = "workspace symbols",
+      },
+      {
+        "<leader>la",
+        function()
+          require("fzf-lua").lsp_code_actions()
+        end,
+        desc = "code actions",
       },
     },
   },
