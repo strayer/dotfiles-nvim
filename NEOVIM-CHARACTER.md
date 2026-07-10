@@ -41,8 +41,8 @@ As of 2026-07-10, the plugin audit and cleanup implementation are complete.
   (`refactor(keymaps): separate mappings from WhichKey`). The post-normalization
   MiniClue reassessment is complete: keep WhichKey because its automatic
   discovery for built-in prefixes such as `g` and `z` is valued. The native
-  UI2 default-options trial is active in `8576c82`
-  (`feat(ui): trial native UI2`); its real-use decision is pending.
+  UI2 trial is active in `8576c82` (`feat(ui): trial native UI2`), with its
+  idle command line hidden by `1c681c4`; its real-use decision is pending.
 - This audit document was added separately in `b84b8d1`
   (`docs(nvim): record plugin audit and cleanup plan`) so the Neo-tree migration
   stayed isolated.
@@ -79,7 +79,7 @@ not cover.
 | MiniFiles post-cleanup trial | Active | `059e1a1`; enabled on `<leader>em` alongside primary Neo-tree, pending real-use evaluation. |
 | Normalize keymap ownership | Complete | `613ced9`; action mappings are core/plugin-owned, WhichKey supplies group labels only, and duplicate workflow aliases are removed. |
 | Reassess MiniClue | Complete | Keep WhichKey; its automatic built-in-prefix discovery is preferred over MiniClue's explicitly configured buffer-local triggers. |
-| Native UI2 post-cleanup trial | Active | `8576c82`; enabled with defaults for real-use evaluation, without message-routing customization. |
+| Native UI2 post-cleanup trial | Active | `8576c82`, extended by `1c681c4`; `cmdheight=0` hides the idle command line, without message-routing customization. |
 
 The resolved lockfile contained 58 entries after the AI-removal commit, 56 after
 completion simplification, 49 after UI consolidation, and 41 after navigation
@@ -229,7 +229,8 @@ Implementation documentation log:
   [UI2 documentation](https://neovim.io/doc/user/lua.html#ui2) and shipped
   `vim._core.ui2` source. These confirm default `enable()`, the `cmd`, `msg`,
   `pager`, and `dialog` surfaces, UI-event-based rendering, and the explicitly
-  experimental/private API status.
+  experimental/private API status. The `cmdheight` documentation also marks
+  zero as experimental and says it works better with UI2 enabled.
 
 ### 1. Reduce the plugin graph
 
@@ -534,11 +535,12 @@ slimming pass:
 - Active: trial `mini.files` on `<leader>em` alongside retained Neo-tree in real
   use. It opens on the current file (or cwd for an unnamed buffer) and does not
   take over directory editing.
-- Active: trial Neovim 0.12 UI2 with defaults in `8576c82`. Noice is gone, but
-  UI2 remains private/experimental; verify native messages, `g<`, `:messages`,
-  shell output, prompts, Tmux, and Neovide before deciding. Do not copy unrelated
-  `winborder`, progress-status, or completion-popup changes: existing retained
-  systems already own those responsibilities.
+- Active: trial Neovim 0.12 UI2 from `8576c82`, with `cmdheight=0` added in
+  `1c681c4`. Noice is gone, but UI2 and zero command height remain experimental;
+  verify native messages, `g<`, `:messages`, shell output, prompts, Tmux, and
+  Neovide before deciding. Do not copy unrelated `winborder`, progress-status,
+  or completion-popup changes: existing retained systems already own those
+  responsibilities.
 - Reassess Lazy versus native package management when the user next reviews the
   plugin-management situation.
 - Reconsider CodeCompanion only if the user intentionally restores an in-editor
@@ -796,7 +798,7 @@ for a dedicated assessment is acceptable.
 | P30 | `mini.nvim` | Consolidated editor utilities | Keep | Six current modules plus Trailspace, Pairs, Hipatterns, Input, and Notify; explicit sign-style Diff |
 | P31 | `vim-caddyfile` | Caddyfile language support | Replace | Native filetype rule plus Tree-sitter Manager Caddy parser |
 | P32 | `nvim-ufo` | Enhanced folding | Remove | No deliberate use; remove three-plugin per-file stack |
-| P33 | `noice.nvim` | Command/message/LSP UI | Remove | Buggy in practice; native 0.12 UI2 default-options trial active in `8576c82` |
+| P33 | `noice.nvim` | Command/message/LSP UI | Remove | Buggy in practice; native 0.12 UI2 trial active in `8576c82`, with `cmdheight=0` added in `1c681c4` |
 | P34 | `vim-python-pep8-indent` | Python indentation | Remove | Old workaround; restore only for an observed current regression |
 | P35 | `no-neck-pain.nvim` | Centered/focused editing layout | Remove | Never used |
 | P36 | `markview.nvim` | In-buffer Markdown rendering | Keep | Core in-Neovim Markdown preview workflow |
@@ -1208,4 +1210,4 @@ complete. Deferred experiments are intentionally outside the slimming pass.
 | I06 | Movement | Compare current Leap with MiniJump2d and other current options; restore a reliable fast-motion workflow if it still adds value. | Assessment complete; reapply `<CR>`/`g<CR>` during cleanup |
 | I07 | Lualine revisit | Make the promised final Lualine versus MiniStatusline decision after the rest of the editor shape is known. | Assessment complete; keep and apply cleanup |
 | I08 | File workflow experiment | Enable and trial MiniFiles alongside retained Neo-tree; decide whether Neo-tree remains primary after real use. | Active post-cleanup trial on `<leader>em`; Neo-tree remains primary pending real use |
-| I09 | Neovim 0.12 UI2 | Experiment only after plugin removals; decide whether the private/experimental UI is stable enough to enable. | Active default-options trial in `8576c82`; real-use decision pending |
+| I09 | Neovim 0.12 UI2 | Experiment only after plugin removals; decide whether the private/experimental UI is stable enough to enable. | Active trial from `8576c82`, with `cmdheight=0` added in `1c681c4`; real-use decision pending |
