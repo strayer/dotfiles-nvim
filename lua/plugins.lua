@@ -1,5 +1,4 @@
 return {
-  { "ntpeters/vim-better-whitespace" },
   { "tpope/vim-fugitive" },
   {
     "craigmac/nvim-navigator",
@@ -12,11 +11,6 @@ return {
 
       require("Navigator").setup()
     end,
-  },
-  {
-    "folke/todo-comments.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    opts = {},
   },
   {
     "iamcco/markdown-preview.nvim",
@@ -72,13 +66,6 @@ return {
     },
     config = function()
       require("config-neo-tree").cfg()
-    end,
-  },
-  {
-    "lewis6991/gitsigns.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    config = function()
-      require("gitsigns").setup()
     end,
   },
   {
@@ -168,11 +155,6 @@ return {
       sign = { enabled = false },
       virtual_text = { enabled = true },
     },
-  },
-  {
-    "windwp/nvim-autopairs",
-    event = "InsertEnter",
-    config = true,
   },
   {
     "AckslD/nvim-neoclip.lua",
@@ -321,10 +303,8 @@ return {
       require("conform").formatters.prettier_yaml = yaml_formatter
     end,
     init = function()
-      local notify = require("notify")
-
       local function show_notification(message, level)
-        notify(message, level, { title = "conform.nvim" })
+        vim.notify(message, level, { title = "conform.nvim" })
       end
 
       vim.api.nvim_create_user_command("FormatToggle", function(args)
@@ -332,16 +312,16 @@ return {
         if is_global then
           vim.g.disable_autoformat = not vim.g.disable_autoformat
           if vim.g.disable_autoformat then
-            show_notification("Autoformat-on-save disabled globally", "info")
+            show_notification("Autoformat-on-save disabled globally", vim.log.levels.INFO)
           else
-            show_notification("Autoformat-on-save enabled globally", "info")
+            show_notification("Autoformat-on-save enabled globally", vim.log.levels.INFO)
           end
         else
           vim.b.disable_autoformat = not vim.b.disable_autoformat
           if vim.b.disable_autoformat then
-            show_notification("Autoformat-on-save disabled for this buffer", "info")
+            show_notification("Autoformat-on-save disabled for this buffer", vim.log.levels.INFO)
           else
-            show_notification("Autoformat-on-save enabled for this buffer", "info")
+            show_notification("Autoformat-on-save enabled for this buffer", vim.log.levels.INFO)
           end
         end
       end, {
@@ -371,7 +351,23 @@ return {
       require("mini.indentscope").setup()
       require("mini.icons").setup()
       require("mini.surround").setup()
-      require("mini.diff").setup()
+      require("mini.trailspace").setup()
+      require("mini.pairs").setup()
+      require("mini.hipatterns").setup({
+        highlighters = {
+          fixme = { pattern = "%f[%w]()FIXME()%f[%W]", group = "MiniHipatternsFixme" },
+          hack = { pattern = "%f[%w]()HACK()%f[%W]", group = "MiniHipatternsHack" },
+          todo = { pattern = "%f[%w]()TODO()%f[%W]", group = "MiniHipatternsTodo" },
+          note = { pattern = "%f[%w]()NOTE()%f[%W]", group = "MiniHipatternsNote" },
+        },
+      })
+      require("mini.input").setup()
+      require("mini.notify").setup({
+        lsp_progress = { enable = false },
+      })
+      require("mini.diff").setup({
+        view = { style = "sign" },
+      })
 
       MiniIcons.mock_nvim_web_devicons()
     end,
@@ -422,36 +418,6 @@ return {
     end,
   },
   {
-    "folke/noice.nvim",
-    event = "VeryLazy",
-    opts = {
-      lsp = {
-        -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-        override = {
-          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-          ["vim.lsp.util.stylize_markdown"] = true,
-          ["cmp.entry.get_documentation"] = true,
-        },
-      },
-      -- you can enable a preset for easier configuration
-      presets = {
-        bottom_search = true, -- use a classic bottom cmdline for search
-        command_palette = true, -- position the cmdline and popupmenu together
-        long_message_to_split = true, -- long messages will be sent to a split
-        inc_rename = false, -- enables an input dialog for inc-rename.nvim
-        lsp_doc_border = false, -- add a border to hover docs and signature help
-      },
-    },
-    dependencies = {
-      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-      "MunifTanjim/nui.nvim",
-      -- OPTIONAL:
-      --   `nvim-notify` is only needed, if you want to use the notification view.
-      --   If not available, we use `mini` as the fallback
-      "rcarriga/nvim-notify",
-    },
-  },
-  {
     "Vimjas/vim-python-pep8-indent",
     ft = "python",
   },
@@ -483,7 +449,7 @@ return {
     "ibhagwan/fzf-lua",
     config = function()
       -- calling `setup` is optional for customization
-      require("fzf-lua").setup({})
+      require("fzf-lua").setup({ ui_select = true })
     end,
     cmd = "FzfLua",
     keys = {
@@ -527,10 +493,6 @@ return {
     "ejrichards/mise.nvim",
     opts = {},
     cond = vim.g.neovide == true,
-  },
-  { -- better vim.ui.select
-    "stevearc/dressing.nvim",
-    opts = {},
   },
   {
     "fladson/vim-kitty",
