@@ -38,9 +38,10 @@ As of 2026-07-10, the plugin audit and cleanup implementation are complete.
 - The MiniFiles post-cleanup trial is active in `059e1a1`
   (`feat(files): trial mini.files alongside neo-tree`); its real-use decision is
   pending. Keymap normalization is complete in `613ced9`
-  (`refactor(keymaps): separate mappings from WhichKey`). MiniClue reassessment
-  and Neovim UI2 remain explicitly deferred future experiments and must be
-  handled one at a time.
+  (`refactor(keymaps): separate mappings from WhichKey`). The post-normalization
+  MiniClue reassessment is complete: keep WhichKey because its automatic
+  discovery for built-in prefixes such as `g` and `z` is valued. Neovim UI2
+  remains an explicitly deferred future experiment.
 - This audit document was added separately in `b84b8d1`
   (`docs(nvim): record plugin audit and cleanup plan`) so the Neo-tree migration
   stayed isolated.
@@ -76,6 +77,7 @@ not cover.
 | Final documentation and acceptance | Complete | README/CLAUDE describe the final architecture; measurements and verification are recorded below. |
 | MiniFiles post-cleanup trial | Active | `059e1a1`; enabled on `<leader>em` alongside primary Neo-tree, pending real-use evaluation. |
 | Normalize keymap ownership | Complete | `613ced9`; action mappings are core/plugin-owned, WhichKey supplies group labels only, and duplicate workflow aliases are removed. |
+| Reassess MiniClue | Complete | Keep WhichKey; its automatic built-in-prefix discovery is preferred over MiniClue's explicitly configured buffer-local triggers. |
 
 The resolved lockfile contained 58 entries after the AI-removal commit, 56 after
 completion simplification, 49 after UI consolidation, and 41 after navigation
@@ -97,7 +99,7 @@ Retain these 23 direct plugins, counting bootstrapped Lazy:
 | `vim-floaterm` | Frequently used floating terminal | No change. |
 | `lualine.nvim` | Polished global statusline | Stale `lsp_progress` removed and Neo-tree extension configured in `a4d8f76`. |
 | `neo-tree.nvim` | Primary filesystem/buffer/Git explorer | Already upgraded to v3 in `1bf68ef`; preserve that commit. |
-| `which-key.nvim` | Current keymap discovery UI | Kept; action mapping ownership normalized in `613ced9`, leaving only group labels in its spec. MiniClue reassessment is now unblocked. |
+| `which-key.nvim` | Current keymap discovery UI | Kept; action mapping ownership normalized in `613ced9`, leaving only group labels in its spec. Post-normalization MiniClue reassessment confirmed WhichKey remains the better fit. |
 | `blink.cmp` | Completion | I05 provider/dependency refresh completed in `9296ec5`. |
 | `tree-sitter-manager.nvim` | Parser management | Retained; Caddy parser source confirmed after `2142857`. |
 | `tokyonight.nvim` | Intentional dark theme | No change. |
@@ -217,6 +219,10 @@ Implementation documentation log:
   This confirms that WhichKey automatically reads normal keymap `desc`
   metadata and that its mapping spec remains useful for group descriptions that
   do not exist as normal mappings.
+- 2026-07-10, current `main` branch at installed commit `4171fba`: official
+  [MiniClue documentation](https://raw.githubusercontent.com/nvim-mini/mini.nvim/main/doc/mini-clue.txt).
+  This confirms its opt-in buffer-local trigger model, generated `g`/`z` clues,
+  and documented trigger-ordering, macro, and operator-pending caveats.
 
 ### 1. Reduce the plugin graph
 
@@ -521,9 +527,6 @@ slimming pass:
 - Active: trial `mini.files` on `<leader>em` alongside retained Neo-tree in real
   use. It opens on the current file (or cwd for an unnamed buffer) and does not
   take over directory editing.
-- Reassess MiniClue as a discovery-only layer now that `613ced9` moved mapping
-  creation out of WhichKey into canonical normal/plugin mappings. Do not enable
-  it as part of the normalization itself.
 - Experiment with Neovim 0.12 UI2 only after Noice is removed and the native UI
   has been used normally; UI2 remains private/experimental.
 - Reassess Lazy versus native package management when the user next reviews the
@@ -762,7 +765,7 @@ for a dedicated assessment is acceptable.
 | P09 | `lualine.nvim` | Statusline | Keep | I07 final: its polish justifies 2.6 MB; remove stale progress/extension config |
 | P10 | `neo-tree.nvim` | Sidebar file/buffer/Git explorer | Keep | Primary file explorer; v3 migration implemented in `1bf68ef` |
 | P11 | `gitsigns.nvim` | Git signs and hunks | Remove | MiniDiff supplies the only used feature: sign-column visualization |
-| P12 | `which-key.nvim` | Keymap discovery | Keep | Mapping ownership normalized in `613ced9`; observer-only MiniClue reassessment remains future work |
+| P12 | `which-key.nvim` | Keymap discovery | Keep | Mapping ownership normalized in `613ced9`; MiniClue reassessment complete, with WhichKey retained for automatic built-in-prefix discovery |
 | P13 | `blink.cmp` | Completion | Keep | Foundational; apply the completed I05 configuration refresh during cleanup |
 | P14 | `lspsaga.nvim` | Enhanced LSP UI | Remove | Native LSP covers configured rename and hover actions |
 | P15 | `nvim-lightbulb` | Code-action availability indicator | Remove | Indicator is not used |
@@ -1022,8 +1025,13 @@ Sources reviewed:
   native mappings now live in `lua/keymaps.lua`, plugin mappings live with their
   owners, and the WhichKey spec contains group labels only. `<leader>f` is the
   sole file-picker mapping, diagnostics remain on `<leader>ld`/`<leader>lD`,
-  and sessions use `<leader>Ss`/`<leader>Sn`. MiniClue has not been enabled or
-  reassessed yet.
+  and sessions use `<leader>Ss`/`<leader>Sn`.
+- Final post-normalization decision: keep WhichKey and do not enable MiniClue.
+  MiniClue can generate clues for `g`, `z`, marks, registers, windows, and other
+  built-ins, but doing so requires explicitly configured buffer-local triggers
+  with ordering and macro caveats. WhichKey already provides that broader
+  automatic discovery, which the user values; removing it for a 2.2 MB saving
+  would make the interaction worse.
 
 Sources reviewed:
 
@@ -1184,7 +1192,7 @@ complete. Deferred experiments are intentionally outside the slimming pass.
 | --- | --- | --- | --- |
 | I01 | nvim-lint | Prove whether Hadolint and markdownlint provide unique live diagnostics; update loading strategy if retained. | Complete: keep and narrow loading |
 | I02 | Floaterm | Compare the frequently used floating-terminal workflow with current native, Snacks, and other maintained approaches. | Complete: keep |
-| I03 | WhichKey | Interaction-level comparison with MiniClue, including mapping coverage and macro/buffer-local caveats. | Keep decision complete; keymap normalization complete in `613ced9`; MiniClue reassessment pending |
+| I03 | WhichKey | Interaction-level comparison with MiniClue, including mapping coverage and macro/buffer-local caveats. | Complete: keep WhichKey after post-normalization reassessment; do not enable MiniClue |
 | I04 | FzfLua | Picker-by-picker comparison with MiniPick/MiniExtra using the actual configured mappings. | Complete: keep |
 | I05 | Blink configuration | Refresh against current upstream after removing Copilot and snippets; add LazyDev provider if appropriate. | Assessment complete; implementation recorded above |
 | I06 | Movement | Compare current Leap with MiniJump2d and other current options; restore a reliable fast-motion workflow if it still adds value. | Assessment complete; reapply `<CR>`/`g<CR>` during cleanup |

@@ -79,8 +79,9 @@ stylua --check .                         # Check Lua formatting
 
 WhichKey remains the current mapping discovery layer, but it does not create
 action mappings. It observes their `desc` metadata and supplies group labels
-only. The mapping architecture is normalized; any MiniClue experiment remains
-explicitly deferred.
+only. The mapping architecture is normalized. MiniClue was reassessed after
+normalization and rejected because WhichKey's automatic discovery for built-in
+prefixes such as `g` and `z` is part of the desired workflow.
 
 ## Development rules
 
