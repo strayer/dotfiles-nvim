@@ -1,0 +1,20 @@
+# Configuration file for `prek`, a git hook framework written in Rust.
+# See https://prek.j178.dev for more information.
+#:schema https://www.schemastore.org/prek.json
+
+[auto_update]
+cooldown_days = 3
+
+[[repos]]
+repo = "https://github.com/JohnnyMorganz/StyLua"
+rev = "c6e8619d2c0f679929c065a6101d99daca402cfd" # frozen: v0.20.0
+hooks = [
+  { id = "stylua-system" }
+]
+
+[[repos]]
+repo = "https://github.com/igorshubovych/markdownlint-cli"
+rev = "f295829140d25717bc79368d3f966fc1f67a824f" # frozen: v0.41.0
+hooks = [
+  { id = "markdownlint" }
+]
