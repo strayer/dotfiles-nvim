@@ -1,56 +1,91 @@
-# 🚀 My Neovim Configuration
+# Neovim Configuration
 
-Welcome to my Neovim configuration! This setup is designed to provide a powerful, efficient, and enjoyable coding experience. This config might be very opinionated and specific to my use-cases, but I hope it helps or inspires someone else as well!
+A focused Neovim configuration for text editing and software development. It
+targets Neovim 0.12 and keeps one clear tool for each recurring workflow.
 
-> [!NOTE]
-> Some parts of this setup work in conjunction with my general dotfile repository at [strayer/dotfiles](https://github.com/strayer/dotfiles), especially the auto dark/light mode feature.
+Some environment integration, especially automatic theme switching, is managed
+by the broader [dotfiles repository](https://github.com/strayer/dotfiles).
 
-## ✨ Features
+## Features
 
-- 🎨 Modern and sleek UI with carefully chosen colorschemes
-- 🧠 Intelligent code completion powered by nvim-cmp
-- 🔍 Fuzzy finding capabilities with fzf-lua
-- 🌳 File explorer with oil.nvim and neo-tree
-- 🔧 Robust LSP configuration for various languages (including Ansible, Bash, Docker, Python, Lua, Terraform, Vue, YAML, Ruby, JSON, Go, PowerShell, and more)
-- 🧩 Syntax highlighting and advanced code analysis with Treesitter
-- 🤖 AI-assisted coding integration with gp.nvim and avante.nvim
-- 📊 Handy status line with lualine
-- 🚀 Efficient plugin management with lazy.nvim
-- 🌓 Automatic dark/light mode switching based on system preferences
+- Blink completion from LSP, paths, and open buffers, with LazyDev metadata only
+  while editing this Neovim configuration.
+- Native `vim.lsp.config`/`vim.lsp.enable` setup for the configured language
+  servers.
+- Neo-tree filesystem, buffer, and Git views.
+- FzfLua pickers for files, text, buffers, diagnostics, symbols, and other
+  searchable editor state.
+- Markview rendering for Markdown, Quarto, and R Markdown inside Neovim.
+- Conform format-on-save and manual formatting, plus focused Markdown and
+  Dockerfile diagnostics from nvim-lint.
+- Fugitive for Git commands and MiniDiff signs for changed lines.
+- Mini.nvim modules for sessions, the start screen, surrounding edits,
+  indentation, trailing whitespace, pairs, highlighted task words, input,
+  notifications, icons, and diffs.
+- Lualine, Tiny Inline Diagnostic, Fidget LSP progress, CSVView, Illuminate, and
+  FloatTerm for their focused workflows.
+- Automatic Tokyonight dark and Catppuccin Latte light theme switching.
 
-## 🛠 Installation
+The resolved plugin graph contains 26 entries: 23 direct plugins including
+bootstrapped Lazy, plus Neo-tree's three dependencies.
 
-> [!NOTE]
-> Currently tested with Neovim v0.10.1
+## Requirements
 
-1. Clone this repository:
-   ```sh
-   git clone https://github.com/yourusername/neovim-config.git ~/.config/nvim
-   ```
-2. Start Neovim and let it install the plugins:
-   ```sh
-   nvim
-   ```
+- Neovim 0.12 or newer.
+- Git.
+- Optional external formatters and linters used by the filetypes you edit, such
+  as StyLua, Prettierd, shfmt, markdownlint-cli2, and Hadolint.
+- `~/.cache/system-theme.txt` containing `dark` or `light` for automatic theme
+  selection.
 
-## 🎮 Key Mappings
+## Installation
 
-This configuration uses which-key as a central part of the key binding setup, providing an interactive menu for discovering and using keybindings. Here are some of the main custom mappings related to core features:
+```sh
+git clone https://github.com/strayer/dotfiles-nvim.git ~/.config/nvim
+cd ~/.config/nvim
+nvim --headless "+Lazy! restore" +qa
+nvim
+```
 
-- `<Leader>f`: Fuzzy find files (fzf-lua)
-- `<Leader>s`: Various search operations (buffers, git branches, diagnostics, etc.)
-- `<Leader>e`: File explorer operations (neo-tree)
-- `<Leader>l`: LSP-related commands
-- `<Leader>d`: Debugging commands
-- `<C-h/j/k/l>`: Navigate between splits (works across both Neovim and Wezterm splits)
+Missing-plugin auto-installation is deliberately disabled. To restore the exact
+versions in `lazy-lock.json` later:
 
-Press `<Leader>` (space key) to bring up the which-key menu and explore more available commands.
+```sh
+nvim --headless "+Lazy! restore" +qa
+```
 
-## 📜 License
+## Key mappings
 
-Copyright 2024 Sven Grunewaldt
+Space is the leader key, and WhichKey displays the available mapping groups.
+The main custom entry points are:
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+- `<CR>` starts Leap in normal, visual, and operator-pending modes; `g<CR>`
+  starts cross-window Leap. Quickfix, command, Neo-tree, and CSV buffers retain
+  their local Enter behavior.
+- `sa`, `sd`, and `sr` add, delete, and replace surroundings with MiniSurround.
+- `<leader>e` opens Neo-tree filesystem, buffer, and Git views.
+- `<leader>f` and `<leader>s` provide FzfLua file and search operations.
+- `<leader>l` contains diagnostics, symbols, code actions, and native LSP
+  operations.
+- `<leader>S` manages sessions, `<leader>t` opens terminals, and `<leader>w`
+  manages windows.
+- `<leader>cf` formats through Conform; `:FormatToggle[!]` controls
+  format-on-save globally or for the current buffer.
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+## Development
 
-THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+`NEOVIM-CHARACTER.md` records the configuration's design decisions, completed
+cleanup commits, and deferred experiments. Read it before changing plugin
+ownership or reintroducing a removed workflow.
+
+Useful commands:
+
+```sh
+just update  # Pull and restore locked plugin versions
+just upgrade # Update plugins, commit lazy-lock.json, and push
+prek run --all-files
+```
+
+## License
+
+See [LICENSE.txt](LICENSE.txt).

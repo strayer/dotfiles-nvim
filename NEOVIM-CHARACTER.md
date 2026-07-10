@@ -6,14 +6,13 @@ resuming related work in a fresh session.
 
 ## Authoritative handoff status
 
-As of 2026-07-10, the plugin audit is complete and cleanup implementation is in
-progress.
+As of 2026-07-10, the plugin audit and cleanup implementation are complete.
 
 - All 63 resolved plugin entries have a verdict: 52 direct entries including
   `lazy.nvim`, plus 11 dependency-only entries.
 - There are no unresolved plugin decisions and no further adversarial challenge
   is required. Later focused assessments supersede provisional batch wording.
-- The target graph is 26 lockfile entries: 23 retained direct plugins including
+- The final graph is 26 lockfile entries: 23 retained direct plugins including
   `lazy.nvim`, plus 3 retained dependency-only plugins. In `lua/plugins.lua`
   this means 22 retained direct specs because Lazy is bootstrapped separately.
 - The Neo-tree migration is implemented in isolated commit `1bf68ef`
@@ -31,8 +30,8 @@ progress.
   (`refactor(filetypes): prefer native language support`). Development-tool
   cleanup is implemented in `d03ed1b`
   (`refactor(dev-tools): remove unused tools and narrow linting`). All target
-  verdicts are now implemented; final documentation, measurements, and the full
-  acceptance pass remain.
+  verdicts are implemented, documentation is current, and the acceptance pass
+  is complete.
 - Leap and Lualine implementation edits were deliberately reverted before the
   Neo-tree commit to keep it isolated; their final decisions are now applied in
   `16e125a` and `a4d8f76`, respectively.
@@ -70,7 +69,7 @@ not cover.
 | Remove browser Markdown preview | Complete | `101d600`; Markview remains the core Markdown renderer. |
 | Prefer native filetype support | Complete | `2142857`; removed six legacy language plugins and added native Caddy detection. |
 | Remove unused development tools | Complete | `d03ed1b`; removed DAP/folding/project tools, orphaned files, and narrowed nvim-lint. |
-| Final documentation and acceptance | In progress | Update README/CLAUDE, record measurements, and run the full acceptance pass. |
+| Final documentation and acceptance | Complete | README/CLAUDE describe the final architecture; measurements and verification are recorded below. |
 
 The resolved lockfile contained 58 entries after the AI-removal commit, 56 after
 completion simplification, 49 after UI consolidation, and 41 after navigation
@@ -427,7 +426,8 @@ Recommended sequence after `1bf68ef`:
    - Apply the retained nvim-lint loading/initial-run change.
    - Delete already-orphaned `config-cmp.lua` and `config-gp.lua` here if they
      were not naturally removed by an earlier group.
-9. `docs(nvim): describe the slimmed configuration` - in progress.
+9. `docs(nvim): describe the slimmed configuration` - complete in the final
+   documentation commit.
    - Update `README.md`, `CLAUDE.md`, and this document's implementation status.
    - Record final graph/load/disk measurements and completed verification.
 
@@ -438,40 +438,64 @@ dependency.
 
 ## Acceptance checklist for the implementation
 
-The cleanup is not complete until these checks pass:
+All checks below passed on 2026-07-10:
 
-- `git diff --check` and the repository's normal Lua formatting checks pass.
-- Lazy resolves exactly the intended 26-entry graph with no removed plugin
+- [x] `git diff --check` and the repository's normal Lua formatting checks pass.
+- [x] Lazy resolves exactly the intended 26-entry graph with no removed plugin
   remaining solely because of a stale dependency.
-- Empty, Markdown, Lua, Dockerfile, Caddyfile, Fish, Kitty, and CSV buffers open
+- [x] Empty, Markdown, Lua, Dockerfile, Caddyfile, Fish, Kitty, and CSV buffers open
   without errors; built-in Fish/Kitty and native Caddy detection set the expected
   filetypes.
-- `:checkhealth neo-tree`, `:checkhealth which-key`, and
+- [x] `:checkhealth neo-tree`, `:checkhealth which-key`, and
   `:checkhealth blink.cmp` pass after the relevant plugin has loaded.
-- Neo-tree reveal/buffer/Git views, window-picker splits, and auto-close still
+- [x] Neo-tree reveal/buffer/Git views, window-picker splits, and auto-close still
   work after dependency cleanup.
-- `<CR>` starts Leap, `g<CR>` starts cross-window Leap, MiniSurround `s...`
+- [x] `<CR>` starts Leap, `g<CR>` starts cross-window Leap, MiniSurround `s...`
   mappings remain reachable, and ordinary Enter still selects entries in
   quickfix, command, Neo-tree, and CSV contexts.
-- MiniDiff uses sign-column visualization. Fugitive remains the Git command UI.
-- FzfLua files/grep/diagnostics/LSP pickers still work and
+- [x] MiniDiff uses sign-column visualization. Fugitive remains the Git command UI.
+- [x] FzfLua files/grep/diagnostics/LSP pickers still work and
   `vim.ui.select` resolves through FzfLua.
-- `vim.ui.input` works through MiniInput for the MiniSessions naming prompt.
-- `[d` and `]d` use the native Neovim 0.12 diagnostic API, and LuaLS receives
+- [x] `vim.ui.input` works through MiniInput for the MiniSessions naming prompt.
+- [x] `[d` and `]d` use the native Neovim 0.12 diagnostic API, and LuaLS receives
   settings under the correct `Lua` key.
-- MiniNotify displays normal/Conform notifications while Fidget remains the only
+- [x] MiniNotify displays normal/Conform notifications while Fidget remains the only
   LSP-progress display.
-- Blink health is clean; its general sources are LSP/path/buffer, and LazyDev is
+- [x] Blink health is clean; its general sources are LSP/path/buffer, and LazyDev is
   added only for Lua. No snippets, Copilot, or CodeCompanion provider remains.
-- LazyDev activates for this Neovim config, supplies `vim.uv` types from LuaLS's
+- [x] LazyDev activates for this Neovim config, supplies `vim.uv` types from LuaLS's
   bundled library, and stays disabled for unrelated Lua workspaces.
-- Synthetic Markdown and Dockerfile checks still produce the previously
+- [x] Synthetic Markdown and Dockerfile checks still produce the previously
   observed markdownlint/Hadolint diagnostics after nvim-lint is narrowed.
-- Format-on-save, `:Format`, `:FormatToggle`, both retained themes, Lualine,
+- [x] Format-on-save, `:Format`, `:FormatToggle`, both retained themes, Lualine,
   Tiny Inline Diagnostic, Markview, Floaterm, CSVView, Illuminate, and sessions
   remain functional.
-- A repository-wide search outside this historical audit document finds no live
+- [x] A repository-wide search outside this historical audit document finds no live
   mappings, requires, docs, or configuration references to removed plugins.
+
+## Final measurements and verification (2026-07-10)
+
+- Resolved and installed graph: 26 plugins. Every installed checkout matches its
+  `lazy-lock.json` revision.
+- Installed footprint: 157 MB (160,828 KiB), down from the 580 MB audit baseline;
+  this removes about 423 MB, or 73%.
+- Loaded after explicitly triggering Lazy's `VeryLazy` event for a fair baseline
+  comparison:
+  - Empty buffer: 16, down from 36.
+  - Markdown: 17, down from 39.
+  - Lua: 17, down from 40.
+- Without explicitly triggering `VeryLazy`, the observed headless counts were 13
+  for an empty buffer and 14 for Markdown or Lua.
+- Neo-tree and WhichKey health reported no issues. Blink health reported only its
+  generic note that dynamically enabled providers may appear disabled; its
+  configured default and Lua-specific sources were verified directly.
+- Headless/PTY smoke tests exercised Neo-tree's three views, window-picker
+  registration and auto-close handler, FzfLua's real file picker, Leap cancel,
+  MiniSurround quote replacement, MiniPairs newline insertion, MiniInput session
+  input, MiniNotify, both themes, CSVView, Floaterm, and format-on-save.
+- Real initial-buffer diagnostics were observed from markdownlint and Hadolint.
+  A tracked-file search outside this historical audit found no live reference to
+  a removed plugin.
 
 ## Explicitly deferred future work
 
