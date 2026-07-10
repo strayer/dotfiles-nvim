@@ -12,6 +12,9 @@ vim.opt.updatetime = 300
 -- use global statusline
 vim.opt.laststatus = 3
 
+-- show the UI2 command line only while it is in use
+vim.opt.cmdheight = 0
+
 vim.opt.incsearch = true -- search as characters are entered
 vim.opt.hlsearch = true -- highlight matches
 
