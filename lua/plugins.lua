@@ -313,6 +313,14 @@ return {
       require("mini.notify").setup({
         lsp_progress = { enable = false },
       })
+      local MiniFiles = require("mini.files")
+      MiniFiles.setup({
+        options = { use_as_default_explorer = false },
+      })
+      vim.keymap.set("n", "<leader>em", function()
+        local path = vim.api.nvim_buf_get_name(0)
+        MiniFiles.open(path ~= "" and path or nil)
+      end, { desc = "mini files" })
       require("mini.diff").setup({
         view = { style = "sign" },
       })
