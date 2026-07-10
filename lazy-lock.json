@@ -11,7 +11,6 @@
   "lazydev.nvim": { "branch": "main", "commit": "ff2cbcba459b637ec3fd165a2be59b7bbaeedf0d" },
   "leap.nvim": { "branch": "main", "commit": "5ad712bbc927c09b6b6ebd3df414669bb80b6c77" },
   "lualine.nvim": { "branch": "master", "commit": "131a558e13f9f28b15cd235557150ccb23f89286" },
-  "markdown-preview.nvim": { "branch": "master", "commit": "a923f5fc5ba36a3b17e289dc35dc17f66d0548ee" },
   "markview.nvim": { "branch": "main", "commit": "dbf74b6db11c1468d5128a38b26b6d99dc7316e9" },
   "mini.nvim": { "branch": "main", "commit": "4171fba613b64ade9a28e198bd5b4fea5ba45e22" },
   "mise.nvim": { "branch": "master", "commit": "6e4e8a857c8085dbc49f90c2b06bba55ffc95c77" },

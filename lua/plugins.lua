@@ -1,13 +1,5 @@
 return {
   { "tpope/vim-fugitive" },
-  {
-    "iamcco/markdown-preview.nvim",
-    build = "cd app && yarn install",
-    cmd = "MarkdownPreview",
-    config = function()
-      vim.cmd("doautocmd mkdp_init BufEnter")
-    end,
-  },
   { "dag/vim-fish" },
   {
     url = "https://codeberg.org/andyg/leap.nvim",
