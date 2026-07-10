@@ -90,17 +90,8 @@ return {
   },
   {
     "saghen/blink.cmp",
-    -- optional: provides snippets for the snippet source
     dependencies = {
       "rafamadriz/friendly-snippets",
-      {
-        "fang2hou/blink-copilot",
-        opts = {
-          max_completions = 1, -- Global default for max completions
-          max_attempts = 2, -- Global default for max attempts
-          -- `kind` is not set, so the default value is "Copilot"
-        },
-      },
     },
 
     -- use a release tag to download pre-built binaries
@@ -127,10 +118,6 @@ return {
         -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
         -- Adjusts spacing to ensure icons are aligned
         nerd_font_variant = "mono",
-
-        kind_icons = {
-          Copilot = "",
-        },
       },
 
       completion = {
@@ -149,21 +136,8 @@ return {
         },
       },
 
-      -- Default list of enabled providers defined so that you can extend it
-      -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
-        default = { "lsp", "path", "snippets", "buffer", "copilot" },
-        per_filetype = {
-          codecompanion = { "codecompanion" },
-        },
-        providers = {
-          copilot = {
-            name = "copilot",
-            module = "blink-copilot",
-            score_offset = 100,
-            async = true,
-          },
-        },
+        default = { "lsp", "path", "snippets", "buffer" },
       },
 
       -- experimental auto-brackets support
@@ -492,11 +466,11 @@ return {
     dependencies = {
       "saghen/blink.cmp",
     },
-    ft = { "markdown", "quarto", "rmd", "Avante", "codecompanion" },
+    ft = { "markdown", "quarto", "rmd" },
     opts = {
       preview = {
         hybrid_modes = { "n" },
-        filetypes = { "markdown", "quarto", "rmd", "Avante", "codecompanion" },
+        filetypes = { "markdown", "quarto", "rmd" },
         icon_provider = "mini",
       },
       markdown = {
@@ -565,63 +539,6 @@ return {
   {
     "fladson/vim-kitty",
     ft = "kitty",
-  },
-  {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    build = ":Copilot auth",
-    event = "InsertEnter",
-    opts = {
-      suggestion = { enabled = false },
-      panel = { enabled = false },
-      filetypes = {
-        markdown = true,
-        help = true,
-      },
-    },
-  },
-  {
-    "olimorris/codecompanion.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    config = function()
-      require("codecompanion").setup(require("config-codecompanion").config())
-    end,
-    keys = {
-      { "<leader>a", nil, desc = "AI" },
-      { "<leader>aa", "<cmd>CodeCompanionActions<cr>", mode = { "n", "v" }, desc = "Actions" },
-      { "<leader>ac", "<cmd>CodeCompanionChat Toggle<cr>", mode = { "n", "v" }, desc = "Toggle Chat" },
-      { "<leader>ai", ":CodeCompanion ", mode = { "n", "v" }, desc = "Inline" },
-      { "ga", "<cmd>CodeCompanionChat Add<cr>", mode = "v", desc = "Add to Chat" },
-    },
-    cmd = { "CodeCompanion", "CodeCompanionChat", "CodeCompanionActions", "CodeCompanionCmd" },
-    init = function()
-      vim.cmd([[cab cc CodeCompanion]])
-    end,
-  },
-  {
-    "coder/claudecode.nvim",
-    dependencies = { "folke/snacks.nvim" },
-    config = true,
-    keys = {
-      { "<leader>C", nil, desc = "Claude Code" },
-      { "<leader>Cc", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude" },
-      { "<leader>Cf", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude" },
-      { "<leader>Cr", "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude" },
-      { "<leader>CC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
-      { "<leader>Cm", "<cmd>ClaudeCodeSelectModel<cr>", desc = "Select Claude model" },
-      { "<leader>Cb", "<cmd>ClaudeCodeAdd %<cr>", desc = "Add current buffer" },
-      { "<leader>Cs", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "Send to Claude" },
-      {
-        "<leader>Cs",
-        "<cmd>ClaudeCodeTreeAdd<cr>",
-        desc = "Add file",
-        ft = { "NvimTree", "neo-tree", "oil", "minifiles", "netrw" },
-      },
-      { "<leader>Ca", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
-      { "<leader>Cd", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
-    },
   },
   {
     "MagicDuck/grug-far.nvim",
