@@ -2,7 +2,6 @@ local M = {}
 
 M.keys = {
   { "<leader>c", name = "code" },
-  { "<leader>?", "<CMD>NvimTreeFindFile<CR>", desc = "find current file" },
   { "<leader>e", group = "explore" },
   { "<leader>ee", "<CMD>Neotree filesystem reveal toggle<CR>", desc = "filesystem" },
   { "<leader>eb", "<CMD>Neotree buffers toggle<CR>", desc = "buffers" },
@@ -14,7 +13,6 @@ M.keys = {
     end,
     desc = "files",
   },
-  { "<leader>r", "<CMD>RnvimrToggle<CR>", desc = "ranger" },
   { "<leader>h", "<C-W>s", desc = "split below" },
   { "<leader>v", "<C-W>v", desc = "split right" },
   { "<leader>d", group = "debug" },
@@ -88,13 +86,6 @@ M.keys = {
     desc = "sessions",
   },
   {
-    "<leader>sr",
-    function()
-      require("neoclip.fzf")()
-    end,
-    desc = "registers",
-  },
-  {
     "<leader>su",
     function()
       require("fzf-lua").colorschemes()
@@ -135,9 +126,13 @@ M.keys = {
     desc = "workspace_diagnostics",
   },
   { "<leader>lI", "<CMD>LspInfo<CR>", desc = "lsp info" },
-  { "<leader>lv", "<CMD>LspVirtualTextToggle<CR>", desc = "lsp toggle virtual text" },
-  { "<leader>lt", "<CMD>Trouble<CR>", desc = "trouble" },
-  { "<leader>lT", "<CMD>LspTypeDefinition<CR>", desc = "type defintion" },
+  {
+    "<leader>lT",
+    function()
+      vim.lsp.buf.type_definition()
+    end,
+    desc = "type definition",
+  },
   { "<leader>lx", "<CMD>cclose<CR>", desc = "close quickfix" },
   {
     "<leader>ls",
@@ -153,8 +148,20 @@ M.keys = {
     end,
     desc = "workspace symbols",
   },
-  { "<leader>lr", "<CMD>Lspsaga rename<cr>", desc = "rename symbol" },
-  { "<leader>lK", "<cmd>Lspsaga hover_doc<cr>", desc = "hover doc" },
+  {
+    "<leader>lr",
+    function()
+      vim.lsp.buf.rename()
+    end,
+    desc = "rename symbol",
+  },
+  {
+    "<leader>lK",
+    function()
+      vim.lsp.buf.hover()
+    end,
+    desc = "hover doc",
+  },
   {
     "<leader>la",
     function()
@@ -169,7 +176,6 @@ M.keys = {
   { "<leader>wj", "<C-W>j", desc = "down" },
   { "<leader>wk", "<C-W>k", desc = "up" },
   { "<leader>wl", "<C-W>l", desc = "right" },
-  { "<leader>wf", "<CMD>NoNeckPain<CR>", desc = "focus" },
   { "<leader>t", group = "terminal" },
   { "<leader>tf", "<CMD>FloatermToggle<CR>", desc = "floating" },
   { "<leader>tv", "<CMD>bo vsplit term://$SHELL<CR>", desc = "vertical split terminal" },

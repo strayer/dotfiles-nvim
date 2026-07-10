@@ -1,18 +1,6 @@
 return {
   { "tpope/vim-fugitive" },
   {
-    "craigmac/nvim-navigator",
-    config = function()
-      vim.keymap.set({ "n", "t" }, "<C-h>", "<CMD>NavigatorLeft<CR>")
-      vim.keymap.set({ "n", "t" }, "<C-l>", "<CMD>NavigatorRight<CR>")
-      vim.keymap.set({ "n", "t" }, "<C-k>", "<CMD>NavigatorUp<CR>")
-      vim.keymap.set({ "n", "t" }, "<C-j>", "<CMD>NavigatorDown<CR>")
-      vim.keymap.set({ "n", "t" }, "<C-p>", "<CMD>NavigatorPrevious<CR>")
-
-      require("Navigator").setup()
-    end,
-  },
-  {
     "iamcco/markdown-preview.nvim",
     build = "cd app && yarn install",
     cmd = "MarkdownPreview",
@@ -23,12 +11,32 @@ return {
   { "dag/vim-fish" },
   {
     url = "https://codeberg.org/andyg/leap.nvim",
-    dependencies = { "tpope/vim-repeat" },
     -- Don't use lazy.nvim `keys` for lazy loading - leap handles it internally.
     -- See https://codeberg.org/andyg/leap.nvim#installation
     config = function()
-      vim.keymap.set({ "n", "x", "o" }, "s", "<Plug>(leap)")
-      vim.keymap.set("n", "S", "<Plug>(leap-from-window)")
+      -- Leap's `s` default collides with MiniSurround's `sa`/`sd`/`sr`
+      -- namespace, and normal Enter is not used for line movement.
+      vim.keymap.set({ "n", "x", "o" }, "<CR>", "<Plug>(leap)")
+      vim.keymap.set("n", "g<CR>", "<Plug>(leap-from-window)")
+
+      local function restore_enter(buf)
+        vim.keymap.set("n", "<CR>", "<CR>", { buffer = buf, silent = true, desc = "select entry" })
+      end
+
+      local group = vim.api.nvim_create_augroup("leap_enter_overrides", { clear = true })
+      vim.api.nvim_create_autocmd("FileType", {
+        group = group,
+        pattern = "qf",
+        callback = function(args)
+          restore_enter(args.buf)
+        end,
+      })
+      vim.api.nvim_create_autocmd("CmdwinEnter", {
+        group = group,
+        callback = function()
+          restore_enter(0)
+        end,
+      })
     end,
   },
   { "voldikss/vim-floaterm", cmd = { "FloatermNew", "FloatermToggle" } },
@@ -135,37 +143,6 @@ return {
       -- experimental signature help support
       -- signature = { enabled = true }
     },
-  },
-  -- TODO: validate what features of lspsaga I'm actually using
-  {
-    "nvimdev/lspsaga.nvim",
-    branch = "main",
-    opts = {
-      lightbulb = {
-        enable = false,
-      },
-      symbol_in_winbar = { enable = false },
-    },
-    event = "LspAttach",
-  },
-  {
-    "kosayoda/nvim-lightbulb",
-    opts = {
-      autocmd = { enabled = true },
-      sign = { enabled = false },
-      virtual_text = { enabled = true },
-    },
-  },
-  {
-    "AckslD/nvim-neoclip.lua",
-    opts = {},
-  },
-  {
-    "folke/trouble.nvim",
-    cmd = { "Trouble", "TroubleToggle" },
-    config = function()
-      require("config-trouble").cfg()
-    end,
   },
   {
     "bezhermoso/tree-sitter-ghostty",
@@ -421,7 +398,6 @@ return {
     "Vimjas/vim-python-pep8-indent",
     ft = "python",
   },
-  { "shortcuts/no-neck-pain.nvim", version = "*", cmd = "NoNeckPain" },
   {
     "OXY2DEV/markview.nvim",
     lazy = false, -- Recommended
@@ -482,12 +458,6 @@ return {
     "rachartier/tiny-inline-diagnostic.nvim",
     event = "VeryLazy",
     config = require("config-tiny-inline-diagnostic").cfg,
-  },
-  {
-    "stevearc/oil.nvim",
-    opts = {},
-    -- no lazy-loading, author doesn't recommend it and it caused problems with
-    -- oil-ssh for me
   },
   {
     "ejrichards/mise.nvim",
