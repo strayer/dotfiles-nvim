@@ -20,6 +20,8 @@ require("lazy").setup({
   rocks = { enabled = false },
 })
 
+require("vim._core.ui2").enable()
+
 require("auto-dark-mode").init()
 
 if os.getenv("TMUX") ~= nil then
