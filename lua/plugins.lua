@@ -1,43 +1,42 @@
 return {
-  { "ntpeters/vim-better-whitespace" },
   { "tpope/vim-fugitive" },
   {
-    "craigmac/nvim-navigator",
-    config = function()
-      vim.keymap.set({ "n", "t" }, "<C-h>", "<CMD>NavigatorLeft<CR>")
-      vim.keymap.set({ "n", "t" }, "<C-l>", "<CMD>NavigatorRight<CR>")
-      vim.keymap.set({ "n", "t" }, "<C-k>", "<CMD>NavigatorUp<CR>")
-      vim.keymap.set({ "n", "t" }, "<C-j>", "<CMD>NavigatorDown<CR>")
-      vim.keymap.set({ "n", "t" }, "<C-p>", "<CMD>NavigatorPrevious<CR>")
-
-      require("Navigator").setup()
-    end,
-  },
-  {
-    "folke/todo-comments.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    opts = {},
-  },
-  {
-    "iamcco/markdown-preview.nvim",
-    build = "cd app && yarn install",
-    cmd = "MarkdownPreview",
-    config = function()
-      vim.cmd("doautocmd mkdp_init BufEnter")
-    end,
-  },
-  { "dag/vim-fish" },
-  {
     url = "https://codeberg.org/andyg/leap.nvim",
-    dependencies = { "tpope/vim-repeat" },
     -- Don't use lazy.nvim `keys` for lazy loading - leap handles it internally.
     -- See https://codeberg.org/andyg/leap.nvim#installation
     config = function()
-      vim.keymap.set({ "n", "x", "o" }, "s", "<Plug>(leap)")
-      vim.keymap.set("n", "S", "<Plug>(leap-from-window)")
+      -- Leap's `s` default collides with MiniSurround's `sa`/`sd`/`sr`
+      -- namespace, and normal Enter is not used for line movement.
+      vim.keymap.set({ "n", "x", "o" }, "<CR>", "<Plug>(leap)")
+      vim.keymap.set("n", "g<CR>", "<Plug>(leap-from-window)")
+
+      local function restore_enter(buf)
+        vim.keymap.set("n", "<CR>", "<CR>", { buffer = buf, silent = true, desc = "select entry" })
+      end
+
+      local group = vim.api.nvim_create_augroup("leap_enter_overrides", { clear = true })
+      vim.api.nvim_create_autocmd("FileType", {
+        group = group,
+        pattern = "qf",
+        callback = function(args)
+          restore_enter(args.buf)
+        end,
+      })
+      vim.api.nvim_create_autocmd("CmdwinEnter", {
+        group = group,
+        callback = function()
+          restore_enter(0)
+        end,
+      })
     end,
   },
-  { "voldikss/vim-floaterm", cmd = { "FloatermNew", "FloatermToggle" } },
+  {
+    "voldikss/vim-floaterm",
+    cmd = { "FloatermNew", "FloatermToggle" },
+    keys = {
+      { "<leader>tf", "<CMD>FloatermToggle<CR>", desc = "floating terminal" },
+    },
+  },
   {
     "nvim-lualine/lualine.nvim",
     config = function()
@@ -48,6 +47,11 @@ return {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
     cmd = "Neotree",
+    keys = {
+      { "<leader>ee", "<CMD>Neotree filesystem reveal toggle<CR>", desc = "filesystem" },
+      { "<leader>eb", "<CMD>Neotree buffers toggle<CR>", desc = "buffers" },
+      { "<leader>eg", "<CMD>Neotree git_status toggle<CR>", desc = "git status" },
+    },
     dependencies = {
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
@@ -75,34 +79,14 @@ return {
     end,
   },
   {
-    "lewis6991/gitsigns.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    config = function()
-      require("gitsigns").setup()
-    end,
-  },
-  {
     "folke/which-key.nvim",
     event = "VeryLazy",
     opts = {
-      spec = require("config-which-key").keys,
+      spec = require("config-which-key").groups,
     },
   },
   {
     "saghen/blink.cmp",
-    -- optional: provides snippets for the snippet source
-    dependencies = {
-      "rafamadriz/friendly-snippets",
-      {
-        "fang2hou/blink-copilot",
-        opts = {
-          max_completions = 1, -- Global default for max completions
-          max_attempts = 2, -- Global default for max attempts
-          -- `kind` is not set, so the default value is "Copilot"
-        },
-      },
-    },
-
     -- use a release tag to download pre-built binaries
     version = "*",
     -- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
@@ -120,17 +104,9 @@ return {
       keymap = { preset = "super-tab" },
 
       appearance = {
-        -- Sets the fallback highlight groups to nvim-cmp's highlight groups
-        -- Useful for when your theme doesn't support blink.cmp
-        -- Will be removed in a future release
-        use_nvim_cmp_as_default = true,
         -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
         -- Adjusts spacing to ensure icons are aligned
         nerd_font_variant = "mono",
-
-        kind_icons = {
-          Copilot = "",
-        },
       },
 
       completion = {
@@ -149,19 +125,16 @@ return {
         },
       },
 
-      -- Default list of enabled providers defined so that you can extend it
-      -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
-        default = { "lsp", "path", "snippets", "buffer", "copilot" },
+        default = { "lsp", "path", "buffer" },
         per_filetype = {
-          codecompanion = { "codecompanion" },
+          lua = { inherit_defaults = true, "lazydev" },
         },
         providers = {
-          copilot = {
-            name = "copilot",
-            module = "blink-copilot",
+          lazydev = {
+            name = "LazyDev",
+            module = "lazydev.integrations.blink",
             score_offset = 100,
-            async = true,
           },
         },
       },
@@ -172,50 +145,6 @@ return {
       -- experimental signature help support
       -- signature = { enabled = true }
     },
-    -- allows extending the enabled_providers array elsewhere in your config
-    -- without having to redefine it
-    opts_extend = { "sources.default" },
-  },
-  -- TODO: validate what features of lspsaga I'm actually using
-  {
-    "nvimdev/lspsaga.nvim",
-    branch = "main",
-    opts = {
-      lightbulb = {
-        enable = false,
-      },
-      symbol_in_winbar = { enable = false },
-    },
-    event = "LspAttach",
-  },
-  {
-    "kosayoda/nvim-lightbulb",
-    opts = {
-      autocmd = { enabled = true },
-      sign = { enabled = false },
-      virtual_text = { enabled = true },
-    },
-  },
-  {
-    "windwp/nvim-autopairs",
-    event = "InsertEnter",
-    config = true,
-  },
-  {
-    "AckslD/nvim-neoclip.lua",
-    opts = {},
-  },
-  {
-    "folke/trouble.nvim",
-    cmd = { "Trouble", "TroubleToggle" },
-    config = function()
-      require("config-trouble").cfg()
-    end,
-  },
-  {
-    "bezhermoso/tree-sitter-ghostty",
-    build = "make nvim_install",
-    ft = "ghostty",
   },
   {
     "romus204/tree-sitter-manager.nvim",
@@ -235,13 +164,6 @@ return {
   },
   { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
   {
-    "mfussenegger/nvim-dap",
-    dependencies = { "mfussenegger/nvim-dap-python" },
-    config = function()
-      require("config-dap-python").cfg()
-    end,
-  },
-  {
     "j-hui/fidget.nvim",
     event = { "VeryLazy" },
     opts = {},
@@ -254,8 +176,8 @@ return {
   },
   { "b0o/SchemaStore.nvim" },
   {
-    -- note: do not lazy-load, BufReadPost autocmd will break
     "mfussenegger/nvim-lint",
+    ft = { "dockerfile", "markdown" },
     config = function()
       local lint = require("lint")
       lint.linters_by_ft = {
@@ -275,11 +197,15 @@ return {
         end
       end
 
-      vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave" }, {
+      vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
         callback = debounce(100, function()
           lint.try_lint()
         end),
       })
+
+      vim.schedule(function()
+        lint.try_lint()
+      end)
     end,
   },
   {
@@ -348,10 +274,8 @@ return {
       require("conform").formatters.prettier_yaml = yaml_formatter
     end,
     init = function()
-      local notify = require("notify")
-
       local function show_notification(message, level)
-        notify(message, level, { title = "conform.nvim" })
+        vim.notify(message, level, { title = "conform.nvim" })
       end
 
       vim.api.nvim_create_user_command("FormatToggle", function(args)
@@ -359,16 +283,16 @@ return {
         if is_global then
           vim.g.disable_autoformat = not vim.g.disable_autoformat
           if vim.g.disable_autoformat then
-            show_notification("Autoformat-on-save disabled globally", "info")
+            show_notification("Autoformat-on-save disabled globally", vim.log.levels.INFO)
           else
-            show_notification("Autoformat-on-save enabled globally", "info")
+            show_notification("Autoformat-on-save enabled globally", vim.log.levels.INFO)
           end
         else
           vim.b.disable_autoformat = not vim.b.disable_autoformat
           if vim.b.disable_autoformat then
-            show_notification("Autoformat-on-save disabled for this buffer", "info")
+            show_notification("Autoformat-on-save disabled for this buffer", vim.log.levels.INFO)
           else
-            show_notification("Autoformat-on-save enabled for this buffer", "info")
+            show_notification("Autoformat-on-save enabled for this buffer", vim.log.levels.INFO)
           end
         end
       end, {
@@ -376,18 +300,6 @@ return {
         bang = true,
       })
     end,
-  },
-  {
-    "cuducos/yaml.nvim",
-    ft = { "yaml" }, -- optional
-    cmd = {
-      "YAMLView",
-      "YAMLYank",
-      "YAMLYankKey",
-      "YAMLYankValue",
-      "YAMLQuickfix",
-      "YAMLTelescope",
-    },
   },
   {
     "echasnovski/mini.nvim",
@@ -398,91 +310,51 @@ return {
       require("mini.indentscope").setup()
       require("mini.icons").setup()
       require("mini.surround").setup()
-      require("mini.diff").setup()
+      require("mini.trailspace").setup()
+      require("mini.pairs").setup()
+      require("mini.hipatterns").setup({
+        highlighters = {
+          fixme = { pattern = "%f[%w]()FIXME()%f[%W]", group = "MiniHipatternsFixme" },
+          hack = { pattern = "%f[%w]()HACK()%f[%W]", group = "MiniHipatternsHack" },
+          todo = { pattern = "%f[%w]()TODO()%f[%W]", group = "MiniHipatternsTodo" },
+          note = { pattern = "%f[%w]()NOTE()%f[%W]", group = "MiniHipatternsNote" },
+        },
+      })
+      require("mini.input").setup()
+      require("mini.notify").setup({
+        lsp_progress = { enable = false },
+      })
+      local MiniFiles = require("mini.files")
+      MiniFiles.setup({
+        options = { use_as_default_explorer = false },
+      })
+      vim.keymap.set("n", "<leader>em", function()
+        local path = vim.api.nvim_buf_get_name(0)
+        MiniFiles.open(path ~= "" and path or nil)
+      end, { desc = "mini files" })
+      vim.keymap.set("n", "<leader>Ss", function()
+        require("mini.sessions").select()
+      end, { desc = "select" })
+      vim.keymap.set("n", "<leader>Sn", function()
+        local MiniSessions = require("mini.sessions")
+        local Utils = require("utils")
+
+        local project_path = Utils.get_git_root_or_cwd()
+        local proposed_session_name = vim.fs.basename(project_path)
+
+        Utils.input_prompt_with_default("Session name:", proposed_session_name, function(name)
+          if name then
+            MiniSessions.write(name)
+          end
+        end)
+      end, { desc = "new" })
+      require("mini.diff").setup({
+        view = { style = "sign" },
+      })
 
       MiniIcons.mock_nvim_web_devicons()
     end,
   },
-  {
-    "isobit/vim-caddyfile",
-    ft = { "caddyfile" },
-  },
-  {
-    "kevinhwang91/nvim-ufo",
-    dependencies = {
-      "kevinhwang91/promise-async",
-      {
-        "luukvbaal/statuscol.nvim",
-        config = function()
-          local builtin = require("statuscol.builtin")
-          require("statuscol").setup({
-            relculright = true,
-            segments = {
-              { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
-              { text = { "%s" }, click = "v:lua.ScSa" },
-              { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
-            },
-          })
-        end,
-      },
-    },
-    event = "BufReadPost",
-    opts = {
-      provider_selector = function()
-        return { "treesitter", "indent" }
-      end,
-    },
-
-    init = function()
-      -- UFO folding
-      vim.o.foldcolumn = "1" -- '0' is not bad
-      vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-      vim.o.foldlevelstart = 99
-      vim.o.foldenable = true
-      vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
-      vim.keymap.set("n", "zR", function()
-        require("ufo").openAllFolds()
-      end)
-      vim.keymap.set("n", "zM", function()
-        require("ufo").closeAllFolds()
-      end)
-    end,
-  },
-  {
-    "folke/noice.nvim",
-    event = "VeryLazy",
-    opts = {
-      lsp = {
-        -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-        override = {
-          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-          ["vim.lsp.util.stylize_markdown"] = true,
-          ["cmp.entry.get_documentation"] = true,
-        },
-      },
-      -- you can enable a preset for easier configuration
-      presets = {
-        bottom_search = true, -- use a classic bottom cmdline for search
-        command_palette = true, -- position the cmdline and popupmenu together
-        long_message_to_split = true, -- long messages will be sent to a split
-        inc_rename = false, -- enables an input dialog for inc-rename.nvim
-        lsp_doc_border = false, -- add a border to hover docs and signature help
-      },
-    },
-    dependencies = {
-      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-      "MunifTanjim/nui.nvim",
-      -- OPTIONAL:
-      --   `nvim-notify` is only needed, if you want to use the notification view.
-      --   If not available, we use `mini` as the fallback
-      "rcarriga/nvim-notify",
-    },
-  },
-  {
-    "Vimjas/vim-python-pep8-indent",
-    ft = "python",
-  },
-  { "shortcuts/no-neck-pain.nvim", version = "*", cmd = "NoNeckPain" },
   {
     "OXY2DEV/markview.nvim",
     lazy = false, -- Recommended
@@ -492,11 +364,11 @@ return {
     dependencies = {
       "saghen/blink.cmp",
     },
-    ft = { "markdown", "quarto", "rmd", "Avante", "codecompanion" },
+    ft = { "markdown", "quarto", "rmd" },
     opts = {
       preview = {
         hybrid_modes = { "n" },
-        filetypes = { "markdown", "quarto", "rmd", "Avante", "codecompanion" },
+        filetypes = { "markdown", "quarto", "rmd" },
         icon_provider = "mini",
       },
       markdown = {
@@ -510,122 +382,112 @@ return {
     "ibhagwan/fzf-lua",
     config = function()
       -- calling `setup` is optional for customization
-      require("fzf-lua").setup({})
+      require("fzf-lua").setup({ ui_select = true })
     end,
     cmd = "FzfLua",
     keys = {
       {
-        "<Leader><Space>",
-        "<CMD>lua require('fzf-lua').files()<CR>",
-        desc = "search files",
-        noremap = true,
-        silent = true,
+        "<leader>f",
+        function()
+          require("fzf-lua").files()
+        end,
+        desc = "files",
+      },
+      {
+        "<leader>sb",
+        function()
+          require("fzf-lua").buffers()
+        end,
+        desc = "buffers",
+      },
+      {
+        "<leader>sB",
+        function()
+          require("fzf-lua").git_branches()
+        end,
+        desc = "git branches",
+      },
+      {
+        "<leader>sh",
+        function()
+          require("fzf-lua").command_history()
+        end,
+        desc = "history",
+      },
+      {
+        "<leader>sm",
+        function()
+          require("fzf-lua").marks()
+        end,
+        desc = "marks",
+      },
+      {
+        "<leader>st",
+        function()
+          require("fzf-lua").live_grep()
+        end,
+        desc = "text",
+      },
+      {
+        "<leader>su",
+        function()
+          require("fzf-lua").colorschemes()
+        end,
+        desc = "colorschemes",
+      },
+      {
+        "<leader>ld",
+        function()
+          require("fzf-lua").diagnostics_document()
+        end,
+        desc = "document diagnostics",
+      },
+      {
+        "<leader>lD",
+        function()
+          require("fzf-lua").diagnostics_workspace()
+        end,
+        desc = "workspace diagnostics",
+      },
+      {
+        "<leader>ls",
+        function()
+          require("fzf-lua").lsp_document_symbols()
+        end,
+        desc = "document symbols",
+      },
+      {
+        "<leader>lS",
+        function()
+          require("fzf-lua").lsp_workspace_symbols()
+        end,
+        desc = "workspace symbols",
+      },
+      {
+        "<leader>la",
+        function()
+          require("fzf-lua").lsp_code_actions()
+        end,
+        desc = "code actions",
       },
     },
-  },
-  {
-    "dstein64/vim-startuptime",
-    cmd = "StartupTime",
   },
   {
     "folke/lazydev.nvim",
     ft = "lua", -- only load on lua files
     opts = {
+      enabled = function(root_dir)
+        return vim.fs.normalize(root_dir) == vim.fs.normalize(vim.fn.stdpath("config"))
+      end,
       library = {
-        -- Library items can be absolute paths
-        -- "~/projects/my-awesome-lib",
-        -- Or relative, which means they will be resolved as a plugin
-        -- "LazyVim",
-        -- When relative, you can also provide a path to the library in the plugin dir
-        "luvit-meta/library", -- see below
+        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
       },
     },
   },
-  { "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typing
   {
     "rachartier/tiny-inline-diagnostic.nvim",
     event = "VeryLazy",
     config = require("config-tiny-inline-diagnostic").cfg,
-  },
-  {
-    "stevearc/oil.nvim",
-    opts = {},
-    -- no lazy-loading, author doesn't recommend it and it caused problems with
-    -- oil-ssh for me
-  },
-  {
-    "ejrichards/mise.nvim",
-    opts = {},
-    cond = vim.g.neovide == true,
-  },
-  { -- better vim.ui.select
-    "stevearc/dressing.nvim",
-    opts = {},
-  },
-  {
-    "fladson/vim-kitty",
-    ft = "kitty",
-  },
-  {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    build = ":Copilot auth",
-    event = "InsertEnter",
-    opts = {
-      suggestion = { enabled = false },
-      panel = { enabled = false },
-      filetypes = {
-        markdown = true,
-        help = true,
-      },
-    },
-  },
-  {
-    "olimorris/codecompanion.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    config = function()
-      require("codecompanion").setup(require("config-codecompanion").config())
-    end,
-    keys = {
-      { "<leader>a", nil, desc = "AI" },
-      { "<leader>aa", "<cmd>CodeCompanionActions<cr>", mode = { "n", "v" }, desc = "Actions" },
-      { "<leader>ac", "<cmd>CodeCompanionChat Toggle<cr>", mode = { "n", "v" }, desc = "Toggle Chat" },
-      { "<leader>ai", ":CodeCompanion ", mode = { "n", "v" }, desc = "Inline" },
-      { "ga", "<cmd>CodeCompanionChat Add<cr>", mode = "v", desc = "Add to Chat" },
-    },
-    cmd = { "CodeCompanion", "CodeCompanionChat", "CodeCompanionActions", "CodeCompanionCmd" },
-    init = function()
-      vim.cmd([[cab cc CodeCompanion]])
-    end,
-  },
-  {
-    "coder/claudecode.nvim",
-    dependencies = { "folke/snacks.nvim" },
-    config = true,
-    keys = {
-      { "<leader>C", nil, desc = "Claude Code" },
-      { "<leader>Cc", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude" },
-      { "<leader>Cf", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude" },
-      { "<leader>Cr", "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude" },
-      { "<leader>CC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
-      { "<leader>Cm", "<cmd>ClaudeCodeSelectModel<cr>", desc = "Select Claude model" },
-      { "<leader>Cb", "<cmd>ClaudeCodeAdd %<cr>", desc = "Add current buffer" },
-      { "<leader>Cs", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "Send to Claude" },
-      {
-        "<leader>Cs",
-        "<cmd>ClaudeCodeTreeAdd<cr>",
-        desc = "Add file",
-        ft = { "NvimTree", "neo-tree", "oil", "minifiles", "netrw" },
-      },
-      { "<leader>Ca", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
-      { "<leader>Cd", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
-    },
-  },
-  {
-    "MagicDuck/grug-far.nvim",
-    opts = {},
   },
   {
     "hat0uma/csvview.nvim",

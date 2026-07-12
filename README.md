@@ -8,12 +8,15 @@ Welcome to my Neovim configuration! This setup is designed to provide a powerful
 ## ✨ Features
 
 - 🎨 Modern and sleek UI with carefully chosen colorschemes
-- 🧠 Intelligent code completion powered by nvim-cmp
+- 🧠 Intelligent code completion powered by blink.cmp
 - 🔍 Fuzzy finding capabilities with fzf-lua
-- 🌳 File explorer with oil.nvim and neo-tree
-- 🔧 Robust LSP configuration for various languages (including Ansible, Bash, Docker, Python, Lua, Terraform, Vue, YAML, Ruby, JSON, Go, PowerShell, and more)
+- 🌳 File explorer with neo-tree (plus a mini.files trial on `<leader>em`)
+- 🔧 Robust LSP configuration for various languages (including Ansible, Bash, Docker, Python, Lua, Terraform, YAML, Ruby, JSON, Go, PowerShell, and more)
 - 🧩 Syntax highlighting and advanced code analysis with Treesitter
-- 🤖 AI-assisted coding integration with gp.nvim and avante.nvim
+- ✂️ Format-on-save with conform.nvim and focused linting with nvim-lint
+- 📝 In-editor Markdown rendering with markview.nvim
+- 🔀 Git workflows with fugitive and change signs from mini.diff
+- 🧰 Lots of small quality-of-life modules from mini.nvim (sessions, start screen, surrounds, pairs, notifications, and more)
 - 📊 Handy status line with lualine
 - 🚀 Efficient plugin management with lazy.nvim
 - 🌓 Automatic dark/light mode switching based on system preferences
@@ -21,13 +24,18 @@ Welcome to my Neovim configuration! This setup is designed to provide a powerful
 ## 🛠 Installation
 
 > [!NOTE]
-> Currently tested with Neovim v0.10.1
+> Currently tested with Neovim v0.12
 
 1. Clone this repository:
    ```sh
-   git clone https://github.com/yourusername/neovim-config.git ~/.config/nvim
+   git clone https://github.com/strayer/dotfiles-nvim.git ~/.config/nvim
    ```
-2. Start Neovim and let it install the plugins:
+2. Install the plugin versions pinned in `lazy-lock.json` (automatic plugin
+   installation is intentionally disabled):
+   ```sh
+   nvim --headless "+Lazy! restore" +qa
+   ```
+3. Start Neovim:
    ```sh
    nvim
    ```
@@ -36,12 +44,15 @@ Welcome to my Neovim configuration! This setup is designed to provide a powerful
 
 This configuration uses which-key as a central part of the key binding setup, providing an interactive menu for discovering and using keybindings. Here are some of the main custom mappings related to core features:
 
+- `<CR>`: Start a Leap motion in the current window (`g<CR>` for other windows)
 - `<Leader>f`: Fuzzy find files (fzf-lua)
 - `<Leader>s`: Various search operations (buffers, git branches, diagnostics, etc.)
-- `<Leader>e`: File explorer operations (neo-tree)
+- `<Leader>e`: File explorer operations (neo-tree, mini.files)
 - `<Leader>l`: LSP-related commands
-- `<Leader>d`: Debugging commands
-- `<C-h/j/k/l>`: Navigate between splits (works across both Neovim and Wezterm splits)
+- `<Leader>c`: Code operations like formatting
+- `<Leader>S`: Session management
+- `<Leader>t`: Terminal operations
+- `<Leader>w`: Window management
 
 Press `<Leader>` (space key) to bring up the which-key menu and explore more available commands.
 
