@@ -5,12 +5,9 @@ configuration.
 
 ## Repository overview
 
-This is a focused Neovim 0.12 configuration managed by lazy.nvim. Preserve the
-clear workflow ownership described below when changing plugins or the editor's
-intended character; completed cleanup decisions remain available in Git history.
-
-The resolved graph has 26 lockfile entries: 23 direct plugins including
-bootstrapped Lazy and three Neo-tree dependencies.
+This is a focused Neovim 0.12 configuration managed by lazy.nvim. Each
+recurring workflow has one clear owner, described below; preserve that
+ownership when changing plugins or behavior.
 
 ## Common commands
 
@@ -26,8 +23,7 @@ stylua --check .                         # Check Lua formatting
 ## Configuration structure
 
 - `init.lua` bootstraps Lazy and loads core configuration.
-- `lua/basics.lua` owns editor options, general autocmds, and native filetype
-  additions.
+- `lua/basics.lua` owns editor options and general autocmds.
 - `lua/keymaps.lua` owns normal mappings for native editor, LSP, terminal, and
   window actions.
 - `lua/plugins.lua` is the plugin specification and most focused setup.
@@ -35,9 +31,8 @@ stylua --check .                         # Check Lua formatting
 - `lua/config-which-key.lua` contains only WhichKey group labels; plugin-backed
   mappings live with their plugin specifications or setup.
 - `lua/auto-dark-mode.lua` reads `~/.cache/system-theme.txt` and switches themes.
-- This file and `README.md` describe the current design and workflow ownership.
 
-## Current system ownership
+## System ownership
 
 - **Completion:** Blink uses LSP, path, and buffer sources. Lua buffers in this
   repository additionally use LazyDev; snippets are not configured.
@@ -47,20 +42,20 @@ stylua --check .                         # Check Lua formatting
 - **Formatting and linting:** Conform handles format-on-save and `:Format`.
   nvim-lint loads only for Markdown and Dockerfile buffers and runs
   markdownlint-cli2 or Hadolint.
-- **Exploration and picking:** Neo-tree remains the primary filesystem, buffer,
-  and Git explorer. MiniFiles is enabled explicitly on `<leader>em` for a
-  post-cleanup workflow trial and does not replace the default directory
-  explorer. FzfLua owns pickers and `vim.ui.select` after it loads.
+- **Exploration and picking:** Neo-tree is the primary filesystem, buffer, and
+  Git explorer. MiniFiles is a secondary explorer on `<leader>em`, currently
+  under evaluation; it does not replace the default directory explorer. FzfLua
+  owns pickers and `vim.ui.select` after it loads.
 - **Input and notifications:** MiniInput owns `vim.ui.input`; MiniNotify owns
   `vim.notify` with LSP progress disabled.
-- **Native messages and command line:** Neovim UI2 is enabled as an experimental
-  post-cleanup trial, with `cmdheight=0` so the command line is visible only
-  while in use. It owns native command-line, message, dialog, and pager
-  presentation; do not treat its private `vim._core.ui2` API as stable.
+- **Native messages and command line:** Neovim's native UI2 is enabled
+  experimentally, with `cmdheight=0` so the command line is visible only while
+  in use. It owns native command-line, message, dialog, and pager presentation;
+  do not treat its private `vim._core.ui2` API as stable.
 - **Editing and UI:** Mini.nvim provides the start screen, sessions,
   indentation, icons, surrounds, trailing-space highlighting, pairs, task-word
-  highlighting, input, notifications, Git signs, and the explicit MiniFiles
-  trial. Lualine remains the global statusline.
+  highlighting, input, notifications, Git signs, and MiniFiles. Lualine is the
+  global statusline.
 - **Git:** Fugitive owns Git commands and buffers; MiniDiff owns sign-column
   change visualization.
 - **Markdown:** Markview renders Markdown, Quarto, and R Markdown in Neovim.
@@ -71,8 +66,8 @@ stylua --check .                         # Check Lua formatting
 
 - `<CR>` / `g<CR>` - Leap in the current window / across windows.
 - `<leader>c` - code operations, primarily formatting.
-- `<leader>e` - explorer views; `<leader>em` opens MiniFiles while the existing
-  Neo-tree mappings remain primary.
+- `<leader>e` - explorer views; `<leader>em` opens MiniFiles while the Neo-tree
+  mappings remain primary.
 - `<leader>f` - find files with FzfLua.
 - `<leader>l` - LSP diagnostics, symbols, code actions, and native operations.
 - `<leader>s` - FzfLua searches.
@@ -80,11 +75,11 @@ stylua --check .                         # Check Lua formatting
 - `<leader>t` - terminal operations.
 - `<leader>w` - window operations.
 
-WhichKey remains the current mapping discovery layer, but it does not create
-action mappings. It observes their `desc` metadata and supplies group labels
-only. The mapping architecture is normalized. MiniClue was reassessed after
-normalization and rejected because WhichKey's automatic discovery for built-in
-prefixes such as `g` and `z` is part of the desired workflow.
+WhichKey is the mapping discovery layer, but it does not create action
+mappings: it observes their `desc` metadata and supplies group labels only.
+WhichKey is deliberately preferred over alternatives such as MiniClue because
+its automatic discovery of built-in prefixes like `g` and `z` is part of the
+desired workflow.
 
 ## Development rules
 
@@ -95,8 +90,7 @@ prefixes such as `g` and `z` is part of the desired workflow.
    installation, configuration, migration, and health documentation. Record
    durable ownership or operational changes in this file and `README.md`.
 4. Run StyLua, `git diff --check`, headless startup, and focused runtime checks
-   before each functional commit. Run the full acceptance checklist before final
-   handoff.
+   before each functional commit.
 5. Do not modify or commit ignored private configuration without explicit user
    direction.
 
@@ -107,8 +101,8 @@ prefixes such as `g` and `z` is part of the desired workflow.
 - Tmux sessions receive insert/normal cursor-shape escape sequences.
 - Theme changes are driven by `~/.cache/system-theme.txt` and the `Signal`
   autocmd.
-- Native filetype rules cover `Caddyfile`, `*.Caddyfile`, `*.caddyfile`, and
-  `Caddyfile.*`; built-in Neovim support handles Fish, Kitty, YAML, and Python.
-- UI2 is intentionally a focused trial with `cmdheight=0`. Test native
+- Built-in Neovim support covers Fish, Kitty, YAML, and Python; no extra
+  filetype plugins are needed for them.
+- UI2 with `cmdheight=0` is an intentionally scoped experiment. Test native
   messages, paging, shell output, prompts, Tmux, and Neovide before making it
-  permanent or adding routing customization.
+  permanent or adding message-routing customization.
