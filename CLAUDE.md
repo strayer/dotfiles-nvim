@@ -96,13 +96,11 @@ desired workflow.
 
 ## Environment-specific behavior
 
-- Neovide receives a custom font, cursor effect, focus workaround, and macOS
-  command-key mappings.
 - Tmux sessions receive insert/normal cursor-shape escape sequences.
 - Theme changes are driven by `~/.cache/system-theme.txt` and the `Signal`
   autocmd.
 - Built-in Neovim support covers Fish, Kitty, YAML, and Python; no extra
   filetype plugins are needed for them.
 - UI2 with `cmdheight=0` is an intentionally scoped experiment. Test native
-  messages, paging, shell output, prompts, Tmux, and Neovide before making it
-  permanent or adding message-routing customization.
+  messages, paging, shell output, prompts, and Tmux before making it permanent
+  or adding message-routing customization.
