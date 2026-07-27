@@ -34,6 +34,12 @@ stylua --check .                         # Check Lua formatting
 
 ## System ownership
 
+- **AI / Claude Code:** claudecode.nvim owns the Claude Code IDE bridge
+  (WebSocket MCP server, selection tracking, and proposed-change diffs). It is
+  deliberately lazy-loaded so the server starts only on first use, never at
+  startup. Both workflows are supported: an embedded session in a native
+  terminal split (`:ClaudeCode`), or an external CLI session that connects via
+  `/ide` after `:ClaudeCodeStart`.
 - **Completion:** Blink uses LSP, path, and buffer sources. Lua buffers in this
   repository additionally use LazyDev; snippets are not configured.
 - **LSP:** `config-lsp.lua` uses `vim.lsp.config` and `vim.lsp.enable`. Fidget is
@@ -65,6 +71,8 @@ stylua --check .                         # Check Lua formatting
 ## Key mapping structure
 
 - `<CR>` / `g<CR>` - Leap in the current window / across windows.
+- `<leader>a` - AI/Claude Code: embedded session, IDE server start, sending
+  context, and diff review.
 - `<leader>c` - code operations, primarily formatting.
 - `<leader>e` - explorer views; `<leader>em` opens MiniFiles while the Neo-tree
   mappings remain primary.

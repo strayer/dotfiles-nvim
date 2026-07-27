@@ -2,6 +2,7 @@
   "SchemaStore.nvim": { "branch": "main", "commit": "6db1246640e9e1bdf8a1d1f6d27a940fc0a572d5" },
   "blink.cmp": { "branch": "main", "commit": "78336bc89ee5365633bcf754d93df01678b5c08f" },
   "catppuccin": { "branch": "main", "commit": "426dbebe06b5c69fd846ceb17b42e12f890aedf1" },
+  "claudecode.nvim": { "branch": "main", "commit": "2390c6e45c4789072c293ac69de051d169668b29" },
   "conform.nvim": { "branch": "master", "commit": "dca1a190aa85f9065979ef35802fb77131911106" },
   "csvview.nvim": { "branch": "main", "commit": "5c22774c3ecc7f8883af5d143b366e45b1f0875d" },
   "fidget.nvim": { "branch": "main", "commit": "889e2e96edef4e144965571d46f7a77bcc4d0ddf" },

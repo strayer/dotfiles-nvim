@@ -18,6 +18,7 @@ Welcome to my Neovim configuration! This setup is designed to provide a powerful
 - 🔀 Git workflows with fugitive and change signs from mini.diff
 - 🧰 Lots of small quality-of-life modules from mini.nvim (sessions, start screen, surrounds, pairs, notifications, and more)
 - 📊 Handy status line with lualine
+- 🤖 Claude Code IDE bridge with claudecode.nvim (on-demand WebSocket server, embedded or external `/ide` sessions)
 - 🚀 Efficient plugin management with lazy.nvim
 - 🌓 Automatic dark/light mode switching based on system preferences
 
@@ -50,6 +51,7 @@ This configuration uses which-key as a central part of the key binding setup, pr
 - `<Leader>e`: File explorer operations (neo-tree, mini.files)
 - `<Leader>l`: LSP-related commands
 - `<Leader>c`: Code operations like formatting
+- `<Leader>a`: AI/Claude Code operations (embedded session, IDE server, send context, diffs)
 - `<Leader>S`: Session management
 - `<Leader>t`: Terminal operations
 - `<Leader>w`: Window management

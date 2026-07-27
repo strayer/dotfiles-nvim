@@ -512,4 +512,41 @@ return {
     cmd = { "CsvViewEnable", "CsvViewDisable", "CsvViewToggle" },
   },
   { "RRethy/vim-illuminate" },
+  {
+    "coder/claudecode.nvim",
+    -- Lazy-loaded on purpose: the WebSocket server starts only when a command
+    -- or keymap below is first used, never at Neovim startup.
+    cmd = {
+      "ClaudeCode",
+      "ClaudeCodeStart",
+      "ClaudeCodeStop",
+      "ClaudeCodeStatus",
+      "ClaudeCodeFocus",
+      "ClaudeCodeAdd",
+      "ClaudeCodeSend",
+      "ClaudeCodeTreeAdd",
+      "ClaudeCodeDiffAccept",
+      "ClaudeCodeDiffDeny",
+      "ClaudeCodeCloseAllDiffs",
+    },
+    opts = {
+      -- Built-in terminal split for the embedded workflow; external sessions
+      -- connect to the same server via /ide regardless of this provider.
+      terminal = { provider = "native" },
+    },
+    keys = {
+      { "<leader>ac", "<cmd>ClaudeCode<cr>", desc = "toggle embedded Claude" },
+      { "<leader>ai", "<cmd>ClaudeCodeStart<cr>", desc = "start IDE server (external /ide)" },
+      { "<leader>as", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "send selection to Claude" },
+      { "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>", desc = "add buffer to Claude" },
+      {
+        "<leader>as",
+        "<cmd>ClaudeCodeTreeAdd<cr>",
+        desc = "add file to Claude",
+        ft = { "neo-tree", "minifiles" },
+      },
+      { "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "accept diff" },
+      { "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "deny diff" },
+    },
+  },
 }

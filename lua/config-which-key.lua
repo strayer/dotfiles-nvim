@@ -1,6 +1,7 @@
 local M = {}
 
 M.groups = {
+  { "<leader>a", group = "ai" },
   { "<leader>c", group = "code" },
   { "<leader>e", group = "explore" },
   { "<leader>l", group = "lsp" },
