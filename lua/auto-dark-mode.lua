@@ -1,7 +1,12 @@
 -- Source: https://github.com/jascha030/macos-nvim-dark-mode/blob/cc7f35a/README.md#neovim
 
 local os_is_dark = function()
-  local f = assert(io.open(vim.env.HOME .. "/.cache/system-theme.txt", "r"))
+  local f = io.open(vim.env.HOME .. "/.cache/system-theme.txt", "r")
+  if not f then
+    -- default to dark when the theme file is missing
+    return true
+  end
+
   local current_system_theme = f:read("*all")
   f:close()
 
